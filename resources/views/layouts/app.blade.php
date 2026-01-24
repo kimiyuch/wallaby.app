@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Kimiyu') }}</title>
+        <title>kimiyu – Split expenses, not relationships.</title>
 
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="Kimiyu" />
+        <meta name="apple-mobile-web-app-title" content="kimiyu" />
         <link rel="manifest" href="/site.webmanifest" />
 
         <!-- Scripts -->
@@ -25,7 +25,7 @@
                 <!-- Logo -->
                 <div class="py-4 px-6">
                     <a href="{{ route('dashboard') }}" class="text-2xl font-bold text-gray-900">
-                        Kimiyu
+                        kimiyu
                     </a>
                 </div>
 
@@ -63,7 +63,7 @@
 
             <!-- Mobile Header -->
             <header class="lg:hidden bg-gray-100 px-4 py-3 flex items-center justify-between">
-                <a href="{{ route('dashboard') }}" class="text-xl font-bold text-gray-900">Kimiyu</a>
+                <a href="{{ route('dashboard') }}" class="text-xl font-bold text-gray-900">kimiyu</a>
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" class="p-2 text-gray-500">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

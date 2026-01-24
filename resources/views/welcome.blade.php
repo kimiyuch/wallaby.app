@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kimiyu — Shared Expenses Made Simple</title>
+    <title>kimiyu – Split expenses, not relationships.</title>
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Kimiyu" />
+    <meta name="apple-mobile-web-app-title" content="kimiyu" />
     <link rel="manifest" href="/site.webmanifest" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -24,7 +24,7 @@
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50">
         <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/" class="text-xl font-bold">Kimiyu</a>
+            <a href="/" class="text-xl font-bold">kimiyu</a>
             <div class="flex items-center gap-6">
                 @auth
                     <a href="{{ route('dashboard') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Dashboard</a>
@@ -50,7 +50,7 @@
             </h1>
             
             <p class="text-lg text-gray-500 mb-10 max-w-xl mx-auto">
-                Kimiyu helps separated parents track and split their children's expenses fairly. No spreadsheets, no awkward conversations — just clarity.
+                kimiyu helps separated parents track and split their children's expenses fairly. No spreadsheets, no awkward conversations — just clarity.
             </p>
             
             <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 transition-colors">
@@ -264,7 +264,7 @@
         <div class="max-w-5xl mx-auto">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="text-sm text-gray-500">
-                    Copyright {{ date('Y') }} – Kimiyu. All rights reserved.
+                    Copyright {{ date('Y') }} – kimiyu. All rights reserved.
                 </div>
                 <div class="flex items-center gap-6 text-sm text-gray-500">
                     <a href="{{ route('login') }}" class="hover:text-gray-900 transition-colors">Log in</a>
