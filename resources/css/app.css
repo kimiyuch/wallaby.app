@@ -4,64 +4,41 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
 /* Fix Safari select styling */
 select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  @apply appearance-none bg-no-repeat pr-8;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
   background-position: right 0.5rem center;
   background-size: 1rem;
-  padding-right: 2rem;
 }
 
 /* Animated background orbs */
 .orb {
-  position: absolute;
-  border-radius: 50%;
+  @apply absolute rounded-full opacity-50;
   filter: blur(80px);
-  opacity: 0.5;
 }
 
 .orb-1 {
-  width: 600px;
-  height: 600px;
+  @apply w-[600px] h-[600px] -top-[200px] -left-[200px];
   background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-  top: -200px;
-  left: -200px;
   animation: float1 25s ease-in-out infinite;
 }
 
 .orb-2 {
-  width: 500px;
-  height: 500px;
+  @apply w-[500px] h-[500px] top-[40%] -right-[150px];
   background: linear-gradient(135deg, #fce7f3, #fbcfe8);
-  top: 40%;
-  right: -150px;
   animation: float2 30s ease-in-out infinite;
 }
 
 .orb-3 {
-  width: 400px;
-  height: 400px;
+  @apply w-[400px] h-[400px] bottom-[10%] left-[10%];
   background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-  bottom: 10%;
-  left: 10%;
   animation: float3 20s ease-in-out infinite;
 }
 
 .orb-4 {
-  width: 350px;
-  height: 350px;
+  @apply w-[350px] h-[350px] top-[60%] left-1/2;
   background: linear-gradient(135deg, #fef3c7, #fde68a);
-  top: 60%;
-  left: 50%;
   animation: float4 28s ease-in-out infinite;
 }
 
