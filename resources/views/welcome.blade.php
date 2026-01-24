@@ -260,7 +260,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 px-6 border-t border-gray-200">
+    <footer class="py-8 px-6">
         <div class="max-w-5xl mx-auto">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="text-sm text-gray-500">
