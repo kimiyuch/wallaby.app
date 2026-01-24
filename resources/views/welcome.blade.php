@@ -15,67 +15,6 @@
         <div class="orb orb-4"></div>
     </div>
 
-    <style>
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
-        }
-        .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-            top: -200px;
-            left: -200px;
-            animation: float1 25s ease-in-out infinite;
-        }
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #fce7f3, #fbcfe8);
-            top: 40%;
-            right: -150px;
-            animation: float2 30s ease-in-out infinite;
-        }
-        .orb-3 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-            bottom: 10%;
-            left: 10%;
-            animation: float3 20s ease-in-out infinite;
-        }
-        .orb-4 {
-            width: 350px;
-            height: 350px;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            top: 60%;
-            left: 50%;
-            animation: float4 28s ease-in-out infinite;
-        }
-        @keyframes float1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(100px, 50px) scale(1.1); }
-            66% { transform: translate(50px, 100px) scale(0.95); }
-        }
-        @keyframes float2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-80px, 60px) scale(1.05); }
-            66% { transform: translate(-40px, -40px) scale(0.9); }
-        }
-        @keyframes float3 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(60px, -40px) scale(1.08); }
-            66% { transform: translate(-30px, 30px) scale(0.92); }
-        }
-        @keyframes float4 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-50px, -60px) scale(1.06); }
-            66% { transform: translate(40px, 20px) scale(0.94); }
-        }
-    </style>
-
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50">
         <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
