@@ -27,7 +27,7 @@
             <input type="checkbox" wire:model="is_personal"
                    id="is_personal"
                    class="rounded border-gray-300 text-gray-900 focus:ring-0">
-            <label for="is_personal" class="text-sm text-gray-500">Personal expense (paid for partner)</label>
+            <label for="is_personal" class="text-sm text-gray-500">Paid for partner</label>
         </div>
 
         <div>

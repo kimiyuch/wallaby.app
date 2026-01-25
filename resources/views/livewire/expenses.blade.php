@@ -105,7 +105,7 @@
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-700">Recurring</span>
                                 @endif
                                 @if($expense->is_personal)
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-purple-100 text-purple-700">Personal</span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-purple-100 text-purple-700">Paid for partner</span>
                                 @endif
                             </div>
                             <span class="text-sm text-gray-900">{{ number_format($expense->amount, 2) }}</span>
@@ -157,7 +157,7 @@
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-700">Recurring</span>
                                     @endif
                                     @if($expense->is_personal)
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-purple-100 text-purple-700">Personal</span>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-purple-100 text-purple-700">Paid for partner</span>
                                     @endif
                                 </div>
                                 <span class="text-sm text-gray-900">{{ number_format($expense->amount, 2) }}</span>
