@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:dashboard />
+    <livewire:expenses />
 </x-app-layout>

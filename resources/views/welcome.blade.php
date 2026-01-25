@@ -27,7 +27,7 @@
             <a href="/" class="text-xl font-bold">kimiyu</a>
             <div class="flex items-center gap-6">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Dashboard</a>
+                    <a href="{{ route('expenses') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Dashboard</a>
                 @else
                     <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Log in</a>
                     <a href="{{ route('register') }}" class="text-sm px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors">Get Started</a>

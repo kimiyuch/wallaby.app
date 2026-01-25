@@ -17,10 +17,17 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <input type="checkbox" wire:model.live="is_recurring" 
+            <input type="checkbox" wire:model.live="is_recurring"
                    id="is_recurring"
                    class="rounded border-gray-300 text-gray-900 focus:ring-0">
             <label for="is_recurring" class="text-sm text-gray-500">Recurring monthly</label>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <input type="checkbox" wire:model="is_personal"
+                   id="is_personal"
+                   class="rounded border-gray-300 text-gray-900 focus:ring-0">
+            <label for="is_personal" class="text-sm text-gray-500">Personal expense (paid for partner)</label>
         </div>
 
         <div>

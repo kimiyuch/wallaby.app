@@ -14,6 +14,7 @@ class Expense extends Model
         'date',
         'end_date',
         'is_recurring',
+        'is_personal',
     ];
 
     protected $casts = [
@@ -21,6 +22,7 @@ class Expense extends Model
         'date' => 'date',
         'end_date' => 'date',
         'is_recurring' => 'boolean',
+        'is_personal' => 'boolean',
     ];
 
     public function user(): BelongsTo

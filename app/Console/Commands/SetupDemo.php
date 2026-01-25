@@ -65,6 +65,7 @@ class SetupDemo extends Command
             'description' => 'Mobile Subscription',
             'date' => now()->subMonths(6)->startOfMonth(),
             'is_recurring' => true,
+            'is_personal' => false,
             'end_date' => null,
         ]);
 
@@ -74,6 +75,7 @@ class SetupDemo extends Command
             'description' => 'Netflix',
             'date' => now()->subMonths(6)->startOfMonth(),
             'is_recurring' => true,
+            'is_personal' => false,
             'end_date' => null,
         ]);
 
@@ -97,12 +99,15 @@ class SetupDemo extends Command
                         $date = now();
                     }
 
+                    $isPersonal = rand(1, 10) <= 2; // 20% chance of personal expense
+
                     Expense::create([
                         'user_id' => $user->id,
                         'amount' => rand(10, 150) + (rand(0, 1) ? 0.50 : 0),
                         'description' => $this->expenseDescriptions[array_rand($this->expenseDescriptions)],
                         'date' => $date,
                         'is_recurring' => false,
+                        'is_personal' => $isPersonal,
                     ]);
                 }
             }

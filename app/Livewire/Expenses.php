@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class Dashboard extends Component
+class Expenses extends Component
 {
     public $selectedMonth;
     public $selectedYear;
@@ -26,6 +26,7 @@ class Dashboard extends Component
         $date = now()->setYear($this->selectedYear)->setMonth($this->selectedMonth)->subMonth();
         $this->selectedMonth = $date->month;
         $this->selectedYear = $date->year;
+        $this->dispatch('monthChanged', month: $this->selectedMonth, year: $this->selectedYear);
     }
 
     public function nextMonth()
@@ -33,6 +34,7 @@ class Dashboard extends Component
         $date = now()->setYear($this->selectedYear)->setMonth($this->selectedMonth)->addMonth();
         $this->selectedMonth = $date->month;
         $this->selectedYear = $date->year;
+        $this->dispatch('monthChanged', month: $this->selectedMonth, year: $this->selectedYear);
     }
 
     public function openExpenseForm()
@@ -89,20 +91,38 @@ class Dashboard extends Component
         return $oneTimeExpenses->concat($recurringExpenses)->sortBy('is_recurring')->values();
     }
 
-    protected function calculateBalance($myTotal, $partnerTotal): array
+    protected function calculateBalance($myExpenses, $partnerExpenses): array
     {
         $user = Auth::user();
         $partner = $user->partner;
-        
+
         if (!$partner) {
             return [];
         }
 
-        $total = $myTotal + $partnerTotal;
-        $fairShare = $total / 2;
+        // Separate shared and personal expenses
+        $mySharedExpenses = $myExpenses->where('is_personal', false)->sum('amount');
+        $partnerSharedExpenses = $partnerExpenses->where('is_personal', false)->sum('amount');
 
-        $userOwes = $fairShare - $myTotal;
-        $partnerOwes = $fairShare - $partnerTotal;
+        // Calculate shared expense split (50/50)
+        $totalShared = $mySharedExpenses + $partnerSharedExpenses;
+        $fairShare = $totalShared / 2;
+
+        // Base balance from shared expenses
+        $userOwes = $fairShare - $mySharedExpenses;
+        $partnerOwes = $fairShare - $partnerSharedExpenses;
+
+        // Add personal expenses (full amount owed by partner)
+        $myPersonalExpenses = $myExpenses->where('is_personal', true)->sum('amount');
+        $partnerPersonalExpenses = $partnerExpenses->where('is_personal', true)->sum('amount');
+
+        // If I paid personal expenses, partner owes me more
+        $userOwes -= $myPersonalExpenses;
+        $partnerOwes += $myPersonalExpenses;
+
+        // If partner paid personal expenses, I owe partner more
+        $userOwes += $partnerPersonalExpenses;
+        $partnerOwes -= $partnerPersonalExpenses;
 
         return [
             $user->id => round($userOwes, 2),
@@ -121,10 +141,10 @@ class Dashboard extends Component
         $myTotal = $myExpenses->sum('amount');
         $partnerTotal = $partnerExpenses->sum('amount');
 
-        return view('livewire.dashboard', [
+        return view('livewire.expenses', [
             'myExpenses' => $myExpenses,
             'partnerExpenses' => $partnerExpenses,
-            'balance' => $this->calculateBalance($myTotal, $partnerTotal),
+            'balance' => $this->calculateBalance($myExpenses, $partnerExpenses),
             'partner' => $partner,
             'myTotal' => $myTotal,
             'partnerTotal' => $partnerTotal,

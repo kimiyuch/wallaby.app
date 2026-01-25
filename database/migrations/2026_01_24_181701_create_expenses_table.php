@@ -10,14 +10,13 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('household_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // who paid
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->decimal('amount', 10, 2);
             $table->string('description');
-            $table->string('category')->default('other');
             $table->date('date');
+            $table->date('end_date')->nullable();
             $table->boolean('is_recurring')->default(false);
-            $table->unsignedTinyInteger('recurring_day')->nullable(); // day of month (1-31)
+            $table->boolean('is_personal')->default(false);
             $table->timestamps();
         });
     }

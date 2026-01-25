@@ -13,8 +13,12 @@ class ExpenseForm extends Component
     public $date;
     public $end_date = '';
     public $is_recurring = false;
+    public $is_personal = false;
 
     public $editingExpenseId = null;
+
+    public $selectedMonth;
+    public $selectedYear;
 
     protected $rules = [
         'amount' => 'required|numeric|min:0.01',
@@ -22,19 +26,46 @@ class ExpenseForm extends Component
         'date' => 'required|date',
         'end_date' => 'nullable|date|after_or_equal:date',
         'is_recurring' => 'boolean',
+        'is_personal' => 'boolean',
     ];
 
-    protected $listeners = ['editExpense'];
+    protected $listeners = ['editExpense', 'monthChanged'];
 
-    public function mount()
+    public function mount($selectedMonth = null, $selectedYear = null)
     {
-        $this->date = now()->format('Y-m-d');
+        $this->selectedMonth = $selectedMonth ?? now()->month;
+        $this->selectedYear = $selectedYear ?? now()->year;
+
+        $this->date = $this->getDefaultDate();
+    }
+
+    protected function getDefaultDate(): string
+    {
+        $now = now();
+        $isCurrentMonth = $this->selectedMonth == $now->month && $this->selectedYear == $now->year;
+
+        if ($isCurrentMonth) {
+            return $now->format('Y-m-d');
+        }
+
+        return now()->setYear($this->selectedYear)->setMonth($this->selectedMonth)->startOfMonth()->format('Y-m-d');
+    }
+
+    public function monthChanged($month, $year)
+    {
+        $this->selectedMonth = $month;
+        $this->selectedYear = $year;
+
+        // Only update date if not editing an expense
+        if (!$this->editingExpenseId) {
+            $this->date = $this->getDefaultDate();
+        }
     }
 
     public function editExpense($expenseId)
     {
         $expense = Expense::findOrFail($expenseId);
-        
+
         if ($expense->user_id !== Auth::id()) {
             return;
         }
@@ -45,6 +76,7 @@ class ExpenseForm extends Component
         $this->date = $expense->date->format('Y-m-d');
         $this->end_date = $expense->end_date?->format('Y-m-d') ?? '';
         $this->is_recurring = $expense->is_recurring;
+        $this->is_personal = $expense->is_personal;
     }
 
     public function save()
@@ -60,6 +92,7 @@ class ExpenseForm extends Component
             'date' => $this->date,
             'end_date' => $this->is_recurring && $this->end_date ? $this->end_date : null,
             'is_recurring' => $this->is_recurring,
+            'is_personal' => $this->is_personal,
         ];
 
         if ($this->editingExpenseId) {
@@ -73,16 +106,16 @@ class ExpenseForm extends Component
             $this->dispatch('toast', type: 'success', message: 'Expense created');
         }
 
-        $this->reset(['amount', 'description', 'end_date', 'is_recurring', 'editingExpenseId']);
-        $this->date = now()->format('Y-m-d');
-        
+        $this->reset(['amount', 'description', 'end_date', 'is_recurring', 'is_personal', 'editingExpenseId']);
+        $this->date = $this->getDefaultDate();
+
         $this->dispatch('expenseUpdated');
     }
 
     public function cancelEdit()
     {
-        $this->reset(['amount', 'description', 'end_date', 'is_recurring', 'editingExpenseId']);
-        $this->date = now()->format('Y-m-d');
+        $this->reset(['amount', 'description', 'end_date', 'is_recurring', 'is_personal', 'editingExpenseId']);
+        $this->date = $this->getDefaultDate();
     }
 
     public function render()

@@ -24,15 +24,15 @@
             <aside class="fixed left-0 top-0 min-h-screen w-64 bg-gray-100 hidden lg:flex flex-col z-50">
                 <!-- Logo -->
                 <div class="py-4 px-6">
-                    <a href="{{ route('dashboard') }}" class="text-2xl font-bold text-gray-900">
+                    <a href="{{ route('expenses') }}" class="text-2xl font-bold text-gray-900">
                         kimiyu
                     </a>
                 </div>
 
                 <!-- Navigation -->
                 <nav class="flex-1 py-4 px-6 space-y-1">
-                    <a href="{{ route('dashboard') }}" 
-                       class="flex items-center gap-3 py-4 text-sm font-regular transition-all duration-200 {{ request()->routeIs('dashboard') ? 'text-black' : 'text-gray-500 hover:text-black' }}">
+                    <a href="{{ route('expenses') }}"
+                       class="flex items-center gap-3 py-4 text-sm font-regular transition-all duration-200 {{ request()->routeIs('expenses') ? 'text-black' : 'text-gray-500 hover:text-black' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/>
                         </svg>
@@ -63,7 +63,7 @@
 
             <!-- Mobile Header -->
             <header class="lg:hidden bg-gray-100 px-4 py-3 flex items-center justify-between">
-                <a href="{{ route('dashboard') }}" class="text-xl font-bold text-gray-900">kimiyu</a>
+                <a href="{{ route('expenses') }}" class="text-xl font-bold text-gray-900">kimiyu</a>
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" class="p-2 text-gray-500">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,7 +71,7 @@
                         </svg>
                     </button>
                     <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg py-2 z-50">
-                        <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Expenses</a>
+                        <a href="{{ route('expenses') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Expenses</a>
                         <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
