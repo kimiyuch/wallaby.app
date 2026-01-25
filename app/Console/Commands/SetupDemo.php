@@ -58,11 +58,11 @@ class SetupDemo extends Command
 
         $this->info('Created users: Peter and Maria');
 
-        // Create recurring expense for both users (Salt Abo)
+        // Create recurring expenses
         Expense::create([
             'user_id' => $peter->id,
-            'amount' => 32.00,
-            'description' => 'Salt Abo',
+            'amount' => 29.00,
+            'description' => 'Mobile Subscription',
             'date' => now()->subMonths(6)->startOfMonth(),
             'is_recurring' => true,
             'end_date' => null,
@@ -70,14 +70,14 @@ class SetupDemo extends Command
 
         Expense::create([
             'user_id' => $maria->id,
-            'amount' => 32.00,
-            'description' => 'Salt Abo',
+            'amount' => 15.90,
+            'description' => 'Netflix',
             'date' => now()->subMonths(6)->startOfMonth(),
             'is_recurring' => true,
             'end_date' => null,
         ]);
 
-        $this->info('Created recurring expenses (Salt Abo)');
+        $this->info('Created recurring expenses (Mobile Subscription, Netflix)');
 
         // Create random expenses for the last 6 months
         $users = [$peter, $maria];

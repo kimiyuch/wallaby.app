@@ -106,47 +106,72 @@
         <div class="max-w-5xl mx-auto">
             <div class="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h2 class="text-4xl font-bold mb-6">Built for real life</h2>
-                    <div class="space-y-6">
-                        <div class="flex gap-4">
-                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
-                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-1">Recurring expenses</h4>
-                                <p class="text-sm text-gray-500">Set up monthly costs once — subscriptions, lessons, allowances — and they appear automatically.</p>
-                            </div>
+                    <h2 class="text-4xl font-bold mb-8">Built for real life</h2>
+                    <div class="space-y-4">
+                        <div class="bg-white/60 rounded-xl p-5 border border-gray-200/40">
+                            <h4 class="font-medium mb-1">Recurring expenses</h4>
+                            <p class="text-sm text-gray-500">Set up monthly costs once — subscriptions, lessons, allowances — and they appear automatically.</p>
                         </div>
-                        <div class="flex gap-4">
-                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
-                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-1">Month-by-month view</h4>
-                                <p class="text-sm text-gray-500">Navigate through history. See what was spent when, and track balances over time.</p>
-                            </div>
+                        <div class="bg-white/60 rounded-xl p-5 border border-gray-200/40">
+                            <h4 class="font-medium mb-1">Month-by-month view</h4>
+                            <p class="text-sm text-gray-500">Navigate through history. See what was spent when, and track balances over time.</p>
                         </div>
-                        <div class="flex gap-4">
-                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
-                                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-1">No learning curve</h4>
-                                <p class="text-sm text-gray-500">Clean, simple interface. Add an expense in under 10 seconds.</p>
-                            </div>
+                        <div class="bg-white/60 rounded-xl p-5 border border-gray-200/40">
+                            <h4 class="font-medium mb-1">No learning curve</h4>
+                            <p class="text-sm text-gray-500">Clean, simple interface. Add an expense in under 10 seconds.</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-100 rounded-2xl p-8 aspect-square flex items-center justify-center">
-                    <div class="text-center">
-                        <div class="text-6xl font-bold text-gray-900 mb-2">50/50</div>
-                        <div class="text-gray-500">Fair. Transparent. Simple.</div>
+                <!-- Mock App UI -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden" data-mock-app>
+                    <!-- App Header -->
+                    <div class="bg-gray-100 text-gray-900 px-5 py-3 flex items-center justify-between border-b border-gray-200/60">
+                        <div class="font-medium text-sm">January 2026</div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                            <span>Synced</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Balance Card -->
+                    <div class="px-5 py-4 border-b border-gray-100">
+                        <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Balance</div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-2xl font-bold text-green-600 tabular-nums">+<span class="counter" data-target="42.50">0</span></span>
+                            <span class="text-sm text-gray-400">owed to you</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Expense List -->
+                    <div class="divide-y divide-gray-100">
+                        <div class="px-5 py-3 flex items-center justify-between">
+                            <div>
+                                <div class="font-medium text-sm">School supplies</div>
+                                <div class="text-xs text-gray-400">Peter paid</div>
+                            </div>
+                            <div class="text-sm font-semibold tabular-nums"><span class="counter" data-target="45.00">0</span></div>
+                        </div>
+                        <div class="px-5 py-3 flex items-center justify-between">
+                            <div>
+                                <div class="font-medium text-sm">New sneakers</div>
+                                <div class="text-xs text-gray-400">Maria paid</div>
+                            </div>
+                            <div class="text-sm font-semibold tabular-nums"><span class="counter" data-target="89.00">0</span></div>
+                        </div>
+                        <div class="px-5 py-3 flex items-center justify-between">
+                            <div>
+                                <div class="font-medium text-sm">Mobile Subscription</div>
+                                <div class="text-xs text-gray-400">Peter · Monthly</div>
+                            </div>
+                            <div class="text-sm font-semibold tabular-nums"><span class="counter" data-target="29.00">0</span></div>
+                        </div>
+                        <div class="px-5 py-3 flex items-center justify-between">
+                            <div>
+                                <div class="font-medium text-sm">Netflix</div>
+                                <div class="text-xs text-gray-400">Maria · Monthly</div>
+                            </div>
+                            <div class="text-sm font-semibold tabular-nums"><span class="counter" data-target="15.90">0</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -249,7 +274,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="py-24 px-6 bg-white/60 backdrop-blur-sm">
+    <section class="py-24 px-6 bg-white/40">
         <div class="max-w-2xl mx-auto text-center">
             <h2 class="text-4xl font-bold mb-4">Ready to simplify?</h2>
             <p class="text-gray-500 mb-8">Join parents who've made expense sharing stress-free.</p>
