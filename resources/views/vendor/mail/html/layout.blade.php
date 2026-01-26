@@ -7,6 +7,9 @@
 <meta name="color-scheme" content="light">
 <meta name="supported-color-schemes" content="light">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+</style>
+<style>
 @media only screen and (max-width: 600px) {
 .inner-body {
 width: 100% !important;
