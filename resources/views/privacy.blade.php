@@ -29,16 +29,16 @@
     </nav>
 
     <!-- Content -->
-    <main class="max-w-3xl mx-auto px-6 py-16 lg:py-24">
+    <main class="max-w-3xl mx-auto px-6 py-8 lg:py-12">
         <h1 class="text-3xl font-bold mb-8">Privacy Policy</h1>
         
-        <div class="prose prose-gray max-w-none space-y-8">
+        <div class="prose prose-gray max-w-none space-y-4">
             <p class="text-lg text-gray-600">
                 Last updated: {{ date('F j, Y') }}
             </p>
 
             <section>
-                <h2 class="text-xl font-bold mt-8 mb-4">What we collect</h2>
+                <h2 class="text-xl font-bold mt-4 mb-2">What we collect</h2>
                 <p class="text-gray-600 mb-4">kimiyu collects only the data necessary to provide our expense tracking service:</p>
                 <ul class="text-gray-600 space-y-2">
                     <li><strong>Account information:</strong> Name, email address, and encrypted password</li>
@@ -48,7 +48,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-8 mb-4">What we don't collect</h2>
+                <h2 class="text-xl font-bold mt-4 mb-2">What we don't collect</h2>
                 <ul class="text-gray-600 space-y-2">
                     <li>Payment or banking information</li>
                     <li>Location data</li>
@@ -58,7 +58,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-8 mb-4">How we use your data</h2>
+                <h2 class="text-xl font-bold mt-4 mb-2">How we use your data</h2>
                 <ul class="text-gray-600 space-y-2">
                     <li>To provide the expense tracking and splitting functionality</li>
                     <li>To send transactional emails (verification, settlement notifications)</li>
@@ -68,7 +68,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-8 mb-4">Data storage & security</h2>
+                <h2 class="text-xl font-bold mt-4 mb-2">Data storage & security</h2>
                 <ul class="text-gray-600 space-y-2">
                     <li>Your data is stored on servers located in Switzerland/EU</li>
                     <li>Passwords are hashed using industry-standard algorithms</li>
@@ -78,7 +78,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-8 mb-4">Data sharing with your partner</h2>
+                <h2 class="text-xl font-bold mt-4 mb-2">Data sharing with your partner</h2>
                 <p class="text-gray-600">
                     When you connect with a partner via invite code, they can see:
                 </p>
@@ -91,7 +91,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-8 mb-4">Your rights</h2>
+                <h2 class="text-xl font-bold mt-4 mb-2">Your rights</h2>
                 <p class="text-gray-600 mb-4">You have the right to:</p>
                 <ul class="text-gray-600 space-y-2">
                     <li><strong>Access:</strong> View all data we store about you</li>
@@ -103,7 +103,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-8 mb-4">Cookies</h2>
+                <h2 class="text-xl font-bold mt-4 mb-2">Cookies</h2>
                 <p class="text-gray-600">
                     We use only essential cookies required for the application to function (session management, CSRF protection). 
                     We do not use tracking or advertising cookies.
@@ -111,7 +111,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-8 mb-4">Contact</h2>
+                <h2 class="text-xl font-bold mt-4 mb-2">Contact</h2>
                 <p class="text-gray-600">
                     For privacy-related questions or requests, contact us at:
                     <a href="mailto:privacy@kimiyu.ch" class="text-gray-900 underline">privacy@kimiyu.ch</a>
@@ -121,7 +121,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-8 px-6 mt-16 lg:mt-24 border-t border-gray-200">
+    <footer class="py-8 px-6 mt-8 lg:mt-12 border-t border-gray-200">
         <div class="max-w-3xl mx-auto">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="text-sm text-gray-500">
