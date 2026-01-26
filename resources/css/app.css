@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --header-height: 60px;
+}
+
 /* Prose lists */
 .prose ul {
   @apply list-disc pl-5 space-y-2;
