@@ -15,12 +15,12 @@ A simple expense tracking app for couples. Track shared costs, see who owes what
 
 ## Tech Stack
 
-- **Laravel 11** — PHP framework
+- **Laravel 12** — PHP framework
 - **Livewire 3** — Reactive components
 - **Tailwind CSS** — Styling
 - **Alpine.js** — JavaScript interactions
 - **SQLite** — Database
-- **Pest** — Testing
+- **Pest** — Testing (74 tests, 178 assertions)
 
 ## Installation
 
@@ -60,6 +60,19 @@ npm run dev
 # Code style
 ./vendor/bin/pint
 ```
+
+## Tests
+
+**74 tests, 178 assertions**
+
+| Suite | Coverage |
+|-------|----------|
+| BalanceCalculator | Equal splits, unequal splits, personal expenses, decimals |
+| Expense Model | Relationships, casts, recurring logic |
+| Space Model | Invite codes, user limits, ownership |
+| ExpenseForm | Create, edit, validation, settled months |
+| Expenses Page | Auth, CRUD, navigation, settlements, balance |
+| Auth | Login, logout, registration, password reset, email verification |
 
 ## How It Works
 
