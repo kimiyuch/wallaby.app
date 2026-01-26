@@ -4,13 +4,19 @@ namespace App\Notifications;
 
 use App\Models\Settlement;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MonthSettledNotification extends Notification implements ShouldQueue
+class MonthSettledNotification extends Notification implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
+
+    public function uniqueId(): string
+    {
+        return 'settled-'.$this->settlement->id;
+    }
 
     public function __construct(
         public Settlement $settlement,
