@@ -3,13 +3,19 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WelcomeNotification extends Notification implements ShouldQueue
+class WelcomeNotification extends Notification implements ShouldBeUnique, ShouldQueue
 {
     use Queueable;
+
+    public function uniqueId(): string
+    {
+        return 'welcome-'.$this->inviteCode;
+    }
 
     public function __construct(
         public string $inviteCode,
