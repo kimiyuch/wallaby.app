@@ -4,6 +4,7 @@ use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
+Route::view('/privacy', 'privacy')->name('privacy');
 
 Route::view('expenses', 'expenses')
     ->middleware(['auth', 'verified'])
