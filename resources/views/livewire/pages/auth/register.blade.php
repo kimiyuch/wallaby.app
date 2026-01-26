@@ -94,8 +94,8 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <div>
-            <h3 class="text-sm text-gray-900 font-bold mb-1">{{ __('Invite Code') }}</h3>
-            <p class="text-sm text-gray-500 mb-3">{{ __('Have an invite code? Enter it to join an existing space.') }}</p>
+            <h3 class="text-sm text-gray-900 font-bold mb-1">{{ __('Invite Code') }} <span class="font-normal text-gray-400">(optional)</span></h3>
+            <p class="text-sm text-gray-500 mb-3">{{ __('Got an invite from your partner? Enter their code to join their space. No code? We\'ll create a new space for you to share.') }}</p>
             <x-text-input 
                 wire:model="invite_code" 
                 id="invite_code" 
