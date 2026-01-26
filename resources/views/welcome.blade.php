@@ -24,7 +24,7 @@
     <x-page-nav />
 
     <!-- Hero -->
-    <section class="min-h-screen flex items-center justify-center pb-[var(--header-height)]">
+    <section class="min-h-screen flex items-center justify-center -mt-[var(--header-height)]">
         <div class="max-w-5xl mx-auto px-6 text-center">
             <div class="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full text-sm text-gray-600 mb-8 shadow-sm">
                 <span class="w-2 h-2 bg-green-500 rounded-full"></span>
