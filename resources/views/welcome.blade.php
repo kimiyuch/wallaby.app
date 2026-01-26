@@ -28,7 +28,7 @@
         <div class="max-w-5xl mx-auto px-6 text-center">
             <div class="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full text-sm text-gray-600 mb-8 shadow-sm">
                 <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                Simple expense tracking for co-parents
+                Simple expense tracking for two
             </div>
             
             <h1 class="text-5xl sm:text-6xl font-bold tracking-tight mb-6">
@@ -37,7 +37,7 @@
             </h1>
             
             <p class="text-lg text-gray-500 mb-10 max-w-xl mx-auto">
-                kimiyu helps separated parents track and split their children's expenses fairly. No spreadsheets, no awkward conversations — just clarity.
+                kimiyu helps couples and housemates track and split expenses fairly. No spreadsheets, no awkward math — just clarity.
             </p>
             
             <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 transition-colors">
