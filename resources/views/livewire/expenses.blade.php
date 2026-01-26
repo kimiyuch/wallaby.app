@@ -33,7 +33,7 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-8">
         <div class="border border-gray-200 bg-gray-50/50 rounded-md p-4">
             <div class="flex items-center gap-2 mb-1">
                 <p class="text-sm text-gray-500">{{ Auth::user()->name }}</p>
@@ -117,7 +117,7 @@
     </div>
 
     <!-- Split View -->
-    <div class="grid grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Left Column: Current User's Expenses -->
         <div>
             <h2 class="text-sm text-gray-900 font-bold pb-2 border-b border-gray-200">{{ Auth::user()->name }}</h2>
@@ -127,16 +127,16 @@
                 <ul class="divide-y divide-gray-200">
                     @foreach($myExpenses as $expense)
                         <li class="relative flex items-center justify-between py-3 transition-colors group">
-                            <div class="flex items-center gap-3 min-w-0 flex-1">
+                            <div class="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
                                 <span class="text-sm text-gray-900 truncate">{{ $expense->description }}</span>
                                 @if($expense->is_recurring)
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-700">Recurring</span>
+                                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-700">Recurring</span>
                                 @endif
                                 @if($expense->is_personal)
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-purple-100 text-purple-700">Paid for partner</span>
+                                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs bg-purple-100 text-purple-700">Paid for partner</span>
                                 @endif
                             </div>
-                            <span class="text-sm text-gray-900">{{ number_format($expense->amount, 2) }}</span>
+                            <span class="text-sm text-gray-900 tabular-nums">{{ number_format($expense->amount, 2) }}</span>
                             <!-- Hover overlay -->
                             @if(!$this->isSettled)
                             <div class="absolute inset-y-0 right-0 flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -181,16 +181,16 @@
                     <ul class="divide-y divide-gray-200">
                         @foreach($partnerExpenses as $expense)
                             <li class="flex items-center justify-between py-3 hover:bg-gray-50/50 transition-colors">
-                                <div class="flex items-center gap-3 min-w-0 flex-1">
+                                <div class="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
                                     <span class="text-sm text-gray-900 truncate">{{ $expense->description }}</span>
                                     @if($expense->is_recurring)
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-700">Recurring</span>
+                                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-700">Recurring</span>
                                     @endif
                                     @if($expense->is_personal)
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-purple-100 text-purple-700">Paid for partner</span>
+                                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs bg-purple-100 text-purple-700">Paid for partner</span>
                                     @endif
                                 </div>
-                                <span class="text-sm text-gray-900">{{ number_format($expense->amount, 2) }}</span>
+                                <span class="text-sm text-gray-900 tabular-nums">{{ number_format($expense->amount, 2) }}</span>
                             </li>
                         @endforeach
                     </ul>
@@ -220,21 +220,21 @@
         </div>
 
         <!-- Panel -->
-        <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <div class="fixed inset-0 lg:inset-y-0 lg:left-auto lg:right-0 flex lg:max-w-full lg:pl-10">
             <div x-show="open"
                  x-transition:enter="transform transition ease-in-out duration-300"
-                 x-transition:enter-start="translate-x-full"
-                 x-transition:enter-end="translate-x-0"
+                 x-transition:enter-start="translate-y-full lg:translate-y-0 lg:translate-x-full"
+                 x-transition:enter-end="translate-y-0 lg:translate-x-0"
                  x-transition:leave="transform transition ease-in-out duration-300"
-                 x-transition:leave-start="translate-x-0"
-                 x-transition:leave-end="translate-x-full"
-                 class="relative bg-white w-full shadow-xl rounded-xl flex flex-col my-4 mr-4 h-[calc(100%-2rem)] overflow-y-auto min-w-[25rem] max-w-4xl">
+                 x-transition:leave-start="translate-y-0 lg:translate-x-0"
+                 x-transition:leave-end="translate-y-full lg:translate-y-0 lg:translate-x-full"
+                 class="relative bg-white w-full shadow-xl flex flex-col h-full lg:rounded-xl lg:my-4 lg:mr-4 lg:h-[calc(100%-2rem)] overflow-y-auto lg:min-w-[25rem] lg:max-w-4xl">
                 
                 <!-- Header -->
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                     <h2 class="text-lg font-bold text-gray-900">New Expense</h2>
                     <button @click="open = false" 
-                            class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-sm transition-colors">
+                            class="-mr-2 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-sm transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
                         </svg>

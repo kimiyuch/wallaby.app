@@ -10,10 +10,14 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class Expenses extends Component
 {
+    #[Url(as: 'period', history: true)]
+    public string $period = '';
+    
     public int $selectedMonth;
     public int $selectedYear;
     public bool $showExpenseForm = false;
@@ -22,8 +26,24 @@ class Expenses extends Component
 
     public function mount(): void
     {
-        $this->selectedMonth = now()->month;
-        $this->selectedYear = now()->year;
+        if ($this->period && preg_match('/^(\d{4})-(\d{2})$/', $this->period, $matches)) {
+            $this->selectedYear = (int) $matches[1];
+            $this->selectedMonth = (int) $matches[2];
+        } else {
+            $this->selectedMonth = now()->month;
+            $this->selectedYear = now()->year;
+            $this->period = $this->formatPeriod();
+        }
+    }
+    
+    protected function formatPeriod(): string
+    {
+        return sprintf('%d-%02d', $this->selectedYear, $this->selectedMonth);
+    }
+    
+    protected function updatePeriod(): void
+    {
+        $this->period = $this->formatPeriod();
     }
 
     #[Computed]
@@ -53,6 +73,7 @@ class Expenses extends Component
         $date = now()->setYear($this->selectedYear)->setMonth($this->selectedMonth)->subMonth();
         $this->selectedMonth = $date->month;
         $this->selectedYear = $date->year;
+        $this->updatePeriod();
         $this->dispatch('monthChanged', month: $this->selectedMonth, year: $this->selectedYear);
         unset($this->isSettled); // Clear computed cache
     }
@@ -62,6 +83,7 @@ class Expenses extends Component
         $date = now()->setYear($this->selectedYear)->setMonth($this->selectedMonth)->addMonth();
         $this->selectedMonth = $date->month;
         $this->selectedYear = $date->year;
+        $this->updatePeriod();
         $this->dispatch('monthChanged', month: $this->selectedMonth, year: $this->selectedYear);
         unset($this->isSettled); // Clear computed cache
     }
