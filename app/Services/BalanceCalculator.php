@@ -9,11 +9,11 @@ class BalanceCalculator
 {
     /**
      * Calculate the balance between two users based on their expenses.
-     * 
-     * @param Collection $userExpenses Expenses paid by the primary user
-     * @param Collection $partnerExpenses Expenses paid by the partner
-     * @param User $user The primary user
-     * @param User|null $partner The partner user
+     *
+     * @param  Collection  $userExpenses  Expenses paid by the primary user
+     * @param  Collection  $partnerExpenses  Expenses paid by the partner
+     * @param  User  $user  The primary user
+     * @param  User|null  $partner  The partner user
      * @return array<int, float> Balance indexed by user ID (positive = owes, negative = is owed)
      */
     public function calculate(
@@ -22,7 +22,7 @@ class BalanceCalculator
         User $user,
         ?User $partner
     ): array {
-        if (!$partner) {
+        if (! $partner) {
             return [];
         }
 

@@ -17,9 +17,11 @@ class Expenses extends Component
 {
     #[Url(as: 'period', history: true)]
     public string $period = '';
-    
+
     public int $selectedMonth;
+
     public int $selectedYear;
+
     public bool $showExpenseForm = false;
 
     protected $listeners = ['expenseUpdated' => 'onExpenseUpdated', 'closeExpenseForm', 'openExpenseForm'];
@@ -35,12 +37,12 @@ class Expenses extends Component
             $this->period = $this->formatPeriod();
         }
     }
-    
+
     protected function formatPeriod(): string
     {
         return sprintf('%d-%02d', $this->selectedYear, $this->selectedMonth);
     }
-    
+
     protected function updatePeriod(): void
     {
         $this->period = $this->formatPeriod();
@@ -61,7 +63,7 @@ class Expenses extends Component
     #[Computed]
     public function isSettled(): bool
     {
-        if (!$this->user->space_id) {
+        if (! $this->user->space_id) {
             return false;
         }
 
@@ -92,9 +94,10 @@ class Expenses extends Component
     {
         if ($this->isSettled) {
             $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
+
             return;
         }
-        
+
         $this->showExpenseForm = true;
     }
 
@@ -112,19 +115,21 @@ class Expenses extends Component
     {
         if ($this->isSettled) {
             $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
+
             return;
         }
-        
+
         // Verify expense exists and belongs to current user
         $expense = Expense::where('id', $id)
             ->where('user_id', $this->user->id)
             ->first();
-            
-        if (!$expense) {
+
+        if (! $expense) {
             $this->dispatch('toast', type: 'error', message: 'Expense not found.');
+
             return;
         }
-        
+
         $this->dispatch('editExpense', expenseId: $id);
         $this->showExpenseForm = true;
     }
@@ -133,15 +138,17 @@ class Expenses extends Component
     {
         if ($this->isSettled) {
             $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
+
             return;
         }
-        
+
         $expense = Expense::where('id', $id)
             ->where('user_id', $this->user->id)
             ->first();
 
-        if (!$expense) {
+        if (! $expense) {
             $this->dispatch('toast', type: 'error', message: 'Expense not found.');
+
             return;
         }
 
@@ -151,27 +158,29 @@ class Expenses extends Component
 
     public function settleMonth(): void
     {
-        if (!$this->user->space_id) {
+        if (! $this->user->space_id) {
             $this->dispatch('toast', type: 'error', message: 'No space found.');
+
             return;
         }
 
         if ($this->isSettled) {
             $this->dispatch('toast', type: 'error', message: 'This month is already settled.');
+
             return;
         }
 
         // Calculate final balance
         $myExpenses = $this->getExpensesForMonth($this->user->id);
         $partnerExpenses = $this->partner ? $this->getExpensesForMonth($this->partner->id) : collect();
-        
-        $calculator = new BalanceCalculator();
+
+        $calculator = new BalanceCalculator;
         $balance = $calculator->calculate($myExpenses, $partnerExpenses, $this->user, $this->partner);
 
         // Determine who owes whom
         $balanceAmount = 0;
         $balanceOwedBy = null;
-        
+
         if (isset($balance[$this->user->id]) && $balance[$this->user->id] > 0) {
             $balanceAmount = $balance[$this->user->id];
             $balanceOwedBy = $this->user->name;
@@ -192,7 +201,7 @@ class Expenses extends Component
 
         // Notify both users
         $this->user->notify(new MonthSettledNotification($settlement, $this->user->name));
-        
+
         if ($this->partner) {
             $this->partner->notify(new MonthSettledNotification($settlement, $this->user->name));
         }
@@ -219,7 +228,7 @@ class Expenses extends Component
             ->where('date', '<=', $monthEnd)
             ->where(function ($query) use ($monthStart) {
                 $query->whereNull('end_date')
-                      ->orWhere('end_date', '>=', $monthStart);
+                    ->orWhere('end_date', '>=', $monthStart);
             })
             ->get();
 
@@ -235,7 +244,7 @@ class Expenses extends Component
         $myTotal = $myExpenses->sum('amount');
         $partnerTotal = $partnerExpenses->sum('amount');
 
-        $calculator = new BalanceCalculator();
+        $calculator = new BalanceCalculator;
 
         return view('livewire.expenses', [
             'myExpenses' => $myExpenses,

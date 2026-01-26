@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(Verified::class, SendWelcomeEmail::class);
 
         // Redirect all emails to test address in non-production environments
-        if (!app()->isProduction()) {
+        if (! app()->isProduction()) {
             Mail::alwaysTo('m@marceli.to');
         }
     }

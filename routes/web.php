@@ -15,6 +15,7 @@ Route::view('profile', 'profile')
 
 Route::post('logout', function (Logout $logout) {
     $logout();
+
     return redirect('/');
 })->middleware('auth')->name('logout');
 

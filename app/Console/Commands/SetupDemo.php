@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class SetupDemo extends Command
 {
     protected $signature = 'app:setup-demo';
+
     protected $description = 'Set up demo users and expenses';
 
     private array $expenseDescriptions = [
@@ -95,17 +96,17 @@ class SetupDemo extends Command
 
         // Create random expenses for the last 6 months
         $users = [$peter, $maria];
-        
+
         for ($monthsAgo = 5; $monthsAgo >= 0; $monthsAgo--) {
             $monthDate = now()->subMonths($monthsAgo);
-            
+
             foreach ($users as $user) {
                 $expenseCount = rand(5, 10);
-                
+
                 for ($i = 0; $i < $expenseCount; $i++) {
                     $day = rand(1, $monthDate->daysInMonth);
                     $date = $monthDate->copy()->setDay($day);
-                    
+
                     // Don't create expenses in the future
                     if ($date->isFuture()) {
                         $date = now();
@@ -123,7 +124,7 @@ class SetupDemo extends Command
                     ]);
                 }
             }
-            
+
             $this->info("Created expenses for {$monthDate->format('F Y')}");
         }
 

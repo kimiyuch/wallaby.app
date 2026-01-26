@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Expense extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'amount',
@@ -35,13 +38,13 @@ class Expense extends Model
      */
     public function isActiveForMonth(int $month, int $year): bool
     {
-        if (!$this->is_recurring) {
+        if (! $this->is_recurring) {
             return false;
         }
 
         $checkDate = now()->setYear($year)->setMonth($month)->startOfMonth();
         $startDate = $this->date->startOfMonth();
-        
+
         // Must be on or after start date
         if ($checkDate->lt($startDate)) {
             return false;

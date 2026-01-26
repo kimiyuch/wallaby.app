@@ -19,6 +19,7 @@ class ExpenseForm extends Component
     public ?int $editingExpenseId = null;
 
     public int $selectedMonth;
+
     public int $selectedYear;
 
     protected $listeners = ['editExpense', 'monthChanged'];
@@ -54,7 +55,7 @@ class ExpenseForm extends Component
         $this->selectedYear = $year;
 
         // Only update date if not editing an expense
-        if (!$this->editingExpenseId) {
+        if (! $this->editingExpenseId) {
             $this->form->setDate($this->getDefaultDate());
         }
     }
@@ -66,14 +67,16 @@ class ExpenseForm extends Component
             ->where('user_id', $this->user->id)
             ->first();
 
-        if (!$expense) {
+        if (! $expense) {
             $this->dispatch('toast', type: 'error', message: 'Expense not found.');
+
             return;
         }
 
         // Check if the expense's month is settled
         if ($this->isMonthSettled($expense->date->month, $expense->date->year)) {
             $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
+
             return;
         }
 
@@ -83,7 +86,7 @@ class ExpenseForm extends Component
 
     protected function isMonthSettled(int $month, int $year): bool
     {
-        return $this->user->space_id 
+        return $this->user->space_id
             && Settlement::isSettled($this->user->space_id, $month, $year);
     }
 
@@ -95,6 +98,7 @@ class ExpenseForm extends Component
         $expenseDate = Carbon::parse($this->form->date);
         if ($this->isMonthSettled($expenseDate->month, $expenseDate->year)) {
             $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
+
             return;
         }
 
@@ -109,8 +113,9 @@ class ExpenseForm extends Component
                 ->where('user_id', $this->user->id)
                 ->first();
 
-            if (!$expense) {
+            if (! $expense) {
                 $this->dispatch('toast', type: 'error', message: 'Expense not found.');
+
                 return;
             }
 

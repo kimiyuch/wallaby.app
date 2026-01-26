@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getPartnerAttribute(): ?User
     {
-        if (!$this->space_id) {
+        if (! $this->space_id) {
             return null;
         }
 
@@ -71,10 +71,10 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isSpaceOwner(): bool
     {
-        if (!$this->space) {
+        if (! $this->space) {
             return false;
         }
-        
+
         return $this->space->users()->oldest()->first()?->id === $this->id;
     }
 

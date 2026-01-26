@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Settlement extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'space_id',
         'settled_by_user_id',

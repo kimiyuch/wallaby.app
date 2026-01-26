@@ -31,11 +31,11 @@ class MonthSettledNotification extends Notification
         if ($this->settlement->balance_amount > 0) {
             $message->line("Final balance: **{$this->settlement->balance_owed_by}** owed **CHF {$this->settlement->balance_amount}**.");
         } else {
-            $message->line("You were all square – no balance owed.");
+            $message->line('You were all square – no balance owed.');
         }
 
         return $message
-            ->line("This month is now closed and no more expenses can be added.")
+            ->line('This month is now closed and no more expenses can be added.')
             ->action('View History', url('/expenses'))
             ->salutation('— The kimiyu team');
     }
