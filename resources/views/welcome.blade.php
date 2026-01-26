@@ -24,8 +24,8 @@
     <x-page-nav />
 
     <!-- Hero -->
-    <section class="min-h-screen flex items-center justify-center px-6">
-        <div class="max-w-3xl mx-auto text-center">
+    <section class="min-h-screen flex items-center justify-center">
+        <div class="max-w-5xl mx-auto px-6 text-center">
             <div class="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full text-sm text-gray-600 mb-8 shadow-sm">
                 <span class="w-2 h-2 bg-green-500 rounded-full"></span>
                 Simple expense tracking for co-parents
@@ -47,8 +47,8 @@
     </section>
 
     <!-- Features -->
-    <section id="how-it-works" class="py-24 px-6">
-        <div class="max-w-5xl mx-auto">
+    <section id="how-it-works" class="py-24">
+        <div class="max-w-5xl mx-auto px-6">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4">How it works</h2>
                 <p class="text-gray-500">Three simple steps to fair expense sharing</p>
@@ -89,8 +89,8 @@
     </section>
 
     <!-- Benefits -->
-    <section class="py-24 px-6 bg-white/60 backdrop-blur-sm">
-        <div class="max-w-5xl mx-auto">
+    <section class="py-24 bg-white/60 backdrop-blur-sm">
+        <div class="max-w-5xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-16 items-center">
                 <div>
                     <h2 class="text-4xl font-bold mb-8">Built for real life</h2>
@@ -262,13 +262,15 @@
     --}}
 
     <!-- CTA -->
-    <section class="py-24 px-6 bg-white/40">
-        <div class="max-w-2xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-4">Ready to simplify?</h2>
-            <p class="text-gray-500 mb-8">Join parents who've made expense sharing stress-free.</p>
-            <x-primary-button as="a" href="{{ route('register') }}" size="lg">
-                Get started
-            </x-primary-button>
+    <section class="py-24 bg-white/40">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-4">Ready to simplify?</h2>
+                <p class="text-gray-500 mb-8">Join parents who've made expense sharing stress-free.</p>
+                <x-primary-button as="a" href="{{ route('register') }}" size="lg">
+                    Get started
+                </x-primary-button>
+            </div>
         </div>
     </section>
 
