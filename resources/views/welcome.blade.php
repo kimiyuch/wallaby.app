@@ -21,23 +21,10 @@
         <div class="orb orb-4"></div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50">
-        <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/" class="text-xl font-bold">kimiyu</a>
-            <div class="flex items-center gap-4">
-                @auth
-                    <x-primary-button as="a" href="{{ route('expenses') }}" size="sm">Dashboard</x-primary-button>
-                @else
-                    <x-tertiary-button as="a" href="{{ route('login') }}" class="no-underline hover:no-underline text-gray-600 hover:text-gray-900">Log in</x-tertiary-button>
-                    <x-primary-button as="a" href="{{ route('register') }}" size="sm">Get Started</x-primary-button>
-                @endauth
-            </div>
-        </div>
-    </nav>
+    <x-public-nav />
 
     <!-- Hero -->
-    <section class="min-h-screen flex items-center justify-center px-6 pt-20">
+    <section class="min-h-screen flex items-center justify-center px-6">
         <div class="max-w-3xl mx-auto text-center">
             <div class="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full text-sm text-gray-600 mb-8 shadow-sm">
                 <span class="w-2 h-2 bg-green-500 rounded-full"></span>
@@ -285,27 +272,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-8 px-6">
-        <div class="max-w-5xl mx-auto">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="text-sm text-gray-500">
-                    Copyright {{ date('Y') }} – kimiyu. All rights reserved.
-                </div>
-                <div class="flex items-center gap-6 text-sm text-gray-500">
-                    <a href="{{ route('privacy') }}" class="hover:text-gray-900 transition-colors">Privacy</a>
-                    <a href="{{ route('login') }}" class="hover:text-gray-900 transition-colors">Log in</a>
-                    <a href="{{ route('register') }}" class="hover:text-gray-900 transition-colors">Register</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Credit -->
-    <div class="pt-4 pb-4 px-6">
-        <div class="text-center text-[0.625rem] text-gray-400 font-mono">
-            Made with ❤️ by <a href="https://marceli.to" target="_blank" class="hover:text-gray-600 transition-colors">marceli.to</a>
-        </div>
-    </div>
+    <x-public-footer />
 </body>
 </html>

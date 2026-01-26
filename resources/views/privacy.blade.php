@@ -13,23 +13,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased font-sans bg-gray-100 text-gray-900">
-    <!-- Navigation -->
-    <nav class="bg-gray-100 border-b border-gray-200">
-        <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/" class="text-xl font-bold">kimiyu</a>
-            <div class="flex items-center gap-4">
-                @auth
-                    <x-primary-button as="a" href="{{ route('expenses') }}" size="sm">Dashboard</x-primary-button>
-                @else
-                    <x-tertiary-button as="a" href="{{ route('login') }}" class="no-underline hover:no-underline text-gray-600 hover:text-gray-900">Log in</x-tertiary-button>
-                    <x-primary-button as="a" href="{{ route('register') }}" size="sm">Get Started</x-primary-button>
-                @endauth
-            </div>
-        </div>
-    </nav>
+    <x-public-nav />
 
     <!-- Content -->
-    <main class="max-w-3xl mx-auto px-6 py-8 lg:py-12">
+    <main class="max-w-5xl mx-auto px-6 py-8 lg:py-12">
         <h1 class="text-3xl font-bold mb-8">Privacy Policy</h1>
         
         <div class="prose prose-gray max-w-none space-y-4">
@@ -114,25 +101,12 @@
                 <h2 class="text-xl font-bold mt-4 mb-2">Contact</h2>
                 <p class="text-gray-600">
                     For privacy-related questions or requests, contact us at:
-                    <a href="mailto:privacy@kimiyu.ch" class="text-gray-900 underline">privacy@kimiyu.ch</a>
+                    <a href="mailto:privacy@kimiyu.ch" class="text-gray-900 underline decoration-1 underline-offset-4 hover:no-underline">privacy@kimiyu.ch</a>
                 </p>
             </section>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="py-8 px-6 mt-8 lg:mt-12 border-t border-gray-200">
-        <div class="max-w-3xl mx-auto">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="text-sm text-gray-500">
-                    © {{ date('Y') }} kimiyu. All rights reserved.
-                </div>
-                <div class="flex items-center gap-6 text-sm text-gray-500">
-                    <a href="{{ route('privacy') }}" class="hover:text-gray-900 transition-colors">Privacy</a>
-                    <a href="{{ route('login') }}" class="hover:text-gray-900 transition-colors">Log in</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <x-public-footer />
 </body>
 </html>
