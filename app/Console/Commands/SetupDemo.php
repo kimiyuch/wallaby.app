@@ -61,6 +61,8 @@ class SetupDemo extends Command
             'password' => Hash::make('password'),
             'space_id' => $space->id,
         ]);
+        $peter->email_verified_at = now();
+        $peter->save();
 
         $maria = User::create([
             'name' => 'Maria',
@@ -68,8 +70,10 @@ class SetupDemo extends Command
             'password' => Hash::make('password'),
             'space_id' => $space->id,
         ]);
+        $maria->email_verified_at = now();
+        $maria->save();
 
-        $this->info('Created users: Peter and Maria (sharing space)');
+        $this->info('Created users: Peter and Maria (verified, sharing space)');
 
         // Create recurring expenses
         Expense::create([
