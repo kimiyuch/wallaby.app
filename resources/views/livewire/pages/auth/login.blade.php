@@ -9,12 +9,6 @@ new #[Layout('layouts.guest')] class extends Component
 {
     public LoginForm $form;
 
-    public function mount(): void
-    {
-        $this->form->email = 'peter@demo.com';
-        $this->form->password = 'password';
-    }
-
     public function login(): void
     {
         $this->validate();
