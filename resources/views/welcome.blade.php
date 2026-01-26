@@ -21,7 +21,7 @@
         <div class="orb orb-4"></div>
     </div>
 
-    <x-public-nav />
+    <x-page-nav />
 
     <!-- Hero -->
     <section class="min-h-screen flex items-center justify-center px-6">
@@ -272,6 +272,6 @@
         </div>
     </section>
 
-    <x-public-footer />
+    <x-page-footer />
 </body>
 </html>

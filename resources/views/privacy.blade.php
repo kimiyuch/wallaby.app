@@ -13,7 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased font-sans bg-gray-100 text-gray-900">
-    <x-public-nav />
+    <x-page-nav />
 
     <!-- Content -->
     <main class="max-w-5xl mx-auto px-6 py-8 lg:py-12">
@@ -107,6 +107,6 @@
         </div>
     </main>
 
-    <x-public-footer />
+    <x-page-footer />
 </body>
 </html>
