@@ -1,5 +1,5 @@
-<footer class="py-8 px-6">
-    <div class="max-w-5xl mx-auto">
+<footer class="py-8">
+    <div class="max-w-5xl mx-auto px-6">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="text-sm text-gray-500">
                 Copyright {{ date('Y') }} kimiyu. All rights reserved.
@@ -13,8 +13,8 @@
     </div>
 </footer>
 
-<div class="pt-4 pb-4 px-6">
-    <div class="text-center text-[0.625rem] text-gray-400 font-mono">
+<div class="py-4">
+    <div class="max-w-5xl mx-auto px-6 text-center text-[0.625rem] text-gray-400 font-mono">
         Made with ❤️ by <a href="https://marceli.to" target="_blank" class="hover:text-gray-600 transition-colors">marceli.to</a>
     </div>
 </div>
