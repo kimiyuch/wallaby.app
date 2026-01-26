@@ -3,11 +3,15 @@
 namespace App\Notifications;
 
 use App\Models\Settlement;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MonthSettledNotification extends Notification
+class MonthSettledNotification extends Notification implements ShouldQueue
 {
+    use Queueable;
+
     public function __construct(
         public Settlement $settlement,
         public string $settledByName
