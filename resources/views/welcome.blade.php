@@ -178,7 +178,7 @@
         </div>
     </section>
 
-    <!-- Pricing -->
+    {{-- Pricing (hidden for beta)
     <section id="pricing" class="py-24 px-6">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-16">
@@ -272,6 +272,7 @@
             </p>
         </div>
     </section>
+    --}}
 
     <!-- CTA -->
     <section class="py-24 px-6 bg-white/40">
@@ -279,7 +280,7 @@
             <h2 class="text-4xl font-bold mb-4">Ready to simplify?</h2>
             <p class="text-gray-500 mb-8">Join parents who've made expense sharing stress-free.</p>
             <x-primary-button as="a" href="{{ route('register') }}" size="lg">
-                Start your free trial
+                Get started
             </x-primary-button>
         </div>
     </section>
