@@ -24,6 +24,12 @@ new class extends Component
         return $this->user->partner?->name;
     }
 
+    #[Computed]
+    public function partnerEmail(): ?string
+    {
+        return $this->user->partner?->email;
+    }
+
     public function regenerateCode(): void
     {
         if (!$this->user->space) {
@@ -39,19 +45,20 @@ new class extends Component
 
 <section>
     <header class="mb-4">
-        <h2 class="text-sm text-gray-900 font-bold pb-2 border-b border-gray-200">
-            {{ __('Space') }}
+        <h2 class="text-sm text-gray-900 font-bold">
+            {{ __('Partner') }}
         </h2>
+        <p class="mt-1 text-sm text-gray-500">
+            @if($this->partnerName)
+                {!! __("You're connected with <span class=\"font-bold text-gray-900\">:name</span> (:email) and share expenses together.", ['name' => e($this->partnerName), 'email' => e($this->partnerEmail)]) !!}
+            @else
+                {{ __('Connect with your partner to share and split expenses together.') }}
+            @endif
+        </p>
     </header>
 
     <div class="space-y-4">
-        @if($this->partnerName)
-            {{-- Connected state: just show partner name --}}
-            <div>
-                <x-input-label :value="__('Partner')" />
-                <p class="text-sm text-gray-900">{{ $this->partnerName }}</p>
-            </div>
-        @else
+        @if(!$this->partnerName)
             {{-- Waiting for partner: show invite code --}}
             <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
                 <p class="text-sm text-amber-800">

@@ -55,7 +55,7 @@ new class extends Component
 
 <section>
     <header class="mb-4">
-        <h2 class="text-sm text-gray-900 font-bold pb-2 border-b border-gray-200">
+        <h2 class="text-sm text-gray-900 font-bold">
             {{ __('Profile Information') }}
         </h2>
     </header>
