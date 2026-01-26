@@ -4,6 +4,7 @@
     </div>
 
     <div class="space-y-8 max-w-lg">
+        <livewire:profile.space-settings />
         <livewire:profile.update-profile-information-form />
         <livewire:profile.update-password-form />
         <livewire:profile.delete-user-form />

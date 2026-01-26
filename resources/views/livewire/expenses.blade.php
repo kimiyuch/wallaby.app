@@ -2,24 +2,29 @@
     <!-- Page Header -->
     <div class="flex items-center justify-between mb-8">
         <div class="flex items-center gap-2">
-            <button wire:click="openExpenseForm"
-                    class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 cursor-pointer rounded-sm transition-colors"
-                    title="Add Expense">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
-            </button>
+            @if(!$this->isSettled)
+                <button wire:click="openExpenseForm"
+                        class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 cursor-pointer rounded-sm transition-colors"
+                        title="Add Expense">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                </button>
+            @endif
             <h1 class="text-xl text-gray-900 font-bold">Expenses</h1>
+            @if($this->isSettled)
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-green-100 text-green-700">Settled</span>
+            @endif
         </div>
         <!-- Month Navigation -->
         <div class="flex items-center gap-1">
-            <button wire:click="previousMonth" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-sm transition-colors">
+            <button wire:click="previousMonth" wire:loading.attr="disabled" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-sm transition-colors disabled:opacity-50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </button>
-            <span class="text-sm text-gray-500 min-w-[120px] text-center">{{ $monthName }} {{ $selectedYear }}</span>
-            <button wire:click="nextMonth" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-sm transition-colors">
+            <span class="text-sm text-gray-500 min-w-[120px] text-center" wire:loading.class="opacity-50">{{ $monthName }} {{ $selectedYear }}</span>
+            <button wire:click="nextMonth" wire:loading.attr="disabled" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-sm transition-colors disabled:opacity-50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
@@ -40,10 +45,10 @@
             <p class="text-xs text-gray-400">This month</p>
         </div>
         
-        @if($partner)
+        @if($this->partner)
         <div class="border border-gray-200 bg-gray-50/50 rounded-md p-4">
             <div class="flex items-center gap-2 mb-1">
-                <p class="text-sm text-gray-500">{{ $partner->name }}</p>
+                <p class="text-sm text-gray-500">{{ $this->partner->name }}</p>
                 <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
@@ -64,23 +69,46 @@
             <p class="text-xs text-gray-400">Combined expenses</p>
         </div>
         
-        <div class="border border-gray-200 bg-gray-50/50 rounded-md p-4">
+        <div class="{{ $this->isSettled ? 'border-green-300 bg-green-50' : 'border-gray-200 bg-gray-50/50' }} border rounded-md p-4 relative">
             <div class="flex items-center gap-2 mb-1">
-                <p class="text-sm text-gray-500">Balance</p>
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
-                </svg>
+                <p class="text-sm {{ $this->isSettled ? 'text-green-700' : 'text-gray-500' }}">Balance</p>
+                @if($this->isSettled)
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                @else
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                    </svg>
+                @endif
             </div>
+            @if(!$this->isSettled && $this->partner && ($myTotal > 0 || $partnerTotal > 0))
+                <button 
+                    @click="$dispatch('confirm-modal', {
+                        title: 'Settle this month?',
+                        message: 'Both partners will be notified and no more expenses can be added.',
+                        type: 'primary',
+                        confirmText: 'Settle',
+                        onConfirm: () => $wire.settleMonth()
+                    })"
+                    class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full border border-gray-300 text-gray-400 hover:border-green-500 hover:text-green-500 hover:bg-green-50 transition-colors"
+                    title="Settle month"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </button>
+            @endif
             @if(isset($balance[Auth::id()]))
                 @if($balance[Auth::id()] > 0)
-                    <p class="text-xl text-red-600 font-bold">-{{ number_format($balance[Auth::id()], 2) }}</p>
-                    <p class="text-xs text-gray-400">You owe</p>
+                    <p class="text-xl {{ $this->isSettled ? 'text-green-600' : 'text-red-600' }} font-bold">-{{ number_format($balance[Auth::id()], 2) }}</p>
+                    <p class="text-xs {{ $this->isSettled ? 'text-green-600' : 'text-gray-400' }}">{{ $this->isSettled ? 'You paid' : 'You owe' }}</p>
                 @elseif($balance[Auth::id()] < 0)
                     <p class="text-xl text-green-600 font-bold">+{{ number_format(abs($balance[Auth::id()]), 2) }}</p>
-                    <p class="text-xs text-gray-400">You get back</p>
+                    <p class="text-xs {{ $this->isSettled ? 'text-green-600' : 'text-gray-400' }}">{{ $this->isSettled ? 'You received' : 'You get back' }}</p>
                 @else
-                    <p class="text-xl text-gray-900 font-bold">0.00</p>
-                    <p class="text-xs text-gray-400">Settled</p>
+                    <p class="text-xl {{ $this->isSettled ? 'text-green-600' : 'text-gray-900' }} font-bold">0.00</p>
+                    <p class="text-xs {{ $this->isSettled ? 'text-green-600' : 'text-gray-400' }}">{{ $this->isSettled ? 'Settled' : 'Even' }}</p>
                 @endif
             @else
                 <p class="text-xl text-gray-400 font-bold">—</p>
@@ -110,6 +138,7 @@
                             </div>
                             <span class="text-sm text-gray-900">{{ number_format($expense->amount, 2) }}</span>
                             <!-- Hover overlay -->
+                            @if(!$this->isSettled)
                             <div class="absolute inset-y-0 right-0 flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
                                 <div class="w-12 h-full bg-gradient-to-r from-transparent to-white"></div>
                                 <div class="flex items-center bg-white pr-1">
@@ -135,6 +164,7 @@
                                     </button>
                                 </div>
                             </div>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
@@ -143,8 +173,8 @@
 
         <!-- Right Column: Partner's Expenses -->
         <div>
-            @if($partner)
-                <h2 class="text-sm text-gray-900 font-bold pb-2 border-b border-gray-200">{{ $partner->name }}</h2>
+            @if($this->partner)
+                <h2 class="text-sm text-gray-900 font-bold pb-2 border-b border-gray-200">{{ $this->partner->name }}</h2>
                 @if($partnerExpenses->isEmpty())
                     <p class="text-sm text-gray-400 py-4 text-center">No expenses this month</p>
                 @else

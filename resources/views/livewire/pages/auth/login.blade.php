@@ -75,12 +75,15 @@ new #[Layout('layouts.guest')] class extends Component
             {{ __('Log in') }}
         </x-primary-button>
 
-        @if (Route::has('password.request'))
-            <div class="text-center">
-                <a class="text-sm text-gray-500 hover:text-gray-700" href="{{ route('password.request') }}" wire:navigate>
+        <div class="text-center space-y-2">
+            @if (Route::has('password.request'))
+                <a class="block text-sm text-gray-500 hover:text-gray-700" href="{{ route('password.request') }}" wire:navigate>
                     {{ __('Forgot your password?') }}
                 </a>
-            </div>
-        @endif
+            @endif
+            <a class="block text-sm text-gray-500 hover:text-gray-700" href="{{ route('register') }}" wire:navigate>
+                {{ __('Don\'t have an account? Register') }}
+            </a>
+        </div>
     </form>
 </div>

@@ -25,12 +25,12 @@
     <nav class="fixed top-0 left-0 right-0 z-50">
         <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="/" class="text-xl font-bold">kimiyu</a>
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4">
                 @auth
-                    <a href="{{ route('expenses') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Dashboard</a>
+                    <x-primary-button as="a" href="{{ route('expenses') }}" size="sm">Dashboard</x-primary-button>
                 @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Log in</a>
-                    <a href="{{ route('register') }}" class="text-sm px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors">Get Started</a>
+                    <x-tertiary-button as="a" href="{{ route('login') }}" class="no-underline hover:no-underline text-gray-600 hover:text-gray-900">Log in</x-tertiary-button>
+                    <x-primary-button as="a" href="{{ route('register') }}" size="sm">Get Started</x-primary-button>
                 @endauth
             </div>
         </div>
@@ -220,9 +220,9 @@
                             Full history
                         </li>
                     </ul>
-                    <a href="{{ route('register') }}" class="block w-full py-3 text-center border-2 border-gray-200 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+                    <x-secondary-button as="a" href="{{ route('register') }}" class="w-full justify-center" size="lg">
                         Get started
-                    </a>
+                    </x-secondary-button>
                 </div>
 
                 <!-- Annual -->
@@ -261,9 +261,9 @@
                             Lock in price forever
                         </li>
                     </ul>
-                    <a href="{{ route('register') }}" class="block w-full py-3 text-center bg-white text-gray-900 rounded-xl hover:bg-gray-100 transition-colors font-medium">
+                    <x-primary-button as="a" href="{{ route('register') }}" variant="light" class="w-full" size="lg">
                         Get started
-                    </a>
+                    </x-primary-button>
                 </div>
             </div>
 
@@ -278,9 +278,9 @@
         <div class="max-w-2xl mx-auto text-center">
             <h2 class="text-4xl font-bold mb-4">Ready to simplify?</h2>
             <p class="text-gray-500 mb-8">Join parents who've made expense sharing stress-free.</p>
-            <a href="{{ route('register') }}" class="inline-block px-8 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors font-medium">
+            <x-primary-button as="a" href="{{ route('register') }}" size="lg">
                 Start your free trial
-            </a>
+            </x-primary-button>
         </div>
     </section>
 

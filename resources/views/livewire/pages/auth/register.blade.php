@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Space;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,13 @@ new #[Layout('layouts.guest')] class extends Component
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
+    public string $invite_code = '';
+
+    public function mount(): void
+    {
+        // Check for invite code in URL
+        $this->invite_code = request()->query('code', '');
+    }
 
     public function register(): void
     {
@@ -21,9 +29,35 @@ new #[Layout('layouts.guest')] class extends Component
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'invite_code' => ['nullable', 'string'],
         ]);
 
+        // Handle space joining/creation
+        $space = null;
+        
+        if (!empty($this->invite_code)) {
+            $space = Space::findByInviteCode($this->invite_code);
+            
+            if (!$space) {
+                $this->addError('invite_code', 'Invalid invite code.');
+                return;
+            }
+            
+            if ($space->isFull()) {
+                $this->addError('invite_code', 'This space already has two members.');
+                return;
+            }
+        } else {
+            // Create new space for this user
+            $space = Space::create([
+                'invite_code' => Space::generateInviteCode(),
+            ]);
+        }
+
         $validated['password'] = Hash::make($validated['password']);
+        $validated['space_id'] = $space->id;
+        
+        unset($validated['invite_code']);
 
         event(new Registered($user = User::create($validated)));
 
@@ -57,6 +91,19 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
             <x-text-input wire:model="password_confirmation" id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1" />
+        </div>
+
+        <div>
+            <h3 class="text-sm text-gray-900 font-bold mb-1">{{ __('Invite Code') }}</h3>
+            <p class="text-sm text-gray-500 mb-3">{{ __('Have an invite code? Enter it to join an existing space.') }}</p>
+            <x-text-input 
+                wire:model="invite_code" 
+                id="invite_code" 
+                type="text" 
+                name="invite_code" 
+                placeholder="e.g. blue-moon-snow"
+            />
+            <x-input-error :messages="$errors->get('invite_code')" class="mt-1" />
         </div>
 
         <x-primary-button class="w-full justify-center">

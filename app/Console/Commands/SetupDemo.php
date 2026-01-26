@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Expense;
+use App\Models\Space;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
@@ -42,21 +43,32 @@ class SetupDemo extends Command
         // Clear existing data
         Expense::truncate();
         User::truncate();
+        Space::truncate();
 
-        // Create users
+        // Create shared space
+        $space = Space::create([
+            'name' => 'Demo Family',
+            'invite_code' => Space::generateInviteCode(),
+        ]);
+
+        $this->info("Created space with invite code: {$space->invite_code}");
+
+        // Create users in the same space
         $peter = User::create([
             'name' => 'Peter',
             'email' => 'peter@demo.com',
             'password' => Hash::make('password'),
+            'space_id' => $space->id,
         ]);
 
         $maria = User::create([
             'name' => 'Maria',
             'email' => 'maria@demo.com',
             'password' => Hash::make('password'),
+            'space_id' => $space->id,
         ]);
 
-        $this->info('Created users: Peter and Maria');
+        $this->info('Created users: Peter and Maria (sharing space)');
 
         // Create recurring expenses
         Expense::create([
@@ -121,5 +133,7 @@ class SetupDemo extends Command
         $this->line('Login credentials:');
         $this->line('  Peter: peter@demo.com / password');
         $this->line('  Maria: maria@demo.com / password');
+        $this->newLine();
+        $this->line("Invite code: {$space->invite_code}");
     }
 }

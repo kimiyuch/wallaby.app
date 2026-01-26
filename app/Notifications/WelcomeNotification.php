@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Notifications;
+
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+
+class WelcomeNotification extends Notification
+{
+    public function __construct(
+        public string $inviteCode,
+        public bool $isSpaceOwner = true
+    ) {}
+
+    public function via(object $notifiable): array
+    {
+        return ['mail'];
+    }
+
+    public function toMail(object $notifiable): MailMessage
+    {
+        return (new MailMessage)
+            ->subject('Welcome to kimiyu! 🎉')
+            ->markdown('emails.welcome', [
+                'user' => $notifiable,
+                'inviteCode' => $this->inviteCode,
+                'isSpaceOwner' => $this->isSpaceOwner,
+            ]);
+    }
+}

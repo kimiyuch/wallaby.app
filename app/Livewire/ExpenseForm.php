@@ -2,41 +2,38 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\ExpenseFormData;
 use App\Models\Expense;
+use App\Models\Settlement;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class ExpenseForm extends Component
 {
-    public $amount = '';
-    public $description = '';
-    public $date;
-    public $end_date = '';
-    public $is_recurring = false;
-    public $is_personal = false;
+    public ExpenseFormData $form;
 
-    public $editingExpenseId = null;
+    #[Locked]
+    public ?int $editingExpenseId = null;
 
-    public $selectedMonth;
-    public $selectedYear;
-
-    protected $rules = [
-        'amount' => 'required|numeric|min:0.01',
-        'description' => 'required|string|max:255',
-        'date' => 'required|date',
-        'end_date' => 'nullable|date|after_or_equal:date',
-        'is_recurring' => 'boolean',
-        'is_personal' => 'boolean',
-    ];
+    public int $selectedMonth;
+    public int $selectedYear;
 
     protected $listeners = ['editExpense', 'monthChanged'];
 
-    public function mount($selectedMonth = null, $selectedYear = null)
+    #[Computed]
+    public function user()
+    {
+        return Auth::user();
+    }
+
+    public function mount(?int $selectedMonth = null, ?int $selectedYear = null): void
     {
         $this->selectedMonth = $selectedMonth ?? now()->month;
         $this->selectedYear = $selectedYear ?? now()->year;
-
-        $this->date = $this->getDefaultDate();
+        $this->form->setDate($this->getDefaultDate());
     }
 
     protected function getDefaultDate(): string
@@ -48,74 +45,91 @@ class ExpenseForm extends Component
             return $now->format('Y-m-d');
         }
 
-        return now()->setYear($this->selectedYear)->setMonth($this->selectedMonth)->startOfMonth()->format('Y-m-d');
+        return Carbon::create($this->selectedYear, $this->selectedMonth, 1)->format('Y-m-d');
     }
 
-    public function monthChanged($month, $year)
+    public function monthChanged(int $month, int $year): void
     {
         $this->selectedMonth = $month;
         $this->selectedYear = $year;
 
         // Only update date if not editing an expense
         if (!$this->editingExpenseId) {
-            $this->date = $this->getDefaultDate();
+            $this->form->setDate($this->getDefaultDate());
         }
     }
 
-    public function editExpense($expenseId)
+    public function editExpense(int $expenseId): void
     {
-        $expense = Expense::findOrFail($expenseId);
+        // Secure query: only fetch if owned by current user
+        $expense = Expense::where('id', $expenseId)
+            ->where('user_id', $this->user->id)
+            ->first();
 
-        if ($expense->user_id !== Auth::id()) {
+        if (!$expense) {
+            $this->dispatch('toast', type: 'error', message: 'Expense not found.');
+            return;
+        }
+
+        // Check if the expense's month is settled
+        if ($this->isMonthSettled($expense->date->month, $expense->date->year)) {
+            $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
             return;
         }
 
         $this->editingExpenseId = $expense->id;
-        $this->amount = $expense->amount;
-        $this->description = $expense->description;
-        $this->date = $expense->date->format('Y-m-d');
-        $this->end_date = $expense->end_date?->format('Y-m-d') ?? '';
-        $this->is_recurring = $expense->is_recurring;
-        $this->is_personal = $expense->is_personal;
+        $this->form->fillFromExpense($expense);
     }
 
-    public function save()
+    protected function isMonthSettled(int $month, int $year): bool
     {
-        $this->validate();
+        return $this->user->space_id 
+            && Settlement::isSettled($this->user->space_id, $month, $year);
+    }
 
-        $user = Auth::user();
+    public function save(): void
+    {
+        $this->form->validate();
 
-        $data = [
-            'user_id' => $user->id,
-            'amount' => $this->amount,
-            'description' => $this->description,
-            'date' => $this->date,
-            'end_date' => $this->is_recurring && $this->end_date ? $this->end_date : null,
-            'is_recurring' => $this->is_recurring,
-            'is_personal' => $this->is_personal,
-        ];
+        // Check if the expense's month is settled
+        $expenseDate = Carbon::parse($this->form->date);
+        if ($this->isMonthSettled($expenseDate->month, $expenseDate->year)) {
+            $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
+            return;
+        }
+
+        $data = array_merge(
+            ['user_id' => $this->user->id],
+            $this->form->toArray()
+        );
 
         if ($this->editingExpenseId) {
-            $expense = Expense::findOrFail($this->editingExpenseId);
-            if ($expense->user_id === $user->id) {
-                $expense->update($data);
-                $this->dispatch('toast', type: 'success', message: 'Expense updated');
+            // Double-check ownership when updating
+            $expense = Expense::where('id', $this->editingExpenseId)
+                ->where('user_id', $this->user->id)
+                ->first();
+
+            if (!$expense) {
+                $this->dispatch('toast', type: 'error', message: 'Expense not found.');
+                return;
             }
+
+            $expense->update($data);
+            $this->dispatch('toast', type: 'success', message: 'Expense updated');
         } else {
             Expense::create($data);
             $this->dispatch('toast', type: 'success', message: 'Expense created');
         }
 
-        $this->reset(['amount', 'description', 'end_date', 'is_recurring', 'is_personal', 'editingExpenseId']);
-        $this->date = $this->getDefaultDate();
-
+        $this->editingExpenseId = null;
+        $this->form->resetForm($this->getDefaultDate());
         $this->dispatch('expenseUpdated');
     }
 
-    public function cancelEdit()
+    public function cancelEdit(): void
     {
-        $this->reset(['amount', 'description', 'end_date', 'is_recurring', 'is_personal', 'editingExpenseId']);
-        $this->date = $this->getDefaultDate();
+        $this->editingExpenseId = null;
+        $this->form->resetForm($this->getDefaultDate());
     }
 
     public function render()
