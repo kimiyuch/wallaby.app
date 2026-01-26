@@ -4,6 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prose lists */
+.prose ul {
+  @apply list-disc pl-5 space-y-2;
+}
+
+.prose ol {
+  @apply list-decimal pl-5 space-y-2;
+}
+
+.prose li {
+  @apply text-gray-600;
+}
+
 /* Fix Safari select styling */
 select {
   @apply appearance-none bg-no-repeat pr-8;

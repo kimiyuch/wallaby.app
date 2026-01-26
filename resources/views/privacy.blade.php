@@ -29,7 +29,7 @@
     </nav>
 
     <!-- Content -->
-    <main class="max-w-3xl mx-auto px-6 py-12">
+    <main class="max-w-3xl mx-auto px-6 py-16 lg:py-24">
         <h1 class="text-3xl font-bold mb-8">Privacy Policy</h1>
         
         <div class="prose prose-gray max-w-none space-y-8">
@@ -40,7 +40,7 @@
             <section>
                 <h2 class="text-xl font-bold mt-8 mb-4">What we collect</h2>
                 <p class="text-gray-600 mb-4">kimiyu collects only the data necessary to provide our expense tracking service:</p>
-                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <ul class="text-gray-600 space-y-2">
                     <li><strong>Account information:</strong> Name, email address, and encrypted password</li>
                     <li><strong>Expense data:</strong> Descriptions, amounts, dates, and categorization (recurring/personal)</li>
                     <li><strong>Space data:</strong> Connection between you and your partner</li>
@@ -49,7 +49,7 @@
 
             <section>
                 <h2 class="text-xl font-bold mt-8 mb-4">What we don't collect</h2>
-                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <ul class="text-gray-600 space-y-2">
                     <li>Payment or banking information</li>
                     <li>Location data</li>
                     <li>Tracking cookies or advertising identifiers</li>
@@ -59,7 +59,7 @@
 
             <section>
                 <h2 class="text-xl font-bold mt-8 mb-4">How we use your data</h2>
-                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <ul class="text-gray-600 space-y-2">
                     <li>To provide the expense tracking and splitting functionality</li>
                     <li>To send transactional emails (verification, settlement notifications)</li>
                     <li>To share expense data with your connected partner</li>
@@ -69,7 +69,7 @@
 
             <section>
                 <h2 class="text-xl font-bold mt-8 mb-4">Data storage & security</h2>
-                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <ul class="text-gray-600 space-y-2">
                     <li>Your data is stored on servers located in Switzerland/EU</li>
                     <li>Passwords are hashed using industry-standard algorithms</li>
                     <li>All connections are encrypted via HTTPS</li>
@@ -82,7 +82,7 @@
                 <p class="text-gray-600">
                     When you connect with a partner via invite code, they can see:
                 </p>
-                <ul class="list-disc list-inside text-gray-600 space-y-2 mt-4">
+                <ul class="text-gray-600 space-y-2 mt-4">
                     <li>Your name</li>
                     <li>Expenses you've logged (description, amount, date)</li>
                     <li>Monthly balances and settlements</li>
@@ -93,7 +93,7 @@
             <section>
                 <h2 class="text-xl font-bold mt-8 mb-4">Your rights</h2>
                 <p class="text-gray-600 mb-4">You have the right to:</p>
-                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <ul class="text-gray-600 space-y-2">
                     <li><strong>Access:</strong> View all data we store about you</li>
                     <li><strong>Correct:</strong> Update your personal information</li>
                     <li><strong>Delete:</strong> Request deletion of your account and all associated data</li>
@@ -121,7 +121,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-8 px-6 mt-12 border-t border-gray-200">
+    <footer class="py-8 px-6 mt-16 lg:mt-24 border-t border-gray-200">
         <div class="max-w-3xl mx-auto">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="text-sm text-gray-500">
