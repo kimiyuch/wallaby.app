@@ -31,7 +31,7 @@
                 Simple expense tracking for two
             </div>
             
-            <h1 class="text-5xl sm:text-6xl font-bold tracking-tight mb-6">
+            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
                 Split expenses,<br>
                 <span class="text-gray-400">not relationships.</span>
             </h1>
