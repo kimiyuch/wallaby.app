@@ -1,7 +1,7 @@
 @props(['icon' => true])
 
 <header class="mx-auto flex max-w-6xl items-center justify-between gap-x-6 px-6 py-5 lg:px-8">
-    <a href="/" aria-label="Homepage" class="flex items-center gap-x-2 font-display text-xl font-semibold text-lilac-950">
+    <a href="/" aria-label="Homepage" class="flex items-center gap-x-2 font-display text-lg font-semibold text-lilac-950">
         @if ($icon)
             <img src="/favicon.svg" alt="" class="-ml-1 size-9">
         @endif

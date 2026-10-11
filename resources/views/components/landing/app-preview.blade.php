@@ -31,7 +31,6 @@
         {{-- Sidebar --}}
         <div class="flex w-48 shrink-0 flex-col gap-y-6 px-4 py-3 max-lg:hidden">
             <div class="flex items-center gap-x-2 font-display text-lg font-semibold text-lilac-950">
-                <img src="/favicon.svg" alt="" class="-ml-1 size-8">
                 Wallaby
             </div>
             <div class="flex flex-col gap-y-5 text-sm">

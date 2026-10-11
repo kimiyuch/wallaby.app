@@ -26,8 +26,7 @@
             <aside class="fixed left-0 top-0 min-h-screen w-64 bg-lilac-50 hidden lg:flex flex-col z-50">
                 <!-- Logo -->
                 <div class="py-4 px-6">
-                    <a href="{{ route('expenses') }}" class="flex items-center gap-2 text-2xl font-display font-semibold text-lilac-950">
-                        <img src="/favicon.svg" alt="" class="w-10 h-10 -ml-1.5">
+                    <a href="{{ route('expenses') }}" class="font-display text-lg font-semibold text-lilac-950">
                         Wallaby
                     </a>
                 </div>
@@ -66,7 +65,7 @@
 
             <!-- Mobile Header -->
             <header class="lg:hidden bg-lilac-50 px-4 py-3 flex items-center justify-between">
-                <a href="{{ route('expenses') }}" class="flex items-center gap-2 text-xl font-display font-semibold text-lilac-950"><img src="/favicon.svg" alt="" class="w-8 h-8 -ml-1">Wallaby</a>
+                <a href="{{ route('expenses') }}" class="font-display text-lg font-semibold text-lilac-950">Wallaby</a>
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" class="-mr-2 p-2 text-gray-500 hover:text-gray-700 transition-colors">
                         <svg x-show="!open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
