@@ -198,11 +198,12 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                                         </svg>
                                     </button>
+                                    @php($stops = $expense->is_recurring && $expense->date->lt($monthStart))
                                     <button @click="$dispatch('confirm-modal', {
-                                                title: 'Delete expense?',
-                                                message: 'This action cannot be undone.',
+                                                title: @js($stops ? 'Stop recurring expense?' : 'Delete expense?'),
+                                                message: @js($stops ? "It's removed from {$monthName} on. Earlier months keep it." : 'This action cannot be undone.'),
                                                 type: 'danger',
-                                                confirmText: 'Delete',
+                                                confirmText: @js($stops ? 'Stop' : 'Delete'),
                                                 onConfirm: () => $wire.deleteExpense({{ $expense->id }})
                                             })"
                                             class="p-2 text-gray-400 hover:text-red-600 rounded-xs transition-colors"

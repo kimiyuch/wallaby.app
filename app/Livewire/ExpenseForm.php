@@ -7,6 +7,7 @@ use App\Models\Expense;
 use App\Models\Settlement;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
@@ -73,8 +74,11 @@ class ExpenseForm extends Component
             return;
         }
 
-        // Check if the expense's month is settled
-        if ($this->isMonthSettled($expense->date->month, $expense->date->year)) {
+        // Changes to a recurring expense apply from the viewed month on, so that's the
+        // month that must still be open; for a one-off it's the month it's in.
+        $month = $expense->is_recurring ? $this->selectedMonthStart() : $expense->date;
+
+        if ($this->isMonthSettled($month->month, $month->year)) {
             $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
 
             return;
@@ -82,6 +86,47 @@ class ExpenseForm extends Component
 
         $this->editingExpenseId = $expense->id;
         $this->form->fillFromExpense($expense);
+
+        if ($this->splitsAtSelectedMonth($expense)) {
+            $this->form->setDate($this->selectedMonthStart()->format('Y-m-d'));
+        }
+    }
+
+    /**
+     * The month from which an edit applies, when it doesn't change the expense as a whole
+     */
+    #[Computed]
+    public function appliesFrom(): ?string
+    {
+        $expense = $this->editingExpenseId ? Expense::find($this->editingExpenseId) : null;
+
+        return $expense && $this->splitsAtSelectedMonth($expense)
+            ? $this->selectedMonthStart()->format('F Y')
+            : null;
+    }
+
+    protected function selectedMonthStart(): Carbon
+    {
+        return Carbon::create($this->selectedYear, $this->selectedMonth, 1);
+    }
+
+    /**
+     * A recurring expense that started before the viewed month is changed from that month on:
+     * the original ends the month before, and the changed copy starts in the viewed month.
+     */
+    protected function splitsAtSelectedMonth(Expense $expense): bool
+    {
+        return $expense->is_recurring && $expense->date->lt($this->selectedMonthStart());
+    }
+
+    protected function isUnchanged(Expense $expense, Expense $changed): bool
+    {
+        return $changed->date->equalTo($this->selectedMonthStart())
+            && $changed->description === $expense->description
+            && (float) $changed->amount === (float) $expense->amount
+            && $changed->is_recurring === $expense->is_recurring
+            && $changed->is_personal === $expense->is_personal
+            && $changed->end_date?->toDateString() === $expense->end_date?->toDateString();
     }
 
     protected function isMonthSettled(int $month, int $year): bool
@@ -94,18 +139,7 @@ class ExpenseForm extends Component
     {
         $this->form->validate();
 
-        // Check if the expense's month is settled
-        $expenseDate = Carbon::parse($this->form->date);
-        if ($this->isMonthSettled($expenseDate->month, $expenseDate->year)) {
-            $this->dispatch('toast', type: 'error', message: 'This month is settled. No changes allowed.');
-
-            return;
-        }
-
-        $data = array_merge(
-            ['user_id' => $this->user->id],
-            $this->form->toArray()
-        );
+        $expense = null;
 
         if ($this->editingExpenseId) {
             // Double-check ownership when updating
@@ -118,7 +152,45 @@ class ExpenseForm extends Component
 
                 return;
             }
+        }
 
+        $data = array_merge(
+            ['user_id' => $this->user->id],
+            $this->form->toArray()
+        );
+        $changed = new Expense($data);
+        $from = $this->selectedMonthStart();
+        $split = $expense && $this->splitsAtSelectedMonth($expense);
+
+        if ($split && $changed->date->lt($from)) {
+            $this->addError('form.date', "Changes apply from {$from->format('F Y')} on. Pick a date in or after it.");
+
+            return;
+        }
+
+        if ($split && $this->isUnchanged($expense, $changed)) {
+            $this->finish();
+
+            return;
+        }
+
+        // Settled months stay as they are: neither the new version nor the part of the old
+        // one that changes may cover one.
+        $spaceId = (int) $this->user->space_id;
+
+        if ($changed->coversSettledMonth($spaceId) || $expense?->coversSettledMonth($spaceId, $split ? $from : null)) {
+            $this->dispatch('toast', type: 'error', message: 'This would change a month that is already settled.');
+
+            return;
+        }
+
+        if ($split) {
+            DB::transaction(function () use ($expense, $data, $from) {
+                $expense->update(['end_date' => $from->copy()->subDay()]);
+                Expense::create($data);
+            });
+            $this->dispatch('toast', type: 'success', message: "Expense updated from {$from->format('F')} on");
+        } elseif ($expense) {
             $expense->update($data);
             $this->dispatch('toast', type: 'success', message: 'Expense updated');
         } else {
@@ -126,6 +198,11 @@ class ExpenseForm extends Component
             $this->dispatch('toast', type: 'success', message: 'Expense created');
         }
 
+        $this->finish();
+    }
+
+    protected function finish(): void
+    {
         $this->editingExpenseId = null;
         $this->form->resetForm($this->getDefaultDate());
         $this->dispatch('expenseUpdated');

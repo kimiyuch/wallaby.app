@@ -35,6 +35,21 @@ class Expense extends Model
     }
 
     /**
+     * Check if a settled month of the space falls within the months this expense covers
+     * (its own month, or every month a recurring expense runs), counting from $from on when given
+     */
+    public function coversSettledMonth(int $spaceId, ?Carbon $from = null): bool
+    {
+        $start = $this->date->copy()->startOfMonth();
+
+        if ($from && $from->gt($start)) {
+            $start = $from;
+        }
+
+        return Settlement::anyBetween($spaceId, $start, $this->is_recurring ? $this->end_date : $this->date);
+    }
+
+    /**
      * Check if this recurring expense is active for a given month/year
      */
     public function isActiveForMonth(int $month, int $year): bool

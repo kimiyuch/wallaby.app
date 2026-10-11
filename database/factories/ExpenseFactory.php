@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Expense;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class ExpenseFactory extends Factory
 {
@@ -39,7 +40,7 @@ class ExpenseFactory extends Factory
     public function forMonth(int $month, int $year): static
     {
         return $this->state(fn (array $attributes) => [
-            'date' => now()->setYear($year)->setMonth($month)->setDay(15),
+            'date' => Carbon::create($year, $month, 15),
         ]);
     }
 }

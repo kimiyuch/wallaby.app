@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 class Settlement extends Model
 {
@@ -43,6 +44,17 @@ class Settlement extends Model
         return static::where('space_id', $spaceId)
             ->where('month', $month)
             ->where('year', $year)
+            ->exists();
+    }
+
+    /**
+     * Check if any month from $from up to $to (open-ended without $to) is settled for a space
+     */
+    public static function anyBetween(int $spaceId, Carbon $from, ?Carbon $to = null): bool
+    {
+        return static::where('space_id', $spaceId)
+            ->whereRaw('year * 12 + month >= ?', [$from->year * 12 + $from->month])
+            ->when($to, fn ($query) => $query->whereRaw('year * 12 + month <= ?', [$to->year * 12 + $to->month]))
             ->exists();
     }
 

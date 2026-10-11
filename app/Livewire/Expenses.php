@@ -183,6 +183,23 @@ class Expenses extends Component
             return;
         }
 
+        $from = $this->selectedMonthStart();
+
+        if ($expense->coversSettledMonth($this->user->space_id, $from)) {
+            $this->dispatch('toast', type: 'error', message: 'A later month with this expense is already settled.');
+
+            return;
+        }
+
+        // A recurring expense that started earlier stops after last month, so the months
+        // before stay as they were. Deleting it outright would rewrite them.
+        if ($expense->is_recurring && $expense->date->lt($from)) {
+            $expense->update(['end_date' => $from->copy()->subDay()]);
+            $this->dispatch('toast', type: 'success', message: "Recurring expense stopped from {$from->format('F')} on");
+
+            return;
+        }
+
         $expense->delete();
         $this->dispatch('toast', type: 'success', message: 'Expense deleted');
     }
@@ -297,6 +314,7 @@ class Expenses extends Component
             'myTotal' => $myTotal,
             'partnerTotal' => $partnerTotal,
             'monthName' => $this->selectedMonthStart()->format('F'),
+            'monthStart' => $this->selectedMonthStart(),
         ]);
     }
 }

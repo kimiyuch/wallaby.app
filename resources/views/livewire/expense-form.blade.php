@@ -86,6 +86,10 @@
             @endif
         </div>
 
+        @if($this->appliesFrom)
+            <p class="text-sm text-gray-500">Changes apply from {{ $this->appliesFrom }} on. Earlier months stay as they were.</p>
+        @endif
+
         <div class="flex items-center justify-end gap-3 pt-2">
             <x-secondary-button type="button" wire:click="$parent.closeExpenseForm">
                 {{ __('Cancel') }}
