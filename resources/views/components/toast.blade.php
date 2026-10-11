@@ -10,6 +10,9 @@
             this.toasts = this.toasts.filter(t => t.id !== id)
         }
     }"
+    @if (session('toast'))
+        x-init="add(@js(session('toast.type')), @js(session('toast.message')))"
+    @endif
     @toast.window="add($event.detail.type, $event.detail.message)"
     class="fixed bottom-4 right-4 z-100 flex flex-col gap-2"
 >
