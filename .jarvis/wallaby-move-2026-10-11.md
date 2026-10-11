@@ -79,3 +79,4 @@ When deploying this branch:
 - The old app is in maintenance mode and kimiyu.ch 302-redirects to wallaby.kimiyu.ch (temporary, until the studio site). Previous `.htaccess` saved as `public/.htaccess.before-wallaby-20261011-205053`; crontab saved as `~/crontab-before-wallaby-20261011-205053.txt`.
 - [x] Cron: the queue worker and `app:backup-database` run from `~/www/wallaby.kimiyu.ch` with `/usr/local/php84/bin/php`.
 - [ ] Old repo `marceli-to/kimiyu.ch`: archive, then `git remote remove old-origin`.
+- [ ] Mail lands in spam: SPF passes (Hostpoint), DKIM and DMARC (`p=quarantine`) were switched on in the Hostpoint panel on 2026-10-11 evening; the welcome-email test right after still went to spam. Retest on 2026-10-12 and read the `Authentication-Results` header (spf/dkim/dmarc).
