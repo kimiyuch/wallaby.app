@@ -77,5 +77,5 @@ When deploying this branch:
 - Live at https://wallaby.kimiyu.ch from `~/www/wallaby.kimiyu.ch` on Hostpoint (PHP 8.4 via `Use php-fpm php84` in `public/.htaccess`). Deploy with `./deploy.sh`.
 - Data moved from the old app in `~/www/kimiyu.ch` (5 users, 130 expenses, 3 settlements, 7 backups); `.env` copied with `APP_NAME=Wallaby`, `APP_URL=https://wallaby.kimiyu.ch`, same `APP_KEY`.
 - The old app is in maintenance mode and kimiyu.ch 302-redirects to wallaby.kimiyu.ch (temporary, until the studio site). Previous `.htaccess` saved as `public/.htaccess.before-wallaby-20261011-205053`; crontab saved as `~/crontab-before-wallaby-20261011-205053.txt`.
-- [ ] Cron (Marcel changes it): point the queue worker and `app:backup-database` lines at `~/www/wallaby.kimiyu.ch` with `/usr/local/php84/bin/php`.
+- [x] Cron: the queue worker and `app:backup-database` run from `~/www/wallaby.kimiyu.ch` with `/usr/local/php84/bin/php`.
 - [ ] Old repo `marceli-to/kimiyu.ch`: archive, then `git remote remove old-origin`.
