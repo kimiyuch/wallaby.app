@@ -61,6 +61,12 @@ class Expenses extends Component
     }
 
     #[Computed]
+    public function hasExpenses(): bool
+    {
+        return $this->user->expenses()->exists();
+    }
+
+    #[Computed]
     public function isSettled(): bool
     {
         if (! $this->user->space_id) {

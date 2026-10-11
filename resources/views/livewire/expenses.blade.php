@@ -32,6 +32,55 @@
         </div>
     </div>
 
+    <!-- Welcome: shown until the partner has joined -->
+    @unless($this->partner)
+        @php($inviteLink = route('register', ['code' => Auth::user()->invite_code]))
+        <div class="mb-8 rounded-xl bg-lilac-50 p-6 sm:p-8">
+            @unless($this->hasExpenses)
+                <div class="mb-6 flex items-center gap-4">
+                    <img src="/mascot.svg" width="724" height="800" alt="" class="w-12 shrink-0 sm:w-14">
+                    <div>
+                        <h2 class="font-display text-xl font-semibold text-lilac-950">Welcome to Wallaby, {{ Auth::user()->name }}</h2>
+                        <p class="mt-1 text-sm text-gray-600">Two steps and your shared tab is ready.</p>
+                    </div>
+                </div>
+            @endunless
+
+            <ol class="grid gap-6 lg:grid-cols-2 lg:gap-10">
+                <li class="flex gap-4">
+                    @unless($this->hasExpenses)
+                        <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-lilac-600 text-sm font-semibold text-white">1</span>
+                    @endunless
+                    <div class="min-w-0">
+                        <h3 class="font-display font-semibold text-lilac-950">Invite your person</h3>
+                        <p class="mt-1 text-sm text-gray-600">Send them this link, or have them enter the code when they sign up. A space is for two people.</p>
+                        <div class="mt-3 flex flex-wrap items-center gap-3"
+                             x-data="{ copied: false }">
+                            <code class="rounded-full bg-white px-3 py-1 font-mono text-sm text-lilac-800 ring-1 ring-lilac-950/10">{{ Auth::user()->invite_code }}</code>
+                            <x-secondary-button size="sm"
+                                                data-link="{{ $inviteLink }}"
+                                                @click="navigator.clipboard.writeText($el.dataset.link).then(() => { copied = true; setTimeout(() => copied = false, 2000) })">
+                                <span x-show="!copied">Copy invite link</span>
+                                <span x-show="copied" x-cloak>Copied</span>
+                            </x-secondary-button>
+                        </div>
+                    </div>
+                </li>
+
+                @unless($this->hasExpenses)
+                    <li class="flex gap-4">
+                        <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-lilac-600 text-sm font-semibold text-white">2</span>
+                        <div class="min-w-0">
+                            <h3 class="font-display font-semibold text-lilac-950">Add your first expense</h3>
+                            <p class="mt-1 text-sm text-gray-600">Rent, groceries, a dinner out. Add what you paid, and Wallaby splits it with your person.</p>
+                            <x-primary-button type="button" size="sm" wire:click="openExpenseForm" class="mt-3">Add expense</x-primary-button>
+                        </div>
+                    </li>
+                @endunless
+            </ol>
+        </div>
+    @endunless
+
     <!-- Stats Cards -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-8">
         <div class="border border-gray-200 bg-gray-50/50 rounded-md p-4">
