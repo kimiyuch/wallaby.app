@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\File;
 
 class BackupDatabase extends Command
 {
-    protected $signature = 'app:backup-database {--keep=7 : Number of backups to keep}';
+    protected $signature = 'app:backup-database
+        {--days=90 : Delete backups older than this many days}
+        {--keep= : Also cap the number of backups kept}';
 
     protected $description = 'Create a backup of the SQLite database';
 
@@ -41,14 +43,17 @@ class BackupDatabase extends Command
 
     protected function cleanup(string $backupDir): void
     {
-        $keep = (int) $this->option('keep');
+        $cutoff = now()->subDays((int) $this->option('days'))->getTimestamp();
         $files = File::glob($backupDir.'/database_*.sqlite');
 
         // Sort by modification time (newest first)
         usort($files, fn ($a, $b) => filemtime($b) - filemtime($a));
 
-        // Delete old backups
-        $toDelete = array_slice($files, $keep);
+        $toDelete = array_filter($files, fn ($file) => filemtime($file) < $cutoff);
+
+        if ($this->option('keep') !== null) {
+            $toDelete = array_unique([...$toDelete, ...array_slice($files, (int) $this->option('keep'))]);
+        }
 
         foreach ($toDelete as $file) {
             File::delete($file);
