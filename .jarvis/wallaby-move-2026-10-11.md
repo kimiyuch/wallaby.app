@@ -67,9 +67,9 @@ Tests: 74 passed after every step.
 - Backups are kept 90 days (`--days`).
 
 When deploying this branch:
-- [ ] `php artisan migrate` (adds `users.departed_at`).
-- [ ] Everyone is signed out once (session serialization is now `json`).
-- [ ] Check the server cron for `app:backup-database`: drop any `--keep=7`, or it still caps at 7 backups.
+- [x] `php artisan migrate` (adds `users.departed_at`).
+- [x] Everyone is signed out once (session serialization is now `json`).
+- [x] Check the server cron for `app:backup-database`: drop any `--keep=7`, or it still caps at 7 backups.
 - [x] "Start fresh" on the profile page: once the partner has left and all months are settled, the user gets a new space; running expenses carry over, the old space is deleted.
 
 ## Production cutover (2026-10-11, evening)
