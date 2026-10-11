@@ -50,7 +50,7 @@
     <div class="isolate">
         <div class="absolute inset-x-0 top-0 -z-10 h-176 bg-linear-to-b from-lilac-50 to-white"></div>
 
-        <x-page-nav />
+        <x-page-nav :icon="false" />
 
         <main>
             {{-- Hero --}}
