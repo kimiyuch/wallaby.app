@@ -10,6 +10,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Wallaby" />
     <link rel="manifest" href="/site.webmanifest" />
+
+    @fonts
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased font-sans bg-lilac-50 text-lilac-950">

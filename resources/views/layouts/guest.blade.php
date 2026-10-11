@@ -15,6 +15,8 @@
         <meta name="apple-mobile-web-app-title" content="Wallaby" />
         <link rel="manifest" href="/site.webmanifest" />
 
+        @fonts
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -30,7 +32,7 @@
                 </div>
 
                 <!-- Card -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <div class="bg-white rounded-2xl p-6 shadow-xs">
                     {{ $slot }}
                 </div>
             </div>

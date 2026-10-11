@@ -15,6 +15,8 @@
         <meta name="apple-mobile-web-app-title" content="Wallaby" />
         <link rel="manifest" href="/site.webmanifest" />
 
+        @fonts
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>

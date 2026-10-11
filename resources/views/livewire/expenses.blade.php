@@ -4,7 +4,7 @@
         <div class="flex items-center gap-2">
             @if(!$this->isSettled)
                 <button wire:click="openExpenseForm"
-                        class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 cursor-pointer rounded-sm transition-colors"
+                        class="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 cursor-pointer rounded-xs transition-colors"
                         title="Add Expense">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -13,18 +13,18 @@
             @endif
             <h1 class="text-xl text-lilac-950 font-display font-semibold">Expenses</h1>
             @if($this->isSettled)
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-mint-100 text-mint-700">Settled</span>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs bg-mint-100 text-mint-700">Settled</span>
             @endif
         </div>
         <!-- Month Navigation -->
         <div class="flex items-center gap-1">
-            <button wire:click="previousMonth" wire:loading.attr="disabled" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-sm transition-colors disabled:opacity-50">
+            <button wire:click="previousMonth" wire:loading.attr="disabled" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-xs transition-colors disabled:opacity-50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </button>
             <span class="text-sm text-gray-500 min-w-[120px] text-center" wire:loading.class="opacity-50">{{ $monthName }} {{ $selectedYear }}</span>
-            <button wire:click="nextMonth" wire:loading.attr="disabled" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-sm transition-colors disabled:opacity-50">
+            <button wire:click="nextMonth" wire:loading.attr="disabled" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-xs transition-colors disabled:opacity-50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
@@ -130,20 +130,20 @@
                             <div class="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
                                 <span class="text-sm text-lilac-950 truncate">{{ $expense->description }}</span>
                                 @if($expense->is_recurring)
-                                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs bg-lilac-100 text-lilac-700">Recurring</span>
+                                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-sm text-xs bg-lilac-100 text-lilac-700">Recurring</span>
                                 @endif
                                 @if($expense->is_personal)
-                                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs bg-gold-100 text-gold-800">Paid for partner</span>
+                                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-sm text-xs bg-gold-100 text-gold-800">Paid for partner</span>
                                 @endif
                             </div>
                             <span class="text-sm text-lilac-950 tabular-nums">{{ number_format($expense->amount, 2) }}</span>
                             <!-- Hover overlay -->
                             @if(!$this->isSettled)
                             <div class="absolute inset-y-0 right-0 flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <div class="w-12 h-full bg-gradient-to-r from-transparent to-white"></div>
+                                <div class="w-12 h-full bg-linear-to-r from-transparent to-white"></div>
                                 <div class="flex items-center bg-white pr-1">
                                     <button wire:click="editExpense({{ $expense->id }})" 
-                                            class="p-2 text-gray-400 hover:text-gray-600 rounded-sm transition-colors"
+                                            class="p-2 text-gray-400 hover:text-gray-600 rounded-xs transition-colors"
                                             title="Edit">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
@@ -156,7 +156,7 @@
                                                 confirmText: 'Delete',
                                                 onConfirm: () => $wire.deleteExpense({{ $expense->id }})
                                             })"
-                                            class="p-2 text-gray-400 hover:text-red-600 rounded-sm transition-colors"
+                                            class="p-2 text-gray-400 hover:text-red-600 rounded-xs transition-colors"
                                             title="Delete">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -184,10 +184,10 @@
                                 <div class="flex items-center gap-2 lg:gap-3 min-w-0 flex-1">
                                     <span class="text-sm text-lilac-950 truncate">{{ $expense->description }}</span>
                                     @if($expense->is_recurring)
-                                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs bg-lilac-100 text-lilac-700">Recurring</span>
+                                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-sm text-xs bg-lilac-100 text-lilac-700">Recurring</span>
                                     @endif
                                     @if($expense->is_personal)
-                                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-xs bg-gold-100 text-gold-800">Paid for partner</span>
+                                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-sm text-xs bg-gold-100 text-gold-800">Paid for partner</span>
                                     @endif
                                 </div>
                                 <span class="text-sm text-lilac-950 tabular-nums">{{ number_format($expense->amount, 2) }}</span>
@@ -228,13 +228,13 @@
                  x-transition:leave="transform transition ease-in-out duration-300"
                  x-transition:leave-start="translate-y-0 lg:translate-x-0"
                  x-transition:leave-end="translate-y-full lg:translate-y-0 lg:translate-x-full"
-                 class="relative bg-white w-full shadow-xl flex flex-col h-full lg:rounded-xl lg:my-4 lg:mr-4 lg:h-[calc(100%-2rem)] overflow-y-auto lg:min-w-[25rem] lg:max-w-4xl">
+                 class="relative bg-white w-full shadow-xl flex flex-col h-full lg:rounded-xl lg:my-4 lg:mr-4 lg:h-[calc(100%-2rem)] overflow-y-auto lg:min-w-100 lg:max-w-4xl">
                 
                 <!-- Header -->
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                     <h2 class="text-lg font-display font-semibold text-lilac-950">New Expense</h2>
                     <button @click="open = false" 
-                            class="-mr-2 p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-sm transition-colors">
+                            class="-mr-2 p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-xs transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
                         </svg>

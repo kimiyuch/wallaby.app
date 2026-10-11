@@ -25,7 +25,7 @@
     @confirm-modal.window="open($event.detail)"
     x-show="show"
     x-cloak
-    class="fixed inset-0 z-[100] overflow-y-auto"
+    class="fixed inset-0 z-100 overflow-y-auto"
 >
     <!-- Backdrop -->
     <div
@@ -60,14 +60,14 @@
                 <button
                     @click="cancel()"
                     type="button"
-                    class="text-sm inline-flex items-center justify-center gap-2 rounded-md cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-lilac-50 text-gray-700 hover:bg-gray-200 focus:ring-lilac-500 px-4 py-2"
+                    class="text-sm inline-flex items-center justify-center gap-2 rounded-md cursor-pointer transition-colors focus:outline-hidden focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-lilac-50 text-gray-700 hover:bg-gray-200 focus:ring-lilac-500 px-4 py-2"
                 >
                     Cancel
                 </button>
                 <button
                     @click="confirm()"
                     type="button"
-                    class="text-sm inline-flex items-center justify-center gap-2 rounded-md cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2"
+                    class="text-sm inline-flex items-center justify-center gap-2 rounded-md cursor-pointer transition-colors focus:outline-hidden focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2"
                     :class="{
                         'bg-red-600 text-white hover:bg-red-500 focus:ring-red-500': type === 'danger',
                         'bg-lilac-600 text-white hover:bg-lilac-700 focus:ring-lilac-500': type !== 'danger'

@@ -1,7 +1,7 @@
 @props(['as' => 'button', 'size' => 'md'])
 
 @php
-$baseClasses = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg cursor-pointer transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed text-gray-500 hover:text-lilac-950 underline';
+$baseClasses = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg cursor-pointer transition-colors focus:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed text-gray-500 hover:text-lilac-950 underline';
 
 $sizeClasses = match($size) {
     'sm' => 'text-xs',

@@ -17,7 +17,7 @@
 
 Wallaby keeps a running tab for couples and housemates. Two people share a space (one creates it, the other joins with an invite code), add what they paid, one-time or recurring, and see who owes whom. Shared expenses are split 50/50; an expense paid for the partner counts 100% to them. At the end of the month you settle up, the month locks, and both get an email.
 
-A Laravel 12 app with Livewire 3 (Volt), Tailwind CSS 3, Alpine.js and SQLite.
+A Laravel 13 app with Livewire 3 (Volt), Tailwind CSS 4, Alpine.js and SQLite.
 
 ## Local development
 
@@ -51,7 +51,7 @@ The suite covers the balance calculation (equal and unequal splits, personal exp
 | `app/Livewire/Expenses.php` | The monthly expenses screen, balance and settling |
 | `app/Livewire/ExpenseForm.php` | Adding and editing an expense |
 | `app/Services/BalanceCalculator.php` | Who owes whom |
-| `tailwind.config.js` | Theme colors (`lilac` for the brand, `mint` for settled, `gold` for highlights) and fonts |
+| `resources/css/app.css` | Theme colors (`lilac` for the brand, `mint` for settled, `gold` for highlights) and fonts |
 | `scripts/make-icon.mjs` | The icon and mascot. Edit the SVG there and run `node scripts/make-icon.mjs` to render the favicons, app icons, `public/mascot.svg`, `public/mail-logo.png` and `docs/icon.png` |
 
 ## License

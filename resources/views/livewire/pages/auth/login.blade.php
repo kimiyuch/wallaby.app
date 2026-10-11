@@ -57,7 +57,7 @@ new #[Layout('layouts.guest')] class extends Component
                 wire:model="form.remember" 
                 id="remember" 
                 type="checkbox" 
-                class="rounded border-gray-300 text-lilac-950 focus:ring-0" 
+                class="rounded-sm border-gray-300 text-lilac-950 focus:ring-0" 
                 name="remember"
             >
             <label for="remember" class="ms-2 text-sm text-gray-500">

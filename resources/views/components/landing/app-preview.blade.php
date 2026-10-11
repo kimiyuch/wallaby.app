@@ -85,7 +85,7 @@
                                     <div class="flex min-w-0 items-center gap-x-2">
                                         <span class="truncate text-lilac-950">{{ $expense['description'] }}</span>
                                         @isset($expense['badge'])
-                                            <span class="shrink-0 rounded px-2 py-0.5 text-xs {{ $badges[$expense['badge']] }} max-sm:hidden">{{ $expense['badge'] }}</span>
+                                            <span class="shrink-0 rounded-sm px-2 py-0.5 text-xs {{ $badges[$expense['badge']] }} max-sm:hidden">{{ $expense['badge'] }}</span>
                                         @endisset
                                     </div>
                                     <span class="text-lilac-950 tabular-nums">{{ $expense['amount'] }}</span>

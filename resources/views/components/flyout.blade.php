@@ -38,7 +38,7 @@
                         {{ $title }}
                     </h2>
                     <button @click="open = false" 
-                            class="p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-sm transition-colors">
+                            class="p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-xs transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
                         </svg>

@@ -1,7 +1,7 @@
 @props(['as' => 'button', 'size' => 'md', 'variant' => 'dark'])
 
 @php
-$baseClasses = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+$baseClasses = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg cursor-pointer transition-colors focus:outline-hidden focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
 $variantClasses = match($variant) {
     'light' => 'bg-white text-lilac-950 hover:bg-lilac-50 focus:ring-white',

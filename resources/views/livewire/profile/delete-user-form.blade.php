@@ -52,7 +52,7 @@ new class extends Component
         x-data="{ show: @entangle('showDeleteModal') }"
         x-show="show"
         x-cloak
-        class="fixed inset-0 z-[100] overflow-y-auto"
+        class="fixed inset-0 z-100 overflow-y-auto"
     >
         <!-- Backdrop -->
         <div

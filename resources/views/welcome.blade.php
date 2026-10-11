@@ -41,11 +41,14 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Wallaby" />
     <link rel="manifest" href="/site.webmanifest" />
+
+    @fonts
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-white font-sans text-lilac-950">
     <div class="isolate">
-        <div class="absolute inset-x-0 top-0 -z-10 h-[44rem] bg-gradient-to-b from-lilac-50 to-white"></div>
+        <div class="absolute inset-x-0 top-0 -z-10 h-176 bg-linear-to-b from-lilac-50 to-white"></div>
 
         <x-page-nav />
 
@@ -61,7 +64,7 @@
                         Wallaby keeps a running tab for couples and housemates. Add what you paid, see who owes whom, and settle up once a month, without spreadsheets or awkward math.
                     </p>
                     <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-                        <a href="{{ route('register') }}" class="rounded-full bg-lilac-600 px-5 py-3 text-base/6 font-semibold text-white shadow-sm hover:bg-lilac-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-600">
+                        <a href="{{ route('register') }}" class="rounded-full bg-lilac-600 px-5 py-3 text-base/6 font-semibold text-white shadow-xs hover:bg-lilac-700 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-600">
                             Create your space
                         </a>
                         <a href="#how-it-works" class="inline-flex items-center gap-x-1.5 text-base/6 font-semibold text-lilac-800 hover:text-lilac-600">
@@ -212,7 +215,7 @@
                         It takes a minute to set up. The other person joins with your invite code.
                     </p>
                     <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-                        <a href="{{ route('register') }}" class="rounded-full bg-white px-5 py-3 text-base/6 font-semibold text-lilac-800 shadow-sm ring-1 ring-lilac-950/10 hover:bg-lilac-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-600">
+                        <a href="{{ route('register') }}" class="rounded-full bg-white px-5 py-3 text-base/6 font-semibold text-lilac-800 shadow-xs ring-1 ring-lilac-950/10 hover:bg-lilac-100 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-600">
                             Create your space
                         </a>
                         <a href="{{ route('login') }}" class="inline-flex items-center gap-x-1.5 text-base/6 font-semibold text-lilac-800 hover:text-lilac-600">

@@ -34,7 +34,7 @@ Handoff note. Read this first when picking the project up in a new session.
 2. **App icon + mascot**, in the sibling style (cute flat animal peeking over the app's object, rounded gradient tile): a wallaby holding on to a mint wallet with a gold coin, on a lilac tile.
    - Source: `scripts/make-icon.mjs` (copied from amor.web's approach). Edit the SVG there and run `node scripts/make-icon.mjs`; it renders everything with Playwright (dev dependency) and builds `favicon.ico` with ImageMagick.
    - Outputs: `public/favicon.svg`, `favicon.ico`, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-192x192.png` / `-512x512.png` (maskable), `public/mascot.svg` (no tile, used in the UI), `public/mail-logo.png` (PNG for email clients), `docs/icon.png` (README).
-3. **Theme** in `tailwind.config.js` (Tailwind **3.4**, not 4 like the siblings):
+3. **Theme** in `resources/css/app.css` (`@theme`, Tailwind 4 since the upgrade below):
    - `lilac` (icon background) = brand: buttons, links, focus, active nav. White on `lilac-600` = 5.3:1.
    - `mint` (wallet) = settled / positive. Use `mint-700`+ for text.
    - `gold` (coin) = highlights, warnings, "Paid for partner" badge.
@@ -56,5 +56,5 @@ Tests: 74 passed after every step.
 - [ ] **Deploy:** point any deploy setup (Forge, webhooks, CI) at the kimiyuch repo instead of `marceli-to/kimiyu.ch`.
 - [ ] **Old repo:** archive or delete `marceli-to/kimiyu.ch` once the deploy is moved, then `git remote remove old-origin`.
 - [x] **README** in the sibling style (centered `docs/icon.png`, name, pun tagline, link to wallaby.kimiyu.ch).
-- [ ] **Optional: Tailwind 4 / Laravel 13 upgrade** to match the siblings (`@theme` colours, `laravel-vite-plugin/fonts` with `@fonts`).
+- [x] **Tailwind 4 / Laravel 13 upgrade** (branch `upgrade-laravel-13-tailwind-4`): Laravel 13, Pest 4, PHPUnit 12, Tailwind 4 through `@tailwindcss/vite`, Vite 8, `laravel-vite-plugin` 3 with Inter (local) and Figtree (Bunny) via `@fonts`. Livewire stays on 3 (Livewire 4 is a separate upgrade). Session serialization is now `json`, which signs everyone out once after deploying.
 - [x] **`.claude/settings.local.json`:** reset to the committed version (the stale `Webroot/kimiyu.ch` rules are gone).
