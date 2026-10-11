@@ -33,6 +33,15 @@ npm run dev           # or: npm run build
 
 `php artisan app:setup-demo` creates two demo users (`peter@demo.com` and `maria@demo.com`, password `password`) in a shared "Demo Household" with six months of expenses. It **empties the users, spaces and expenses tables first**, so never run it against real data.
 
+## Deploying
+
+```sh
+npm run build     # if you changed the design; commit public/build
+./deploy.sh
+```
+
+`deploy.sh` runs the tests, exports the committed code, installs production dependencies, syncs it to Hostpoint over SSH with your own key and runs the migrations. The server's `.env`, the SQLite database and `storage/` (including the nightly backups in `storage/backups`) are left alone. The site runs on PHP 8.4, set in the first line of `public/.htaccess`.
+
 ## Tests
 
 ```sh
