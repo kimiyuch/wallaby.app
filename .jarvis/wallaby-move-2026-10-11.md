@@ -80,3 +80,7 @@ When deploying this branch:
 - [x] Cron: the queue worker and `app:backup-database` run from `~/www/wallaby.kimiyu.ch` with `/usr/local/php84/bin/php`.
 - [ ] Old repo `marceli-to/kimiyu.ch`: archive, then `git remote remove old-origin`.
 - [ ] Mail lands in spam: SPF passes (Hostpoint), DKIM and DMARC (`p=quarantine`) were switched on in the Hostpoint panel on 2026-10-11 evening; the welcome-email test right after still went to spam. Retest on 2026-10-12 and read the `Authentication-Results` header (spf/dkim/dmarc).
+
+## Next: the kimiyu.ch studio page
+
+Prepared in `Webroot/kimiyu.web` (repo `kimiyuch/kimiyu.web`, empty). Its `NEXT.md` has the brief, the four apps, the styles to copy, the server state of `~/www/kimiyu.ch` and the studio mark (`artwork/kimiyu-bear.svg`). Start the next session there.
