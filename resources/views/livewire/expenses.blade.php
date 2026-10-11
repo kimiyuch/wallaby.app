@@ -131,7 +131,7 @@
                     </svg>
                 @endif
             </div>
-            @if(!$this->isSettled && $this->partner && ($myTotal > 0 || $partnerTotal > 0))
+            @if(!$this->isSettled && $this->canSettle && ($myTotal > 0 || $partnerTotal > 0))
                 <button 
                     @click="$dispatch('confirm-modal', {
                         title: 'Settle this month?',
@@ -281,7 +281,7 @@
                 
                 <!-- Header -->
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                    <h2 class="text-lg font-display font-semibold text-lilac-950">New Expense</h2>
+                    <h2 class="text-lg font-display font-semibold text-lilac-950">{{ $editing ? 'Edit expense' : 'New expense' }}</h2>
                     <button @click="open = false" 
                             class="-mr-2 p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-xs transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

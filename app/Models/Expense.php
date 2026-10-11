@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 class Expense extends Model
 {
@@ -42,7 +43,7 @@ class Expense extends Model
             return false;
         }
 
-        $checkDate = now()->setYear($year)->setMonth($month)->startOfMonth();
+        $checkDate = Carbon::create($year, $month, 1);
         $startDate = $this->date->startOfMonth();
 
         // Must be on or after start date

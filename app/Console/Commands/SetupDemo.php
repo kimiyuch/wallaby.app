@@ -80,7 +80,7 @@ class SetupDemo extends Command
             'user_id' => $peter->id,
             'amount' => 29.00,
             'description' => 'Mobile Subscription',
-            'date' => now()->subMonths(6)->startOfMonth(),
+            'date' => now()->startOfMonth()->subMonths(6),
             'is_recurring' => true,
             'is_personal' => false,
             'end_date' => null,
@@ -90,7 +90,7 @@ class SetupDemo extends Command
             'user_id' => $maria->id,
             'amount' => 15.90,
             'description' => 'Netflix',
-            'date' => now()->subMonths(6)->startOfMonth(),
+            'date' => now()->startOfMonth()->subMonths(6),
             'is_recurring' => true,
             'is_personal' => false,
             'end_date' => null,
@@ -102,7 +102,7 @@ class SetupDemo extends Command
         $users = [$peter, $maria];
 
         for ($monthsAgo = 5; $monthsAgo >= 0; $monthsAgo--) {
-            $monthDate = now()->subMonths($monthsAgo);
+            $monthDate = now()->startOfMonth()->subMonths($monthsAgo);
 
             foreach ($users as $user) {
                 $expenseCount = rand(5, 10);

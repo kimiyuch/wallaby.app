@@ -1,10 +1,12 @@
 <?php
 
+use App\Livewire\ExpenseForm;
 use App\Livewire\Expenses;
 use App\Models\Expense;
 use App\Models\Settlement;
 use App\Models\Space;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Livewire\Livewire;
 
 beforeEach(function () {
@@ -71,7 +73,7 @@ it('can navigate between months', function () {
 
     $component->call('previousMonth');
 
-    $expected = now()->subMonth();
+    $expected = now()->startOfMonth()->subMonth();
     $component->assertSet('selectedMonth', $expected->month)
         ->assertSet('selectedYear', $expected->year);
 });
@@ -80,13 +82,13 @@ it('only shows expenses for selected month', function () {
     Expense::factory()->create([
         'user_id' => $this->user->id,
         'description' => 'January Item',
-        'date' => now()->setMonth(1)->setYear(2026),
+        'date' => '2026-01-15',
     ]);
 
     Expense::factory()->create([
         'user_id' => $this->user->id,
         'description' => 'February Item',
-        'date' => now()->setMonth(2)->setYear(2026),
+        'date' => '2026-02-15',
     ]);
 
     Livewire::actingAs($this->user)
@@ -205,4 +207,108 @@ it('calculates balance correctly', function () {
         ->test(Expenses::class);
 
     $component->assertSee('+50.00');
+});
+
+it('steps through months correctly at the end of a long month', function () {
+    Carbon::setTestNow('2026-10-31 12:00');
+
+    $component = Livewire::actingAs($this->user)->test(Expenses::class);
+
+    $component->call('previousMonth')->assertSet('period', '2026-09')->assertSee('September 2026');
+    $component->call('previousMonth')->assertSet('period', '2026-08')->assertSee('August 2026');
+    $component->call('nextMonth')->call('nextMonth')->call('nextMonth')
+        ->assertSet('period', '2026-11')->assertSee('November 2026');
+
+    Carbon::setTestNow();
+});
+
+it('names a month opened by link on the 31st correctly', function () {
+    Carbon::setTestNow('2026-10-31 12:00');
+
+    Livewire::actingAs($this->user)
+        ->withQueryParams(['period' => '2026-02'])
+        ->test(Expenses::class)
+        ->assertSee('February 2026');
+
+    Carbon::setTestNow();
+});
+
+it('cannot settle a month that has not started yet', function () {
+    Expense::factory()->create([
+        'user_id' => $this->user->id,
+        'amount' => 100,
+        'date' => now()->startOfMonth(),
+        'is_recurring' => true,
+    ]);
+
+    $next = now()->startOfMonth()->addMonth();
+
+    Livewire::actingAs($this->user)
+        ->withQueryParams(['period' => $next->format('Y-m')])
+        ->test(Expenses::class)
+        ->assertDontSeeHtml('title="Settle month"')
+        ->call('settleMonth')
+        ->assertDispatched('toast', type: 'error');
+
+    expect(Settlement::count())->toBe(0);
+});
+
+it('cannot settle without a partner', function () {
+    $this->partner->delete();
+    Expense::factory()->create(['user_id' => $this->user->id, 'amount' => 100, 'date' => now()]);
+
+    Livewire::actingAs($this->user)
+        ->test(Expenses::class)
+        ->call('settleMonth')
+        ->assertDispatched('toast', type: 'error');
+
+    expect(Settlement::count())->toBe(0);
+});
+
+it('handles both partners settling the same month at once', function () {
+    Expense::factory()->create(['user_id' => $this->user->id, 'amount' => 100, 'date' => now()]);
+
+    $mine = Livewire::actingAs($this->user)->test(Expenses::class);
+
+    // The partner settles while this page is still open.
+    Settlement::factory()->create([
+        'space_id' => $this->space->id,
+        'settled_by_user_id' => $this->partner->id,
+        'month' => now()->month,
+        'year' => now()->year,
+    ]);
+
+    $mine->call('settleMonth')->assertDispatched('toast', type: 'error');
+
+    expect(Settlement::count())->toBe(1);
+});
+
+it('starts a new expense with an empty form after editing another one', function () {
+    $rent = Expense::factory()->create([
+        'user_id' => $this->user->id,
+        'description' => 'Rent',
+        'amount' => 1000,
+        'date' => now(),
+    ]);
+
+    $page = Livewire::actingAs($this->user)->test(Expenses::class);
+    $page->call('editExpense', $rent->id)->assertSee('Edit expense');
+
+    // Close the panel without saving, then add a new expense.
+    $page->set('showExpenseForm', false)
+        ->call('openExpenseForm')
+        ->assertDispatched('resetExpenseForm')
+        ->assertSee('New expense');
+
+    Livewire::actingAs($this->user)
+        ->test(ExpenseForm::class)
+        ->call('editExpense', $rent->id)
+        ->dispatch('resetExpenseForm')
+        ->assertSet('editingExpenseId', null)
+        ->assertSet('form.description', '')
+        ->set('form.description', 'Pizza')
+        ->set('form.amount', '20')
+        ->call('save');
+
+    expect(Expense::pluck('description')->sort()->values()->all())->toBe(['Pizza', 'Rent']);
 });

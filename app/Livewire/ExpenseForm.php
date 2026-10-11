@@ -22,7 +22,7 @@ class ExpenseForm extends Component
 
     public int $selectedYear;
 
-    protected $listeners = ['editExpense', 'monthChanged'];
+    protected $listeners = ['editExpense', 'monthChanged', 'resetExpenseForm' => 'cancelEdit'];
 
     #[Computed]
     public function user()

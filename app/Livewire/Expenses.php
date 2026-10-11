@@ -6,6 +6,7 @@ use App\Models\Expense;
 use App\Models\Settlement;
 use App\Notifications\MonthSettledNotification;
 use App\Services\BalanceCalculator;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,8 @@ class Expenses extends Component
     public int $selectedYear;
 
     public bool $showExpenseForm = false;
+
+    public bool $editing = false;
 
     protected $listeners = ['expenseUpdated' => 'onExpenseUpdated', 'closeExpenseForm', 'openExpenseForm'];
 
@@ -66,6 +69,16 @@ class Expenses extends Component
         return $this->user->expenses()->exists();
     }
 
+    /**
+     * A month can be settled once it has started, by a space of two.
+     */
+    #[Computed]
+    public function canSettle(): bool
+    {
+        return $this->partner !== null
+            && $this->selectedMonthStart()->lte(now());
+    }
+
     #[Computed]
     public function isSettled(): bool
     {
@@ -76,19 +89,27 @@ class Expenses extends Component
         return Settlement::isSettled($this->user->space_id, $this->selectedMonth, $this->selectedYear);
     }
 
+    /**
+     * The first day of the selected month. Built from scratch rather than from now(),
+     * which would overflow into the next month on the 29th to 31st.
+     */
+    protected function selectedMonthStart(): Carbon
+    {
+        return Carbon::create($this->selectedYear, $this->selectedMonth, 1);
+    }
+
     public function previousMonth(): void
     {
-        $date = now()->setYear($this->selectedYear)->setMonth($this->selectedMonth)->subMonth();
-        $this->selectedMonth = $date->month;
-        $this->selectedYear = $date->year;
-        $this->updatePeriod();
-        $this->dispatch('monthChanged', month: $this->selectedMonth, year: $this->selectedYear);
-        unset($this->isSettled); // Clear computed cache
+        $this->goToMonth($this->selectedMonthStart()->subMonth());
     }
 
     public function nextMonth(): void
     {
-        $date = now()->setYear($this->selectedYear)->setMonth($this->selectedMonth)->addMonth();
+        $this->goToMonth($this->selectedMonthStart()->addMonth());
+    }
+
+    protected function goToMonth(Carbon $date): void
+    {
         $this->selectedMonth = $date->month;
         $this->selectedYear = $date->year;
         $this->updatePeriod();
@@ -104,6 +125,9 @@ class Expenses extends Component
             return;
         }
 
+        // Start from an empty form, even if the panel was last closed while editing.
+        $this->dispatch('resetExpenseForm')->to(ExpenseForm::class);
+        $this->editing = false;
         $this->showExpenseForm = true;
     }
 
@@ -137,6 +161,7 @@ class Expenses extends Component
         }
 
         $this->dispatch('editExpense', expenseId: $id);
+        $this->editing = true;
         $this->showExpenseForm = true;
     }
 
@@ -176,6 +201,12 @@ class Expenses extends Component
             return;
         }
 
+        if (! $this->canSettle) {
+            $this->dispatch('toast', type: 'error', message: 'This month can\'t be settled yet.');
+
+            return;
+        }
+
         // Calculate final balance
         $myExpenses = $this->getExpensesForMonth($this->user->id);
         $partnerExpenses = $this->partner ? $this->getExpensesForMonth($this->partner->id) : collect();
@@ -195,15 +226,22 @@ class Expenses extends Component
             $balanceOwedBy = $this->partner->name;
         }
 
-        // Create settlement
-        $settlement = Settlement::create([
-            'space_id' => $this->user->space_id,
-            'settled_by_user_id' => $this->user->id,
-            'month' => $this->selectedMonth,
-            'year' => $this->selectedYear,
-            'balance_amount' => $balanceAmount,
-            'balance_owed_by' => $balanceOwedBy,
-        ]);
+        // Create settlement. The unique index catches the partner settling at the same moment.
+        try {
+            $settlement = Settlement::create([
+                'space_id' => $this->user->space_id,
+                'settled_by_user_id' => $this->user->id,
+                'month' => $this->selectedMonth,
+                'year' => $this->selectedYear,
+                'balance_amount' => $balanceAmount,
+                'balance_owed_by' => $balanceOwedBy,
+            ]);
+        } catch (UniqueConstraintViolationException) {
+            unset($this->isSettled);
+            $this->dispatch('toast', type: 'error', message: 'This month is already settled.');
+
+            return;
+        }
 
         // Notify both users
         $this->user->notify(new MonthSettledNotification($settlement, $this->user->name));
@@ -218,7 +256,7 @@ class Expenses extends Component
 
     protected function getExpensesForMonth(int $userId): Collection
     {
-        $monthStart = Carbon::create($this->selectedYear, $this->selectedMonth, 1)->startOfMonth();
+        $monthStart = $this->selectedMonthStart();
         $monthEnd = $monthStart->copy()->endOfMonth();
 
         // Get one-time expenses for this month
@@ -258,7 +296,7 @@ class Expenses extends Component
             'balance' => $calculator->calculate($myExpenses, $partnerExpenses, $this->user, $this->partner),
             'myTotal' => $myTotal,
             'partnerTotal' => $partnerTotal,
-            'monthName' => now()->setMonth($this->selectedMonth)->format('F'),
+            'monthName' => $this->selectedMonthStart()->format('F'),
         ]);
     }
 }
