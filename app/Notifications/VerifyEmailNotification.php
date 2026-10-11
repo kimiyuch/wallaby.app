@@ -13,13 +13,13 @@ class VerifyEmailNotification extends VerifyEmail
         $verificationUrl = $this->verificationUrl($notifiable);
 
         return (new MailMessage)
-            ->subject('Verify your email – kimiyu')
+            ->subject('Verify your email – Wallaby')
             ->greeting("Hi {$notifiable->name}!")
-            ->line("Welcome to kimiyu! We're excited to have you on board.")
+            ->line("Welcome to Wallaby! We're excited to have you on board.")
             ->line('Please verify your email address by clicking the button below.')
             ->action('Verify Email', $verificationUrl)
             ->line('Once verified, you can start tracking and splitting expenses with your partner.')
-            ->line('If you didn\'t create an account with kimiyu, you can safely ignore this email.')
-            ->salutation('— The kimiyu team');
+            ->line('If you didn\'t create an account with Wallaby, you can safely ignore this email.')
+            ->salutation('— The Wallaby team');
     }
 }

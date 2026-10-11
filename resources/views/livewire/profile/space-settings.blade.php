@@ -45,12 +45,12 @@ new class extends Component
 
 <section>
     <header class="mb-4">
-        <h2 class="text-sm text-gray-900 font-bold">
+        <h2 class="text-sm text-lilac-950 font-display font-semibold">
             {{ __('Partner') }}
         </h2>
         <p class="mt-1 text-sm text-gray-500">
             @if($this->partnerName)
-                {!! __("You're connected with <span class=\"font-bold text-gray-900\">:name</span> (:email) and share expenses together.", ['name' => e($this->partnerName), 'email' => e($this->partnerEmail)]) !!}
+                {!! __("You're connected with <span class=\"font-semibold text-lilac-950\">:name</span> (:email) and share expenses together.", ['name' => e($this->partnerName), 'email' => e($this->partnerEmail)]) !!}
             @else
                 {{ __('Connect with your partner to share and split expenses together.') }}
             @endif
@@ -60,8 +60,8 @@ new class extends Component
     <div class="space-y-4">
         @if(!$this->partnerName)
             {{-- Waiting for partner: show invite code --}}
-            <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                <p class="text-sm text-amber-800">
+            <div class="p-3 bg-gold-50 border border-gold-200 rounded-lg">
+                <p class="text-sm text-gold-800">
                     {{ __('No partner yet. Share your invite code to connect with someone.') }}
                 </p>
             </div>

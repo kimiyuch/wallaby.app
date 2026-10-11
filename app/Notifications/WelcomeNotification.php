@@ -30,7 +30,7 @@ class WelcomeNotification extends Notification implements ShouldBeUnique, Should
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Welcome to kimiyu! 🎉')
+            ->subject('Welcome to Wallaby! 🎉')
             ->markdown('emails.welcome', [
                 'user' => $notifiable,
                 'inviteCode' => $this->inviteCode,

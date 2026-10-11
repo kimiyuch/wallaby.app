@@ -3,14 +3,14 @@
 body,
 body *:not(html):not(style):not(br):not(tr):not(code) {
     box-sizing: border-box;
-    font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     position: relative;
 }
 
 body {
     -webkit-text-size-adjust: none;
-    background-color: #f3f4f6;
+    background-color: #f6f3fe;
     color: #374151;
     height: 100%;
     line-height: 1.4;
@@ -28,7 +28,7 @@ blockquote {
 }
 
 a {
-    color: #111827;
+    color: #2a1d4d;
 }
 
 a img {
@@ -38,24 +38,25 @@ a img {
 /* Typography */
 
 h1 {
-    color: #111827;
+    color: #2a1d4d;
+    font-family: 'Figtree', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 0;
     text-align: left;
 }
 
 h2 {
-    color: #111827;
+    color: #2a1d4d;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 0;
     text-align: left;
 }
 
 h3 {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 0;
     text-align: left;
 }
@@ -82,7 +83,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #f3f4f6;
+    background-color: #f6f3fe;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -105,9 +106,10 @@ img {
 }
 
 .header a {
-    color: #111827;
+    color: #2a1d4d;
+    font-family: 'Figtree', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 600;
     text-decoration: none;
 }
 
@@ -117,9 +119,9 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #f3f4f6;
-    border-bottom: 1px solid #f3f4f6;
-    border-top: 1px solid #f3f4f6;
+    background-color: #f6f3fe;
+    border-bottom: 1px solid #f6f3fe;
+    border-top: 1px solid #f6f3fe;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -130,7 +132,7 @@ img {
     -premailer-cellspacing: 0;
     -premailer-width: 570px;
     background-color: #ffffff;
-    border-color: #e5e7eb;
+    border-color: #eee8fd;
     border-radius: 12px;
     border-width: 1px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
@@ -146,7 +148,7 @@ img {
 /* Subcopy */
 
 .subcopy {
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid #eee8fd;
     margin-top: 25px;
     padding-top: 25px;
 }
@@ -190,7 +192,7 @@ img {
 }
 
 .table th {
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #eee8fd;
     margin: 0;
     padding-bottom: 8px;
 }
@@ -234,20 +236,20 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #111827;
-    border-bottom: 12px solid #111827;
-    border-left: 24px solid #111827;
-    border-right: 24px solid #111827;
-    border-top: 12px solid #111827;
+    background-color: #7556cf;
+    border-bottom: 12px solid #7556cf;
+    border-left: 24px solid #7556cf;
+    border-right: 24px solid #7556cf;
+    border-top: 12px solid #7556cf;
 }
 
 .button-green,
 .button-success {
-    background-color: #059669;
-    border-bottom: 12px solid #059669;
-    border-left: 24px solid #059669;
-    border-right: 24px solid #059669;
-    border-top: 12px solid #059669;
+    background-color: #1b7d65;
+    border-bottom: 12px solid #1b7d65;
+    border-left: 24px solid #1b7d65;
+    border-right: 24px solid #1b7d65;
+    border-top: 12px solid #1b7d65;
 }
 
 .button-red,
@@ -266,11 +268,11 @@ img {
 }
 
 .panel-content {
-    background-color: #f3f4f6;
+    background-color: #f6f3fe;
     color: #4b5563;
     padding: 16px 24px;
     border-radius: 8px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #eee8fd;
 }
 
 .panel-content p {
@@ -289,8 +291,8 @@ img {
 /* Code/Invite Code Box */
 
 .code-box {
-    background-color: #f3f4f6;
-    border: 1px solid #e5e7eb;
+    background-color: #f6f3fe;
+    border: 1px solid #eee8fd;
     border-radius: 8px;
     padding: 16px 24px;
     text-align: center;
@@ -300,7 +302,7 @@ img {
 .code-box code {
     font-size: 24px;
     font-weight: 600;
-    color: #111827;
+    color: #2a1d4d;
     letter-spacing: 0.05em;
 }
 

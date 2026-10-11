@@ -1,279 +1,230 @@
+@php
+    $steps = [
+        ['title' => 'Create your space', 'body' => 'Sign up and Wallaby gives you a three-word invite code to share.'],
+        ['title' => 'Invite your person', 'body' => 'Your partner or housemate signs up with the code, and you’re connected. A space is for two people.'],
+        ['title' => 'Add expenses as they happen', 'body' => 'Groceries, rent, a dinner out. Wallaby splits each one and keeps the balance up to date.'],
+    ];
+
+    $rules = [
+        ['icon' => 'scale', 'title' => 'Shared costs split 50/50', 'body' => 'Everything you both use is split down the middle, no matter who paid.'],
+        ['icon' => 'gift', 'title' => 'Paid for the other person', 'body' => 'Bought something that’s only for them? Mark it, and the full amount goes on their side.'],
+        ['icon' => 'banknotes', 'title' => 'One number at the end', 'body' => 'Wallaby nets it all out, so there’s a single amount for one of you to send.'],
+    ];
+
+    $features = [
+        ['icon' => 'arrow-path', 'title' => 'Recurring expenses', 'body' => 'Add rent, utilities or subscriptions once. They show up every month until you give them an end date.'],
+        ['icon' => 'calendar-days', 'title' => 'Month by month', 'body' => 'Flip back through past months to see what was spent, by whom, and how the balance came out.'],
+        ['icon' => 'check-badge', 'title' => 'Settle up', 'body' => 'Once you’ve squared up, mark the month as settled. It’s locked, and you both get an email.'],
+        ['icon' => 'device-phone-mobile', 'title' => 'On your phone', 'body' => 'Wallaby runs in the browser. Add it to your home screen and it opens like an app.'],
+        ['icon' => 'user-group', 'title' => 'Couples and housemates', 'body' => 'Share a flat, a household or a life. Wallaby works the same for any two people who split costs.'],
+        ['icon' => 'lock-closed', 'title' => 'Private by design', 'body' => 'Only the two of you see your expenses. No ads, no tracking cookies, and your data stays in Switzerland or the EU.'],
+    ];
+
+    $faqs = [
+        ['question' => 'Can more than two people share a space?', 'answer' => 'No. Wallaby is made for two, so the balance is always one clear number between you and the other person.'],
+        ['question' => 'Does Wallaby move any money?', 'answer' => 'No. Wallaby keeps the tab and tells you who owes whom. You pay each other however you like, then mark the month as settled.'],
+        ['question' => 'What happens when we settle a month?', 'answer' => 'The month is locked so nothing changes by accident, and you both get an email confirming it. Past months stay there to look back on.'],
+        ['question' => 'What can the other person see?', 'answer' => 'Your name, the expenses you log and the monthly balances. Your email address and password are never shared.'],
+        ['question' => 'Can I delete my account?', 'answer' => 'Yes, at any time from your profile. Your account and its data are deleted with it.'],
+    ];
+@endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth antialiased">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>kimiyu – Split expenses, not relationships.</title>
+    <title>Wallaby – Split expenses, not relationships.</title>
+    <meta name="description" content="Wallaby keeps a running tab for couples and housemates. Add what you paid, see who owes whom, and settle up once a month.">
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="kimiyu" />
+    <meta name="apple-mobile-web-app-title" content="Wallaby" />
     <link rel="manifest" href="/site.webmanifest" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased font-sans bg-gray-100 text-gray-900 overflow-x-hidden">
-    <!-- Animated Background Orbs -->
-    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
+<body class="bg-white font-sans text-lilac-950">
+    <div class="isolate">
+        <div class="absolute inset-x-0 top-0 -z-10 h-[44rem] bg-gradient-to-b from-lilac-50 to-white"></div>
+
+        <x-page-nav />
+
+        <main>
+            {{-- Hero --}}
+            <section class="pt-10 pb-24 sm:pt-16 sm:pb-32">
+                <div class="mx-auto max-w-6xl px-6 text-center lg:px-8">
+                    <img src="/mascot.svg" width="724" height="800" fetchpriority="high" alt="" class="mx-auto h-auto w-32 sm:w-40">
+                    <h1 class="mx-auto mt-8 max-w-[20ch] font-display text-5xl font-semibold tracking-tight text-balance sm:text-7xl">
+                        Split expenses, <span class="text-lilac-600">not relationships</span>
+                    </h1>
+                    <p class="mx-auto mt-6 max-w-[48ch] text-lg/8 text-pretty text-gray-600 sm:text-xl/8">
+                        Wallaby keeps a running tab for couples and housemates. Add what you paid, see who owes whom, and settle up once a month, without spreadsheets or awkward math.
+                    </p>
+                    <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+                        <a href="{{ route('register') }}" class="rounded-full bg-lilac-600 px-5 py-3 text-base/6 font-semibold text-white shadow-sm hover:bg-lilac-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-600">
+                            Create your space
+                        </a>
+                        <a href="#how-it-works" class="inline-flex items-center gap-x-1.5 text-base/6 font-semibold text-lilac-800 hover:text-lilac-600">
+                            See how it works
+                            <x-heroicon-m-arrow-right class="size-5 shrink-0 fill-current" />
+                        </a>
+                    </div>
+                    <p class="mt-6 text-base/7 text-gray-500 sm:text-sm/6">Made for two people · Works on your phone and computer</p>
+
+                    <x-landing.app-preview class="mx-auto mt-16 max-w-5xl text-left sm:mt-20" />
+                </div>
+            </section>
+
+            {{-- How it works --}}
+            <section id="how-it-works" class="scroll-mt-8 pb-24 sm:pb-32">
+                <div class="mx-auto max-w-6xl px-6 lg:px-8">
+                    <p class="text-base/7 font-semibold text-lilac-600">How it works</p>
+                    <h2 class="mt-2 max-w-[30ch] font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+                        Set up in a minute, fair from then on
+                    </h2>
+
+                    <ol role="list" class="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3">
+                        @foreach ($steps as $step)
+                            <li class="border-t border-lilac-950/10 pt-6">
+                                <p class="font-display text-base/7 font-semibold text-lilac-600 tabular-nums">0{{ $loop->iteration }}</p>
+                                <h3 class="mt-2 text-lg/7 font-semibold">{{ $step['title'] }}</h3>
+                                <p class="mt-2 text-base/7 text-pretty text-gray-600">{{ $step['body'] }}</p>
+                                @if ($loop->first)
+                                    <p class="mt-4 inline-flex rounded-full bg-lilac-50 px-3 py-1 font-mono text-sm/6 text-lilac-800 ring-1 ring-lilac-950/10">blue-moon-snow</p>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ol>
+                </div>
+            </section>
+
+            {{-- Balance --}}
+            <section id="balance" class="scroll-mt-8 bg-lilac-950 py-24 sm:py-32">
+                <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2 lg:px-8">
+                    <div>
+                        <p class="text-base/7 font-semibold text-lilac-300">No awkward math</p>
+                        <h2 class="mt-2 max-w-[24ch] font-display text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
+                            Always know who owes whom
+                        </h2>
+                        <p class="mt-6 max-w-[48ch] text-lg/8 text-pretty text-lilac-100/70">
+                            Wallaby does the sums the same way every month, so neither of you has to keep score.
+                        </p>
+
+                        <dl class="mt-12 flex flex-col gap-y-8">
+                            @foreach ($rules as $rule)
+                                <div>
+                                    <dt class="flex items-start gap-x-3 text-base/7 font-semibold text-white">
+                                        <x-dynamic-component :component="'heroicon-m-'.$rule['icon']" class="h-7 w-5 shrink-0 fill-lilac-300" />
+                                        {{ $rule['title'] }}
+                                    </dt>
+                                    <dd class="mt-1 pl-8 text-base/7 text-pretty text-lilac-100/70">{{ $rule['body'] }}</dd>
+                                </div>
+                            @endforeach
+                        </dl>
+                    </div>
+
+                    {{-- Worked example: the same month as the screen above --}}
+                    <div class="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+                        <p class="text-base/7 font-semibold text-white sm:text-sm/6">October, worked out</p>
+                        <dl class="mt-6 divide-y divide-white/10 text-base/7 sm:text-sm/6">
+                            <div class="flex justify-between gap-x-4 pb-4">
+                                <dt class="text-lilac-100/70">Mia paid for both</dt>
+                                <dd class="text-white tabular-nums">182.40</dd>
+                            </div>
+                            <div class="flex justify-between gap-x-4 py-4">
+                                <dt class="text-lilac-100/70">Jonas paid for both</dt>
+                                <dd class="text-white tabular-nums">112.40</dd>
+                            </div>
+                            <div class="flex justify-between gap-x-4 py-4">
+                                <dt class="text-lilac-100/70">Each person’s half of 294.80</dt>
+                                <dd class="text-white tabular-nums">147.40</dd>
+                            </div>
+                            <div class="flex justify-between gap-x-4 py-4">
+                                <dt class="text-lilac-100/70">Mia paid 35.00 over her half, so Jonas owes her</dt>
+                                <dd class="text-white tabular-nums">35.00</dd>
+                            </div>
+                            <div class="flex justify-between gap-x-4 py-4">
+                                <dt class="text-lilac-100/70">Jonas bought Mia’s concert ticket, so she owes him</dt>
+                                <dd class="text-white tabular-nums">59.00</dd>
+                            </div>
+                            <div class="flex items-baseline justify-between gap-x-4 pt-4">
+                                <dt class="font-semibold text-white">Mia sends Jonas</dt>
+                                <dd class="font-display text-3xl font-semibold text-mint-300 tabular-nums">24.00</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </section>
+
+            {{-- Features --}}
+            <section id="features" class="scroll-mt-8 py-24 sm:py-32">
+                <div class="mx-auto max-w-6xl px-6 lg:px-8">
+                    <p class="text-base/7 font-semibold text-lilac-600">Features</p>
+                    <h2 class="mt-2 max-w-[30ch] font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+                        Everything two people need to share costs
+                    </h2>
+                    <p class="mt-6 max-w-[48ch] text-lg/8 text-pretty text-gray-600">
+                        Wallaby does one thing and keeps it simple. No budgets, no bank connections, no charts to study.
+                    </p>
+
+                    <dl class="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+                        @foreach ($features as $feature)
+                            <div>
+                                <dt class="flex items-start gap-x-3 text-base/7 font-semibold">
+                                    <x-dynamic-component :component="'heroicon-m-'.$feature['icon']" class="h-7 w-5 shrink-0 fill-lilac-500" />
+                                    {{ $feature['title'] }}
+                                </dt>
+                                <dd class="mt-1 pl-8 text-base/7 text-pretty text-gray-600">{{ $feature['body'] }}</dd>
+                            </div>
+                        @endforeach
+                    </dl>
+                </div>
+            </section>
+
+            {{-- FAQ --}}
+            <section id="faq" class="scroll-mt-8 pb-24 sm:pb-32">
+                <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 lg:grid-cols-3 lg:px-8">
+                    <div>
+                        <p class="text-base/7 font-semibold text-lilac-600">Questions</p>
+                        <h2 class="mt-2 max-w-[30ch] font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+                            Good to know
+                        </h2>
+                    </div>
+                    <dl class="divide-y divide-lilac-950/10 lg:col-span-2">
+                        @foreach ($faqs as $faq)
+                            <div class="py-6 first:pt-0 last:pb-0">
+                                <dt class="text-base/7 font-semibold">{{ $faq['question'] }}</dt>
+                                <dd class="mt-2 max-w-[56ch] text-base/7 text-pretty text-gray-600">{{ $faq['answer'] }}</dd>
+                            </div>
+                        @endforeach
+                    </dl>
+                </div>
+            </section>
+
+            {{-- Call to action --}}
+            <section class="bg-lilac-50 py-24 sm:py-32">
+                <div class="mx-auto max-w-6xl px-6 text-center lg:px-8">
+                    <img src="/mascot.svg" width="724" height="800" alt="" class="mx-auto h-auto w-24">
+                    <h2 class="mx-auto mt-8 max-w-[30ch] font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+                        Start your shared tab
+                    </h2>
+                    <p class="mx-auto mt-6 max-w-[48ch] text-lg/8 text-pretty text-gray-600">
+                        It takes a minute to set up. The other person joins with your invite code.
+                    </p>
+                    <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+                        <a href="{{ route('register') }}" class="rounded-full bg-white px-5 py-3 text-base/6 font-semibold text-lilac-800 shadow-sm ring-1 ring-lilac-950/10 hover:bg-lilac-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lilac-600">
+                            Create your space
+                        </a>
+                        <a href="{{ route('login') }}" class="inline-flex items-center gap-x-1.5 text-base/6 font-semibold text-lilac-800 hover:text-lilac-600">
+                            Log in
+                            <x-heroicon-m-arrow-right class="size-5 shrink-0 fill-current" />
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <x-page-footer />
     </div>
-
-    <x-page-nav />
-
-    <!-- Hero -->
-    <section class="min-h-screen flex items-center justify-center -mt-[var(--header-height)]">
-        <div class="max-w-5xl mx-auto px-6 text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full text-sm text-gray-600 mb-8 shadow-sm">
-                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                Simple expense tracking for two
-            </div>
-            
-            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
-                Split expenses,<br>
-                <span class="text-gray-400">not relationships.</span>
-            </h1>
-            
-            <p class="text-lg text-gray-500 mb-10 max-w-xl mx-auto">
-                kimiyu helps couples and housemates track and split expenses fairly. No spreadsheets, no awkward math — just clarity.
-            </p>
-            
-            <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 transition-colors">
-                See how it works →
-            </a>
-        </div>
-    </section>
-
-    <!-- Features -->
-    <section id="how-it-works" class="py-24">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">How it works</h2>
-                <p class="text-gray-500">Three simple steps to fair expense sharing</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-8">
-                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/>
-                        </svg>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">Log expenses</h3>
-                    <p class="text-gray-500 text-sm">Add expenses as they happen — school fees, clothes, activities. It takes seconds.</p>
-                </div>
-                
-                <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-8">
-                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">See the balance</h3>
-                    <p class="text-gray-500 text-sm">Instantly see who paid what and who owes whom. Fair 50/50 split, automatically calculated.</p>
-                </div>
-                
-                <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-8">
-                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">Stay in sync</h3>
-                    <p class="text-gray-500 text-sm">Both parents see the same data. Transparency builds trust and reduces conflict.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits -->
-    <section class="py-24 bg-white/60 backdrop-blur-sm">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-4xl font-bold mb-8">Built for real life</h2>
-                    <div class="space-y-4">
-                        <div class="bg-white/60 rounded-xl p-5 border border-gray-200/40">
-                            <h4 class="font-medium mb-1">Recurring expenses</h4>
-                            <p class="text-sm text-gray-500">Set up monthly costs once — subscriptions, lessons, allowances — and they appear automatically.</p>
-                        </div>
-                        <div class="bg-white/60 rounded-xl p-5 border border-gray-200/40">
-                            <h4 class="font-medium mb-1">Month-by-month view</h4>
-                            <p class="text-sm text-gray-500">Navigate through history. See what was spent when, and track balances over time.</p>
-                        </div>
-                        <div class="bg-white/60 rounded-xl p-5 border border-gray-200/40">
-                            <h4 class="font-medium mb-1">No learning curve</h4>
-                            <p class="text-sm text-gray-500">Clean, simple interface. Add an expense in under 10 seconds.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Mock App UI -->
-                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/60 overflow-hidden" data-mock-app>
-                    <!-- App Header -->
-                    <div class="bg-gray-100 text-gray-900 px-5 py-3 flex items-center justify-between border-b border-gray-200/60">
-                        <div class="font-medium text-sm">January 2026</div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500">
-                            <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-                            <span>Synced</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Balance Card -->
-                    <div class="px-5 py-4 border-b border-gray-100">
-                        <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Balance</div>
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-2xl font-bold text-green-600 tabular-nums">+<span class="counter" data-target="42.50">0</span></span>
-                            <span class="text-sm text-gray-400">owed to you</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Expense List -->
-                    <div class="divide-y divide-gray-100">
-                        <div class="px-5 py-3 flex items-center justify-between">
-                            <div>
-                                <div class="font-medium text-sm">School supplies</div>
-                                <div class="text-xs text-gray-400">Peter paid</div>
-                            </div>
-                            <div class="text-sm font-semibold tabular-nums"><span class="counter" data-target="45.00">0</span></div>
-                        </div>
-                        <div class="px-5 py-3 flex items-center justify-between">
-                            <div>
-                                <div class="font-medium text-sm">New sneakers</div>
-                                <div class="text-xs text-gray-400">Maria paid</div>
-                            </div>
-                            <div class="text-sm font-semibold tabular-nums"><span class="counter" data-target="89.00">0</span></div>
-                        </div>
-                        <div class="px-5 py-3 flex items-center justify-between">
-                            <div>
-                                <div class="font-medium text-sm">Mobile Subscription</div>
-                                <div class="text-xs text-gray-400">Peter · Monthly</div>
-                            </div>
-                            <div class="text-sm font-semibold tabular-nums"><span class="counter" data-target="29.00">0</span></div>
-                        </div>
-                        <div class="px-5 py-3 flex items-center justify-between">
-                            <div>
-                                <div class="font-medium text-sm">Netflix</div>
-                                <div class="text-xs text-gray-400">Maria · Monthly</div>
-                            </div>
-                            <div class="text-sm font-semibold tabular-nums"><span class="counter" data-target="15.90">0</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{-- Pricing (hidden for beta)
-    <section id="pricing" class="py-24 px-6">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Simple pricing</h2>
-                <p class="text-gray-500">One plan. Everything included. No hidden fees.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                <!-- Monthly -->
-                <div class="bg-white rounded-2xl p-8 border-2 border-gray-200">
-                    <div class="text-sm text-gray-500 mb-2">Monthly</div>
-                    <div class="flex items-baseline gap-1 mb-4">
-                        <span class="text-4xl font-bold">$5</span>
-                        <span class="text-gray-500">/month</span>
-                    </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Unlimited expenses
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Both parents included
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Recurring expenses
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Full history
-                        </li>
-                    </ul>
-                    <x-secondary-button as="a" href="{{ route('register') }}" class="w-full justify-center" size="lg">
-                        Get started
-                    </x-secondary-button>
-                </div>
-
-                <!-- Annual -->
-                <div class="bg-gray-900 rounded-2xl p-8 text-white relative overflow-hidden">
-                    <div class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                        Save $10
-                    </div>
-                    <div class="text-sm text-gray-400 mb-2">Annual</div>
-                    <div class="flex items-baseline gap-1 mb-4">
-                        <span class="text-4xl font-bold">$50</span>
-                        <span class="text-gray-400">/year</span>
-                    </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-2 text-sm text-gray-300">
-                            <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Everything in monthly
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-300">
-                            <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            2 months free
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-300">
-                            <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Priority support
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-300">
-                            <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Lock in price forever
-                        </li>
-                    </ul>
-                    <x-primary-button as="a" href="{{ route('register') }}" variant="light" class="w-full" size="lg">
-                        Get started
-                    </x-primary-button>
-                </div>
-            </div>
-
-            <p class="text-center text-sm text-gray-500 mt-8">
-                14-day free trial. No credit card required.
-            </p>
-        </div>
-    </section>
-    --}}
-
-    <!-- CTA -->
-    <section class="py-24 bg-white/40">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="max-w-2xl mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-4">Ready to simplify?</h2>
-                <p class="text-gray-500 mb-8">Join parents who've made expense sharing stress-free.</p>
-                <x-primary-button as="a" href="{{ route('register') }}" size="lg">
-                    Get started
-                </x-primary-button>
-            </div>
-        </div>
-    </section>
-
-    <x-page-footer />
 </body>
 </html>

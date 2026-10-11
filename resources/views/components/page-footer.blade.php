@@ -1,20 +1,13 @@
-<footer class="py-8">
-    <div class="max-w-5xl mx-auto px-6">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="text-sm text-gray-500">
-                Copyright {{ date('Y') }} kimiyu. All rights reserved.
-            </div>
-            <div class="flex items-center gap-6 text-sm text-gray-500">
-                <a href="{{ route('privacy') }}" class="hover:text-gray-900 transition-colors">Privacy</a>
-                <a href="{{ route('login') }}" class="hover:text-gray-900 transition-colors">Log in</a>
-                <a href="{{ route('register') }}" class="hover:text-gray-900 transition-colors">Register</a>
-            </div>
+<footer class="border-t border-lilac-950/5">
+    <div class="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+        <div class="flex items-center gap-x-3">
+            <img src="/favicon.svg" alt="" class="size-7">
+            <p class="text-sm/6 text-gray-600">Wallaby, made with <span aria-label="love">❤️</span> by <a href="https://kimiyu.ch" class="font-medium text-lilac-800 hover:text-lilac-600">kimiyu.ch</a></p>
         </div>
+        <nav class="flex flex-wrap gap-x-6 gap-y-2 whitespace-nowrap">
+            <a href="{{ route('privacy') }}" class="text-sm/6 font-normal text-gray-600 hover:text-lilac-700">Privacy</a>
+            <a href="{{ route('login') }}" class="text-sm/6 font-normal text-gray-600 hover:text-lilac-700">Log in</a>
+            <a href="{{ route('register') }}" class="text-sm/6 font-normal text-gray-600 hover:text-lilac-700">Register</a>
+        </nav>
     </div>
 </footer>
-
-<div class="py-4">
-    <div class="max-w-5xl mx-auto px-6 text-center text-[0.625rem] text-gray-400 font-mono">
-        Made with ❤️ by <a href="https://marceli.to" target="_blank" class="hover:text-gray-600 transition-colors">marceli.to</a>
-    </div>
-</div>

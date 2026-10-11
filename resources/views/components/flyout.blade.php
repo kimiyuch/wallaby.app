@@ -16,7 +16,7 @@
          x-transition:leave="ease-in-out duration-300"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 bg-black/20 transition-opacity"
+         class="fixed inset-0 bg-lilac-950/20 transition-opacity"
          @click="open = false">
     </div>
 
@@ -34,11 +34,11 @@
             <div class="flex h-full flex-col bg-white shadow-xl">
                 <!-- Header -->
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                    <h2 class="text-lg font-bold text-gray-900" id="slide-over-title">
+                    <h2 class="text-lg font-display font-semibold text-lilac-950" id="slide-over-title">
                         {{ $title }}
                     </h2>
                     <button @click="open = false" 
-                            class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-sm transition-colors">
+                            class="p-2 text-gray-400 hover:text-gray-600 hover:bg-lilac-50 rounded-sm transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
                         </svg>

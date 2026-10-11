@@ -34,7 +34,7 @@ new class extends Component
 
 <section>
     <header class="mb-4">
-        <h2 class="text-sm text-gray-900 font-bold">
+        <h2 class="text-sm text-lilac-950 font-display font-semibold">
             {{ __('Delete Account') }}
         </h2>
     </header>
@@ -63,7 +63,7 @@ new class extends Component
             x-transition:leave="ease-in duration-150"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="fixed inset-0 bg-black/30"
+            class="fixed inset-0 bg-lilac-950/30"
             @click="$wire.cancelDelete()"
         ></div>
 
@@ -80,7 +80,7 @@ new class extends Component
                 class="bg-white rounded-xl shadow-xl max-w-md w-full p-6"
                 @click.stop
             >
-                <h3 class="text-sm font-bold text-gray-900 mb-2">Delete your account?</h3>
+                <h3 class="text-sm font-display font-semibold text-lilac-950 mb-2">Delete your account?</h3>
                 <p class="text-sm text-gray-500 mb-4">This action cannot be undone. Please enter your password to confirm.</p>
                 
                 <form wire:submit="deleteUser">

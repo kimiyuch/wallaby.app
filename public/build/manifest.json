@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CJZcDeQj.css",
+    "file": "assets/app-D8G5TSqL.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -8,8 +8,12 @@
       "app.css"
     ]
   },
+  "resources/fonts/InterVariable.woff2": {
+    "file": "assets/InterVariable-B7rthDxM.woff2",
+    "src": "resources/fonts/InterVariable.woff2"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-CkWg8NwY.js",
+    "file": "assets/app-DRfyodfH.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

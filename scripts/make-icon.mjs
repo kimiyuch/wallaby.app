@@ -1,0 +1,108 @@
+// Draws the Wallaby icon: a wallaby peeking over a wallet, on a lilac square. Writes the
+// SVGs and renders the PNGs with headless Chromium (needs `npm install`).
+// Usage: node scripts/make-icon.mjs
+import { chromium } from "playwright";
+import { execFileSync } from "node:child_process";
+import { writeFileSync } from "node:fs";
+
+const root = new URL("../", import.meta.url).pathname;
+
+const defs = `
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9cbfa"/><stop offset="1" stop-color="#7556cf"/></linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="fur" gradientUnits="userSpaceOnUse" x1="0" y1="250" x2="0" y2="640"><stop offset="0" stop-color="#d6a679"/><stop offset="1" stop-color="#a8714a"/></linearGradient>
+    <linearGradient id="ear" gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="360"><stop offset="0" stop-color="#a8714a"/><stop offset=".35" stop-color="#c99668"/><stop offset="1" stop-color="#d6a679"/></linearGradient>
+    <linearGradient id="cream" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbeedd"/><stop offset="1" stop-color="#efd3ad"/></linearGradient>
+    <linearGradient id="wallet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fc7a2"/><stop offset="1" stop-color="#22977a"/></linearGradient>
+    <linearGradient id="tab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fa886"/><stop offset="1" stop-color="#1b7d65"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#f0a92e"/></linearGradient>
+    <filter id="drop" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#2a1660" flood-opacity=".3"/></filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#2a1660" flood-opacity=".25"/></filter>
+    <filter id="icon" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".3"/></filter>
+    <clipPath id="squircle"><rect x="100" y="100" width="824" height="824" rx="185"/></clipPath>`;
+
+const background = `
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="560" fill="url(#sheen)"/>`;
+
+// A coin behind the wallet, the wallaby, then the wallet with the wallaby's paws on its top edge.
+const art = `
+  <g filter="url(#soft)">
+    <circle cx="752" cy="560" r="62" fill="url(#gold)"/>
+  </g>
+  <circle cx="752" cy="560" r="42" fill="none" stroke="#d98f1c" stroke-width="8" opacity=".55"/>
+
+  <g class="wallaby">
+    <g filter="url(#soft)">
+      <path d="M384 342C336 262 334 170 356 116q12-22 30-6c50 44 96 120 108 200z" fill="url(#ear)"/>
+      <path d="M640 342c48-80 50-172 28-226q-12-22-30-6c-50 44-96 120-108 200z" fill="url(#ear)"/>
+      <ellipse cx="512" cy="660" rx="220" ry="130" fill="url(#fur)"/>
+      <ellipse cx="512" cy="396" rx="164" ry="146" fill="url(#fur)"/>
+      <ellipse cx="512" cy="508" rx="104" ry="118" fill="url(#fur)"/>
+    </g>
+    <path d="M404 316c-28-56-30-118-18-164 34 34 64 92 74 152z" fill="#f2c9b4"/>
+    <path d="M620 316c28-56 30-118 18-164-34 34-64 92-74 152z" fill="#f2c9b4"/>
+    <ellipse cx="512" cy="540" rx="80" ry="84" fill="url(#cream)"/>
+    <path d="M414 458q32 22 68 22M610 458q-32 22-68 22" fill="none" stroke="#fbeedd" stroke-width="13" stroke-linecap="round" opacity=".75"/>
+    <g class="eyes">
+      <g fill="#1d2326"><ellipse cx="446" cy="398" rx="25" ry="30"/><ellipse cx="578" cy="398" rx="25" ry="30"/></g>
+      <g fill="#fff"><circle cx="455" cy="387" r="9"/><circle cx="587" cy="387" r="9"/></g>
+    </g>
+    <path d="M478 492q34-16 68 0-4 30-34 40-30-10-34-40z" fill="#3b2a22"/>
+    <path d="M494 494q18-7 36 0" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+    <path d="M512 532v12m0 0q-16 14-30 4m30-4q16 14 30 4" fill="none" stroke="#8a5a3a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g filter="url(#drop)"><rect x="186" y="588" width="652" height="288" rx="56" fill="url(#wallet)"/></g>
+  <rect x="212" y="614" width="600" height="236" rx="36" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="20 14" stroke-linecap="round" opacity=".45"/>
+  <g filter="url(#soft)"><path d="M838 676v120H646a60 60 0 0 1 0-120z" fill="url(#tab)"/></g>
+  <circle cx="660" cy="736" r="26" fill="url(#gold)"/>
+  <circle cx="660" cy="736" r="12" fill="#d98f1c" opacity=".5"/>
+
+  <g fill="#9a6440">
+    <ellipse cx="418" cy="596" rx="44" ry="30"/><ellipse cx="606" cy="596" rx="44" ry="30"/>
+  </g>
+  <g fill="none" stroke="#6f4429" stroke-width="6" stroke-linecap="round" opacity=".6">
+    <path d="M404 606v14M432 606v14M592 606v14M620 606v14"/>
+  </g>`;
+
+const svg = (viewBox, body) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}">\n  <defs>${defs}\n  </defs>${body}\n</svg>\n`;
+
+// Full-bleed square for the apple-touch-icon (iOS rounds the corners) and, with the art
+// shrunk into the safe circle, for the maskable manifest icons.
+const square = svg("0 0 1024 1024", background + art);
+const maskable = svg("0 0 1024 1024", `${background}<g transform="translate(512 540) scale(0.84) translate(-512 -540)">${art}</g>`);
+// Rounded square on transparent with a shadow, on the macOS icon grid like the siblings': favicon, README.
+const rounded = svg("0 0 1024 1024", `
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="#7556cf" filter="url(#icon)"/>
+  <g clip-path="url(#squircle)"><g transform="translate(100 100) scale(0.8047)">${background}${art}</g></g>`);
+// The wallaby and its wallet without a background, for the app itself.
+const mascot = svg("150 90 724 800", art);
+
+writeFileSync(root + "public/favicon.svg", rounded);
+writeFileSync(root + "public/mascot.svg", mascot);
+
+const renders = [
+  [rounded, "public/favicon-96x96.png", 96],
+  [rounded, "docs/icon.png", 512],
+  [maskable, "public/web-app-manifest-192x192.png", 192],
+  [maskable, "public/web-app-manifest-512x512.png", 512],
+  [square, "public/apple-touch-icon.png", 180],
+  [mascot, "public/mail-logo.png", 160],
+  [rounded, "storage/app/favicon-32.png", 32],
+  [rounded, "storage/app/favicon-48.png", 48],
+];
+const browser = await chromium.launch();
+for (const [source, out, size] of renders) {
+  const page = await browser.newPage({ viewport: { width: size, height: size } });
+  await page.setContent(`<style>html,body{margin:0;background:transparent}svg{display:block;width:${size}px;height:${size}px}</style>${source}`);
+  await page.screenshot({ path: root + out, omitBackground: true });
+  await page.close();
+  console.log(out);
+}
+await browser.close();
+
+// favicon.ico for old browsers, from the 32 and 48 px renders (needs ImageMagick).
+execFileSync("magick", [root + "storage/app/favicon-32.png", root + "storage/app/favicon-48.png", root + "public/favicon.ico"]);
+console.log("public/favicon.ico");

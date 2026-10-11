@@ -7,7 +7,7 @@ You're all set! Your email is verified and your space is ready.
 **Share this invite code with your partner:**
 
 <x-mail::panel>
-<div style="text-align: center; font-size: 20px; font-weight: 600; letter-spacing: 0.05em; color: #111827;">
+<div style="text-align: center; font-size: 20px; font-weight: 600; letter-spacing: 0.05em; color: #2a1d4d;">
 {{ $inviteCode }}
 </div>
 </x-mail::panel>
@@ -22,12 +22,12 @@ Go to Dashboard
 @else
 You've successfully joined your partner's space!
 
-You can now track expenses together. Every expense either of you adds will be visible to both, and kimiyu will automatically calculate who owes whom.
+You can now track expenses together. Every expense either of you adds will be visible to both, and Wallaby will automatically calculate who owes whom.
 
 <x-mail::button :url="url('/expenses')">
 Start Tracking
 </x-mail::button>
 @endif
 
-— The kimiyu team
+— The Wallaby team
 </x-mail::message>

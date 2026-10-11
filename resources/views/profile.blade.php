@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="flex items-center justify-between mb-8">
-        <h1 class="text-xl text-gray-900 font-bold">Profile</h1>
+        <h1 class="text-xl text-lilac-950 font-display font-semibold">Profile</h1>
     </div>
 
     <div class="space-y-12 max-w-lg">

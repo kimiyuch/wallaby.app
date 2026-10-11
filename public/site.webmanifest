@@ -1,7 +1,12 @@
 {
-  "name": "kimiyu",
-  "short_name": "kimiyu",
+  "name": "Wallaby",
+  "short_name": "Wallaby",
   "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
     {
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
@@ -15,7 +20,8 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  "theme_color": "#f6f3fe",
+  "background_color": "#f6f3fe",
+  "display": "standalone",
+  "description": "Split expenses, not relationships."
 }

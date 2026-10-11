@@ -55,7 +55,7 @@ new class extends Component
 
 <section>
     <header class="mb-4">
-        <h2 class="text-sm text-gray-900 font-bold">
+        <h2 class="text-sm text-lilac-950 font-display font-semibold">
             {{ __('Profile Information') }}
         </h2>
     </header>
@@ -76,13 +76,13 @@ new class extends Component
                 <div>
                     <p class="text-sm mt-2 text-gray-800">
                         {{ __('Your email address is unverified.') }}
-                        <button wire:click.prevent="sendVerification" class="underline text-sm text-gray-600 hover:text-gray-900">
+                        <button wire:click.prevent="sendVerification" class="underline text-sm text-gray-600 hover:text-lilac-950">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 text-sm text-green-600">
+                        <p class="mt-2 text-sm text-mint-700">
                             {{ __('A new verification link has been sent to your email address.') }}
                         </p>
                     @endif

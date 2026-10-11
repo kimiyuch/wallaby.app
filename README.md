@@ -1,8 +1,10 @@
-# kimiyu
+# Wallaby
 
 **Split expenses, not relationships.**
 
 A simple expense tracking app for couples. Track shared costs, see who owes what, and settle up at the end of each month.
+
+Live at [wallaby.kimiyu.ch](https://wallaby.kimiyu.ch).
 
 ## Features
 
@@ -26,8 +28,8 @@ A simple expense tracking app for couples. Track shared costs, see who owes what
 
 ```bash
 # Clone
-git clone https://github.com/marceli-to/kimiyu.ch.git
-cd kimiyu.ch
+git clone https://github.com/kimiyuch/wallaby.web.git
+cd wallaby.web
 
 # Install dependencies
 composer install

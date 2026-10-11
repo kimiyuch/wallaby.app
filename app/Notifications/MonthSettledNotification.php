@@ -34,7 +34,7 @@ class MonthSettledNotification extends Notification implements ShouldBeUnique, S
         $year = $this->settlement->year;
 
         $message = (new MailMessage)
-            ->subject("✓ {$monthName} {$year} settled – kimiyu")
+            ->subject("✓ {$monthName} {$year} settled – Wallaby")
             ->greeting("Hi {$notifiable->name}!")
             ->line("**{$this->settledByName}** has marked **{$monthName} {$year}** as settled.");
 
@@ -47,6 +47,6 @@ class MonthSettledNotification extends Notification implements ShouldBeUnique, S
         return $message
             ->line('This month is now closed and no more expenses can be added.')
             ->action('View History', url('/expenses'))
-            ->salutation('— The kimiyu team');
+            ->salutation('— The Wallaby team');
     }
 }

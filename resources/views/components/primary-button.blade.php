@@ -4,8 +4,8 @@
 $baseClasses = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
 $variantClasses = match($variant) {
-    'light' => 'bg-white text-gray-900 hover:bg-gray-100 focus:ring-white',
-    default => 'bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-500',
+    'light' => 'bg-white text-lilac-950 hover:bg-lilac-50 focus:ring-white',
+    default => 'bg-lilac-600 text-white hover:bg-lilac-700 focus:ring-lilac-500',
 };
 
 $sizeClasses = match($size) {

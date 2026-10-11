@@ -15,26 +15,26 @@ class SetupDemo extends Command
     protected $description = 'Set up demo users and expenses';
 
     private array $expenseDescriptions = [
-        'School supplies',
-        'Soccer practice',
-        'Swimming lessons',
-        'Winter jacket',
-        'New shoes',
-        'Birthday party',
-        'School trip',
-        'Piano lessons',
-        'Dentist visit',
-        'Doctor checkup',
-        'Bus tickets',
-        'Lunch money',
-        'Art supplies',
-        'Books',
-        'Haircut',
+        'Groceries',
+        'Dinner out',
+        'Electricity bill',
+        'Internet',
+        'Cleaning supplies',
+        'Takeaway pizza',
         'Cinema tickets',
-        'Zoo visit',
-        'Sports equipment',
-        'School photos',
-        'Vitamins',
+        'Concert tickets',
+        'Weekend trip',
+        'Train tickets',
+        'Furniture',
+        'Plants',
+        'Pharmacy',
+        'Birthday gift',
+        'Coffee beans',
+        'Toilet paper',
+        'Drinks for the party',
+        'Laundry detergent',
+        'Kitchen tools',
+        'Brunch',
     ];
 
     public function handle(): void
@@ -48,7 +48,7 @@ class SetupDemo extends Command
 
         // Create shared space
         $space = Space::create([
-            'name' => 'Demo Family',
+            'name' => 'Demo Household',
             'invite_code' => Space::generateInviteCode(),
         ]);
 

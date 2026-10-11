@@ -3,21 +3,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Privacy Policy – kimiyu</title>
+    <title>Privacy Policy – Wallaby</title>
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="kimiyu" />
+    <meta name="apple-mobile-web-app-title" content="Wallaby" />
     <link rel="manifest" href="/site.webmanifest" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased font-sans bg-gray-100 text-gray-900">
+<body class="antialiased font-sans bg-lilac-50 text-lilac-950">
     <x-page-nav />
 
     <!-- Content -->
     <main class="max-w-5xl mx-auto px-6 py-8 lg:py-12">
-        <h1 class="text-3xl font-bold mb-8">Privacy Policy</h1>
+        <h1 class="text-3xl font-display font-semibold mb-8">Privacy Policy</h1>
         
         <div class="prose prose-gray max-w-none space-y-4">
             <p class="text-lg text-gray-600">
@@ -25,8 +25,8 @@
             </p>
 
             <section>
-                <h2 class="text-xl font-bold mt-4 mb-2">What we collect</h2>
-                <p class="text-gray-600 mb-4">kimiyu collects only the data necessary to provide our expense tracking service:</p>
+                <h2 class="text-xl font-display font-semibold mt-4 mb-2">What we collect</h2>
+                <p class="text-gray-600 mb-4">Wallaby collects only the data necessary to provide our expense tracking service:</p>
                 <ul class="text-gray-600 space-y-2">
                     <li><strong>Account information:</strong> Name, email address, and encrypted password</li>
                     <li><strong>Expense data:</strong> Descriptions, amounts, dates, and categorization (recurring/personal)</li>
@@ -35,7 +35,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-4 mb-2">What we don't collect</h2>
+                <h2 class="text-xl font-display font-semibold mt-4 mb-2">What we don't collect</h2>
                 <ul class="text-gray-600 space-y-2">
                     <li>Payment or banking information</li>
                     <li>Location data</li>
@@ -45,7 +45,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-4 mb-2">How we use your data</h2>
+                <h2 class="text-xl font-display font-semibold mt-4 mb-2">How we use your data</h2>
                 <ul class="text-gray-600 space-y-2">
                     <li>To provide the expense tracking and splitting functionality</li>
                     <li>To send transactional emails (verification, settlement notifications)</li>
@@ -55,7 +55,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-4 mb-2">Data storage & security</h2>
+                <h2 class="text-xl font-display font-semibold mt-4 mb-2">Data storage & security</h2>
                 <ul class="text-gray-600 space-y-2">
                     <li>Your data is stored on servers located in Switzerland/EU</li>
                     <li>Passwords are hashed using industry-standard algorithms</li>
@@ -65,7 +65,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-4 mb-2">Data sharing with your partner</h2>
+                <h2 class="text-xl font-display font-semibold mt-4 mb-2">Data sharing with your partner</h2>
                 <p class="text-gray-600">
                     When you connect with a partner via invite code, they can see:
                 </p>
@@ -78,7 +78,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-4 mb-2">Your rights</h2>
+                <h2 class="text-xl font-display font-semibold mt-4 mb-2">Your rights</h2>
                 <p class="text-gray-600 mb-4">You have the right to:</p>
                 <ul class="text-gray-600 space-y-2">
                     <li><strong>Access:</strong> View all data we store about you</li>
@@ -90,7 +90,7 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-4 mb-2">Cookies</h2>
+                <h2 class="text-xl font-display font-semibold mt-4 mb-2">Cookies</h2>
                 <p class="text-gray-600">
                     We use only essential cookies required for the application to function (session management, CSRF protection). 
                     We do not use tracking or advertising cookies.
@@ -98,10 +98,10 @@
             </section>
 
             <section>
-                <h2 class="text-xl font-bold mt-4 mb-2">Contact</h2>
+                <h2 class="text-xl font-display font-semibold mt-4 mb-2">Contact</h2>
                 <p class="text-gray-600">
                     For privacy-related questions or requests, contact us at:
-                    <a href="mailto:privacy@kimiyu.ch" class="text-gray-900 underline decoration-1 underline-offset-4 hover:no-underline">privacy@kimiyu.ch</a>
+                    <a href="mailto:privacy@kimiyu.ch" class="text-lilac-950 underline decoration-1 underline-offset-4 hover:no-underline">privacy@kimiyu.ch</a>
                 </p>
             </section>
         </div>

@@ -1,11 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+/* Figtree for headings, as on the sibling sites (SIL Open Font License). */
+@import url('https://fonts.bunny.net/css?family=figtree:500,600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --header-height: 60px;
+/* InterVariable from rsms.me, cut down to latin and weights 400–600; the same file as joey.web.
+   Keeps the character variants that Google's and Bunny's copies drop. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('../fonts/InterVariable.woff2') format('woff2');
+}
+
+body {
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
 /* Prose lists */
@@ -29,56 +40,3 @@ select {
   background-size: 1rem;
 }
 
-/* Animated background orbs */
-.orb {
-  @apply absolute rounded-full opacity-50;
-  filter: blur(80px);
-}
-
-.orb-1 {
-  @apply w-[600px] h-[600px] -top-[200px] -left-[200px];
-  background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-  animation: float1 25s ease-in-out infinite;
-}
-
-.orb-2 {
-  @apply w-[500px] h-[500px] top-[40%] -right-[150px];
-  background: linear-gradient(135deg, #fce7f3, #fbcfe8);
-  animation: float2 30s ease-in-out infinite;
-}
-
-.orb-3 {
-  @apply w-[400px] h-[400px] bottom-[10%] left-[10%];
-  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-  animation: float3 20s ease-in-out infinite;
-}
-
-.orb-4 {
-  @apply w-[350px] h-[350px] top-[60%] left-1/2;
-  background: linear-gradient(135deg, #fef3c7, #fde68a);
-  animation: float4 28s ease-in-out infinite;
-}
-
-@keyframes float1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(100px, 50px) scale(1.1); }
-  66% { transform: translate(50px, 100px) scale(0.95); }
-}
-
-@keyframes float2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-80px, 60px) scale(1.05); }
-  66% { transform: translate(-40px, -40px) scale(0.9); }
-}
-
-@keyframes float3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(60px, -40px) scale(1.08); }
-  66% { transform: translate(-30px, 30px) scale(0.92); }
-}
-
-@keyframes float4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-50px, -60px) scale(1.06); }
-  66% { transform: translate(40px, 20px) scale(0.94); }
-}

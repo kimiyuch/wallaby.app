@@ -36,7 +36,7 @@
         x-transition:leave="ease-in duration-150"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 bg-black/30"
+        class="fixed inset-0 bg-lilac-950/30"
         @click="cancel()"
     ></div>
 
@@ -53,14 +53,14 @@
             class="bg-white rounded-xl shadow-xl max-w-md w-full p-6"
             @click.stop
         >
-            <h3 class="text-sm font-bold text-gray-900 mb-2" x-text="title"></h3>
+            <h3 class="text-sm font-display font-semibold text-lilac-950 mb-2" x-text="title"></h3>
             <p class="text-sm text-gray-500 mb-6" x-text="message" x-show="message"></p>
             
             <div class="flex items-center justify-end gap-3">
                 <button
                     @click="cancel()"
                     type="button"
-                    class="text-sm inline-flex items-center justify-center gap-2 rounded-md cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500 px-4 py-2"
+                    class="text-sm inline-flex items-center justify-center gap-2 rounded-md cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-lilac-50 text-gray-700 hover:bg-gray-200 focus:ring-lilac-500 px-4 py-2"
                 >
                     Cancel
                 </button>
@@ -70,7 +70,7 @@
                     class="text-sm inline-flex items-center justify-center gap-2 rounded-md cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2"
                     :class="{
                         'bg-red-600 text-white hover:bg-red-500 focus:ring-red-500': type === 'danger',
-                        'bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-500': type !== 'danger'
+                        'bg-lilac-600 text-white hover:bg-lilac-700 focus:ring-lilac-500': type !== 'danger'
                     }"
                     x-text="confirmText"
                 >

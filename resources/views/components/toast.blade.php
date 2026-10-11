@@ -24,13 +24,13 @@
             x-transition:leave-end="opacity-0 translate-y-2"
             class="flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg text-sm min-w-[280px]"
             :class="{
-                'bg-green-50 text-green-800 border border-green-200': toast.type === 'success',
+                'bg-mint-50 text-mint-800 border border-mint-200': toast.type === 'success',
                 'bg-red-50 text-red-800 border border-red-200': toast.type === 'error',
-                'bg-amber-50 text-amber-800 border border-amber-200': toast.type === 'warning'
+                'bg-gold-50 text-gold-800 border border-gold-200': toast.type === 'warning'
             }"
         >
             <template x-if="toast.type === 'success'">
-                <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-mint-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
             </template>
@@ -40,7 +40,7 @@
                 </svg>
             </template>
             <template x-if="toast.type === 'warning'">
-                <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-gold-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
             </template>
