@@ -58,3 +58,16 @@ Tests: 74 passed after every step.
 - [x] **README** in the sibling style (centered `docs/icon.png`, name, pun tagline, link to wallaby.kimiyu.ch).
 - [x] **Tailwind 4 / Laravel 13 upgrade** (branch `upgrade-laravel-13-tailwind-4`): Laravel 13, Pest 4, PHPUnit 12, Tailwind 4 through `@tailwindcss/vite`, Vite 8, `laravel-vite-plugin` 3 with Inter (local) and Figtree (Bunny) via `@fonts`. Livewire stays on 3 (Livewire 4 is a separate upgrade). Session serialization is now `json`, which signs everyone out once after deploying.
 - [x] **`.claude/settings.local.json`:** reset to the committed version (the stale `Webroot/kimiyu.ch` rules are gone).
+
+## Later on 2026-10-11 (branch `upgrade-laravel-13-tailwind-4`, not merged or pushed yet)
+
+- Welcome section on the expenses screen until the partner joins; invite links explain themselves when opened while signed in.
+- Bug fixes: month navigation on the 29th–31st, stale edit form, settling future months; recurring expenses now change from the viewed month on, so settled months never change.
+- Deleting an account with an active partner anonymises it (`departed_at`) and keeps the expenses; otherwise everything is deleted.
+- Backups are kept 90 days (`--days`).
+
+When deploying this branch:
+- [ ] `php artisan migrate` (adds `users.departed_at`).
+- [ ] Everyone is signed out once (session serialization is now `json`).
+- [ ] Check the server cron for `app:backup-database`: drop any `--keep=7`, or it still caps at 7 backups.
+- [ ] Open idea: a "Start fresh" button so someone whose partner left can begin a new space and invite someone else.
