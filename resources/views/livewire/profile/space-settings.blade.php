@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\StartFresh;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Volt\Component;
@@ -28,6 +29,50 @@ new class extends Component
     public function partnerEmail(): ?string
     {
         return $this->user->partner?->email;
+    }
+
+    #[Computed]
+    public function canStartFresh(): bool
+    {
+        return (new StartFresh)->isOffered($this->user);
+    }
+
+    /**
+     * Unsettled months that block starting fresh
+     */
+    #[Computed]
+    public function openMonths(): \Illuminate\Support\Collection
+    {
+        return (new StartFresh)->openMonths($this->user);
+    }
+
+    /**
+     * What moves to the new space, e.g. "Rent and Flight carry over from December 2026."
+     */
+    #[Computed]
+    public function carriedOver(): ?string
+    {
+        $startFresh = new StartFresh;
+        $names = $startFresh->carriedOver($this->user)->pluck('description');
+
+        return $names->isEmpty()
+            ? null
+            : $names->join(', ', ' and ').($names->count() === 1 ? ' carries' : ' carry').' over from '.$startFresh->nextMonth()->format('F Y').'.';
+    }
+
+    public function startFresh(StartFresh $startFresh): void
+    {
+        if (! $this->canStartFresh || $this->openMonths->isNotEmpty()) {
+            $this->dispatch('toast', type: 'error', message: 'Settle the open months first.');
+
+            return;
+        }
+
+        $startFresh($this->user);
+
+        Auth::user()->refresh();
+        unset($this->user, $this->canStartFresh, $this->openMonths, $this->carriedOver, $this->inviteCode, $this->partnerName, $this->partnerEmail);
+        $this->dispatch('toast', type: 'success', message: 'New space ready. Share your invite code.');
     }
 
     public function regenerateCode(): void
@@ -60,6 +105,36 @@ new class extends Component
     </header>
 
     <div class="space-y-4">
+        @if($this->canStartFresh)
+            <div class="space-y-3 rounded-lg border border-gray-200 p-4">
+                <h3 class="text-sm font-display font-semibold text-lilac-950">{{ __('Start fresh') }}</h3>
+                <p class="text-sm text-gray-500">
+                    {{ __('Get a new space to share with someone else. The history with your former partner is deleted.') }}
+                    {{ $this->carriedOver }}
+                </p>
+                @if($this->openMonths->isNotEmpty())
+                    <p class="text-sm text-gold-800">
+                        Settle
+                        @foreach($this->openMonths as $month)
+                            <a href="{{ route('expenses', ['period' => $month->format('Y-m')]) }}" class="font-medium underline hover:text-gold-950">{{ $month->format('F Y') }}</a>{{ $loop->remaining > 1 ? ',' : ($loop->remaining === 1 ? ' and' : '') }}
+                        @endforeach
+                        first, so nothing is left open.
+                    </p>
+                @endif
+                <div class="flex justify-end">
+                    <x-primary-button
+                        type="button"
+                        wire:click="startFresh"
+                        wire:confirm="Start a new space? The history with your former partner is deleted. {{ $this->carriedOver }}"
+                        wire:loading.attr="disabled"
+                        :disabled="$this->openMonths->isNotEmpty()"
+                    >
+                        {{ __('Start fresh') }}
+                    </x-primary-button>
+                </div>
+            </div>
+        @endif
+
         @if(!$this->partnerName)
             {{-- Waiting for partner: show invite code --}}
             <div class="p-3 bg-gold-50 border border-gold-200 rounded-lg">

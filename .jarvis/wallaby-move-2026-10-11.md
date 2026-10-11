@@ -70,4 +70,4 @@ When deploying this branch:
 - [ ] `php artisan migrate` (adds `users.departed_at`).
 - [ ] Everyone is signed out once (session serialization is now `json`).
 - [ ] Check the server cron for `app:backup-database`: drop any `--keep=7`, or it still caps at 7 backups.
-- [ ] Open idea: a "Start fresh" button so someone whose partner left can begin a new space and invite someone else.
+- [x] "Start fresh" on the profile page: once the partner has left and all months are settled, the user gets a new space; running expenses carry over, the old space is deleted.
