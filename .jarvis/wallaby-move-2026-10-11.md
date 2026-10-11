@@ -52,8 +52,8 @@ Tests: 74 passed after every step.
 
 - [x] **Commit** the 2026-10-11 work (`a384459`, pushed to `origin/main`).
 - [x] **GitHub repo name:** renamed to `kimiyuch/wallaby.web`; `origin` and the README clone URL updated.
-- [ ] **Domain:** DNS record and SSL for wallaby.kimiyu.ch, and `APP_URL=https://wallaby.kimiyu.ch` in the production `.env` (email logo loads from `APP_URL`).
-- [ ] **Deploy:** point any deploy setup (Forge, webhooks, CI) at the kimiyuch repo instead of `marceli-to/kimiyu.ch`.
+- [x] **Domain:** wallaby.kimiyu.ch is live with `APP_URL` set (see Production cutover below).
+- [x] **Deploy:** `deploy.sh` deploys this repo to Hostpoint.
 - [ ] **Old repo:** archive or delete `marceli-to/kimiyu.ch` once the deploy is moved, then `git remote remove old-origin`.
 - [x] **README** in the sibling style (centered `docs/icon.png`, name, pun tagline, link to wallaby.kimiyu.ch).
 - [x] **Tailwind 4 / Laravel 13 upgrade** (branch `upgrade-laravel-13-tailwind-4`): Laravel 13, Pest 4, PHPUnit 12, Tailwind 4 through `@tailwindcss/vite`, Vite 8, `laravel-vite-plugin` 3 with Inter (local) and Figtree (Bunny) via `@fonts`. Livewire stays on 3 (Livewire 4 is a separate upgrade). Session serialization is now `json`, which signs everyone out once after deploying.
@@ -71,3 +71,11 @@ When deploying this branch:
 - [ ] Everyone is signed out once (session serialization is now `json`).
 - [ ] Check the server cron for `app:backup-database`: drop any `--keep=7`, or it still caps at 7 backups.
 - [x] "Start fresh" on the profile page: once the partner has left and all months are settled, the user gets a new space; running expenses carry over, the old space is deleted.
+
+## Production cutover (2026-10-11, evening)
+
+- Live at https://wallaby.kimiyu.ch from `~/www/wallaby.kimiyu.ch` on Hostpoint (PHP 8.4 via `Use php-fpm php84` in `public/.htaccess`). Deploy with `./deploy.sh`.
+- Data moved from the old app in `~/www/kimiyu.ch` (5 users, 130 expenses, 3 settlements, 7 backups); `.env` copied with `APP_NAME=Wallaby`, `APP_URL=https://wallaby.kimiyu.ch`, same `APP_KEY`.
+- The old app is in maintenance mode and kimiyu.ch 302-redirects to wallaby.kimiyu.ch (temporary, until the studio site). Previous `.htaccess` saved as `public/.htaccess.before-wallaby-20261011-205053`; crontab saved as `~/crontab-before-wallaby-20261011-205053.txt`.
+- [ ] Cron (Marcel changes it): point the queue worker and `app:backup-database` lines at `~/www/wallaby.kimiyu.ch` with `/usr/local/php84/bin/php`.
+- [ ] Old repo `marceli-to/kimiyu.ch`: archive, then `git remote remove old-origin`.
