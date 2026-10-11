@@ -12,7 +12,7 @@ Handoff note. Read this first when picking the project up in a new session.
   - `kimiyuch/amor.web` (web app)
   - Wallaby is a Laravel web app, so it is **`wallaby.web`**.
 - Production domain: **wallaby.kimiyu.ch** (same pattern as joey/bilby/amor.kimiyu.ch).
-- Email stays on the studio domain: `hello@kimiyu.ch` (sender), `privacy@kimiyu.ch` (privacy page).
+- Email stays on the studio domain: `bot@kimiyu.ch` sends the app emails, `marcel@kimiyu.ch` is the contact on the privacy page (there is no privacy@ or hello@ mailbox).
 
 ## Local setup
 

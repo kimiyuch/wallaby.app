@@ -104,7 +104,7 @@
                 <h2 class="text-xl font-display font-semibold mt-4 mb-2">Contact</h2>
                 <p class="text-gray-600">
                     For privacy-related questions or requests, contact us at:
-                    <a href="mailto:privacy@kimiyu.ch" class="text-lilac-950 underline decoration-1 underline-offset-4 hover:no-underline">privacy@kimiyu.ch</a>
+                    <a href="mailto:marcel@kimiyu.ch" class="text-lilac-950 underline decoration-1 underline-offset-4 hover:no-underline">marcel@kimiyu.ch</a>
                 </p>
             </section>
         </div>
