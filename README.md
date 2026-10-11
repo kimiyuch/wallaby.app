@@ -61,6 +61,7 @@ The suite covers the balance calculation (equal and unequal splits, personal exp
 | `app/Livewire/ExpenseForm.php` | Adding and editing an expense |
 | `app/Services/BalanceCalculator.php` | Who owes whom |
 | `resources/css/app.css` | Theme colors (`lilac` for the brand, `mint` for settled, `gold` for highlights) and fonts |
+| `resources/views/og-image.blade.php` | The link preview image. Run `./scripts/og-image.sh` (needs Herd and `npm run build`) to render it to `public/images/og.png` |
 | `scripts/make-icon.mjs` | The icon and mascot. Edit the SVG there and run `node scripts/make-icon.mjs` to render the favicons, app icons, `public/mascot.svg`, `public/mail-logo.png` and `docs/icon.png` |
 
 ## License
