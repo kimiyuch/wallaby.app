@@ -49,7 +49,9 @@ new class extends Component
             {{ __('Partner') }}
         </h2>
         <p class="mt-1 text-sm text-gray-500">
-            @if($this->partnerName)
+            @if($this->user->partner?->hasDeparted())
+                {{ __('Your partner deleted their account. Their expenses stay here so your history still adds up.') }}
+            @elseif($this->partnerName)
                 {!! __("You're connected with <span class=\"font-semibold text-lilac-950\">:name</span> (:email) and share expenses together.", ['name' => e($this->partnerName), 'email' => e($this->partnerEmail)]) !!}
             @else
                 {{ __('Connect with your partner to share and split expenses together.') }}

@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'departed_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -56,6 +57,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return User::where('space_id', $this->space_id)
             ->where('id', '!=', $this->id)
             ->first();
+    }
+
+    /**
+     * Check if this user deleted their account and only their expenses remain
+     */
+    public function hasDeparted(): bool
+    {
+        return $this->departed_at !== null;
     }
 
     /**

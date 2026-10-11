@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Expense;
+use App\Models\Settlement;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class BalanceCalculator
@@ -54,5 +57,37 @@ class BalanceCalculator
             $user->id => round($userOwes, 2),
             $partner->id => round($partnerOwes, 2),
         ];
+    }
+
+    /**
+     * What the user owes the partner over every month up to now that isn't settled yet
+     * (positive = owes, negative = is owed).
+     */
+    public function openBalance(User $user, User $partner): float
+    {
+        $first = Expense::whereIn('user_id', [$user->id, $partner->id])->min('date');
+
+        if (! $first || ! $user->space_id) {
+            return 0.0;
+        }
+
+        $total = 0.0;
+
+        for ($month = Carbon::parse($first)->startOfMonth(); $month->lte(now()); $month = $month->copy()->addMonth()) {
+            if (Settlement::isSettled($user->space_id, $month->month, $month->year)) {
+                continue;
+            }
+
+            $balance = $this->calculate(
+                Expense::forUserInMonth($user->id, $month),
+                Expense::forUserInMonth($partner->id, $month),
+                $user,
+                $partner
+            );
+
+            $total += $balance[$user->id];
+        }
+
+        return round($total, 2);
     }
 }

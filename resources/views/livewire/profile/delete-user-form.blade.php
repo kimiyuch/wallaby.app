@@ -1,13 +1,48 @@
 <?php
 
+use App\Actions\DeleteAccount;
 use App\Livewire\Actions\Logout;
+use App\Models\User;
+use App\Services\BalanceCalculator;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Volt\Component;
 
 new class extends Component
 {
     public string $password = '';
     public bool $showDeleteModal = false;
+
+    /**
+     * The partner who keeps the expenses after this account is gone
+     */
+    #[Computed]
+    public function partner(): ?User
+    {
+        $partner = Auth::user()->partner;
+
+        return $partner && ! $partner->hasDeparted() ? $partner : null;
+    }
+
+    /**
+     * What's still owed between the two over the months that aren't settled
+     */
+    #[Computed]
+    public function openBalance(): ?string
+    {
+        if (! $this->partner) {
+            return null;
+        }
+
+        $owes = (new BalanceCalculator)->openBalance(Auth::user(), $this->partner);
+        $amount = number_format(abs($owes), 2);
+
+        return match (true) {
+            $owes > 0 => "You still owe {$this->partner->name} {$amount} from months that aren’t settled.",
+            $owes < 0 => "{$this->partner->name} still owes you {$amount} from months that aren’t settled.",
+            default => null,
+        };
+    }
 
     public function confirmDelete(): void
     {
@@ -20,13 +55,13 @@ new class extends Component
         $this->password = '';
     }
 
-    public function deleteUser(Logout $logout): void
+    public function deleteUser(Logout $logout, DeleteAccount $deleteAccount): void
     {
         $this->validate([
             'password' => ['required', 'string', 'current_password'],
         ]);
 
-        tap(Auth::user(), $logout(...))->delete();
+        $deleteAccount(tap(Auth::user(), $logout(...)));
 
         $this->redirect('/', navigate: true);
     }
@@ -40,7 +75,11 @@ new class extends Component
     </header>
 
     <p class="text-sm text-gray-500 mb-4">
-        {{ __('Once your account is deleted, all of its resources and data will be permanently deleted.') }}
+        @if($this->partner)
+            Your name and email are deleted. Your expenses stay visible to {{ $this->partner->name }}, without your name or email, so their history still adds up.
+        @else
+            Once your account is deleted, all of its resources and data will be permanently deleted.
+        @endif
     </p>
 
     <x-danger-button wire:click="confirmDelete">
@@ -81,7 +120,15 @@ new class extends Component
                 @click.stop
             >
                 <h3 class="text-sm font-display font-semibold text-lilac-950 mb-2">Delete your account?</h3>
-                <p class="text-sm text-gray-500 mb-4">This action cannot be undone. Please enter your password to confirm.</p>
+                <div class="text-sm text-gray-500 mb-4 space-y-2">
+                    @if($this->partner)
+                        <p>Your expenses stay visible to {{ $this->partner->name }}, without your name or email.</p>
+                    @endif
+                    @if($this->openBalance)
+                        <p class="text-gold-800">{{ $this->openBalance }}</p>
+                    @endif
+                    <p>This action cannot be undone. Please enter your password to confirm.</p>
+                </div>
                 
                 <form wire:submit="deleteUser">
                     <div class="mb-4">

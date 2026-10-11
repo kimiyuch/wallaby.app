@@ -89,7 +89,7 @@
                     <li><strong>Delete:</strong> Request deletion of your account and all associated data</li>
                     <li><strong>Export:</strong> Request a copy of your data</li>
                 </ul>
-                <p class="text-gray-600 mt-4">You can delete your account at any time from your profile settings.</p>
+                <p class="text-gray-600 mt-4">You can delete your account at any time from your profile settings. If you share a space with someone, the expenses you added stay visible to them, without your name or email, so their records still add up. Once nobody uses the space any more, everything in it is deleted.</p>
             </section>
 
             <section>

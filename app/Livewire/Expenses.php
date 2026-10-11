@@ -263,7 +263,7 @@ class Expenses extends Component
         // Notify both users
         $this->user->notify(new MonthSettledNotification($settlement, $this->user->name));
 
-        if ($this->partner) {
+        if ($this->partner && ! $this->partner->hasDeparted()) {
             $this->partner->notify(new MonthSettledNotification($settlement, $this->user->name));
         }
 
@@ -273,28 +273,7 @@ class Expenses extends Component
 
     protected function getExpensesForMonth(int $userId): Collection
     {
-        $monthStart = $this->selectedMonthStart();
-        $monthEnd = $monthStart->copy()->endOfMonth();
-
-        // Get one-time expenses for this month
-        $oneTimeExpenses = Expense::where('user_id', $userId)
-            ->where('is_recurring', false)
-            ->whereMonth('date', $this->selectedMonth)
-            ->whereYear('date', $this->selectedYear)
-            ->get();
-
-        // Get recurring expenses active for this month (optimized query)
-        $recurringExpenses = Expense::where('user_id', $userId)
-            ->where('is_recurring', true)
-            ->where('date', '<=', $monthEnd)
-            ->where(function ($query) use ($monthStart) {
-                $query->whereNull('end_date')
-                    ->orWhere('end_date', '>=', $monthStart);
-            })
-            ->get();
-
-        // Combine and sort (non-recurring first, then recurring)
-        return $oneTimeExpenses->concat($recurringExpenses)->sortBy('is_recurring')->values();
+        return Expense::forUserInMonth($userId, $this->selectedMonthStart());
     }
 
     public function render()

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class Expense extends Model
 {
@@ -32,6 +33,31 @@ class Expense extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Expenses a user paid that count in the month starting at $monthStart: the one-offs dated
+     * in it and every recurring expense running then, one-offs first.
+     */
+    public static function forUserInMonth(int $userId, Carbon $monthStart): Collection
+    {
+        $monthEnd = $monthStart->copy()->endOfMonth();
+
+        $oneTimeExpenses = static::where('user_id', $userId)
+            ->where('is_recurring', false)
+            ->whereBetween('date', [$monthStart, $monthEnd])
+            ->get();
+
+        $recurringExpenses = static::where('user_id', $userId)
+            ->where('is_recurring', true)
+            ->where('date', '<=', $monthEnd)
+            ->where(function ($query) use ($monthStart) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', $monthStart);
+            })
+            ->get();
+
+        return $oneTimeExpenses->concat($recurringExpenses)->sortBy('is_recurring')->values();
     }
 
     /**
