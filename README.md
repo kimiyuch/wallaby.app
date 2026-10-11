@@ -1,94 +1,58 @@
-# Wallaby
+<p align="center">
+  <img src="docs/icon.png" width="128" height="128" alt="Wallaby icon">
+</p>
 
-**Split expenses, not relationships.**
+<h1 align="center">Wallaby</h1>
 
-A simple expense tracking app for couples. Track shared costs, see who owes what, and settle up at the end of each month.
+<p align="center">
+  Split expenses, not relationships.<br>
+  A wallaby that keeps the shared wallet in its pouch.
+</p>
 
-Live at [wallaby.kimiyu.ch](https://wallaby.kimiyu.ch).
+<p align="center">
+  <a href="https://wallaby.kimiyu.ch"><b>Open Wallaby</b></a>
+</p>
 
-## Features
+---
 
-- 📊 **Track expenses** — Add one-time or recurring expenses
-- 👫 **Partner sharing** — Connect with your partner via invite code
-- ⚖️ **Auto-split** — 50/50 split with balance calculation
-- 💝 **Personal expenses** — Mark expenses paid on behalf of partner (100% theirs)
-- 📅 **Monthly view** — Navigate between months, settle when done
-- ✅ **Settlements** — Lock months and get notified when settled
+Wallaby keeps a running tab for couples and housemates. Two people share a space (one creates it, the other joins with an invite code), add what they paid, one-time or recurring, and see who owes whom. Shared expenses are split 50/50; an expense paid for the partner counts 100% to them. At the end of the month you settle up, the month locks, and both get an email.
 
-## Tech Stack
+A Laravel 12 app with Livewire 3 (Volt), Tailwind CSS 3, Alpine.js and SQLite.
 
-- **Laravel 12** — PHP framework
-- **Livewire 3** — Reactive components
-- **Tailwind CSS** — Styling
-- **Alpine.js** — JavaScript interactions
-- **SQLite** — Database
-- **Pest** — Testing (74 tests, 178 assertions)
+## Local development
 
-## Installation
+The site runs in [Herd](https://herd.laravel.com) at `https://wallaby.web.test`.
 
-```bash
-# Clone
-git clone https://github.com/kimiyuch/wallaby.web.git
-cd wallaby.web
-
-# Install dependencies
+```sh
 composer install
 npm install
-
-# Setup
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-
-# Build assets
-npm run build
-
-# Run
-php artisan serve
+cp .env.example .env && php artisan key:generate
+touch database/database.sqlite && php artisan migrate
+npm run dev           # or: npm run build
 ```
 
-## Development
-
-```bash
-# Watch assets
-npm run dev
-
-# Run tests
-./vendor/bin/pest
-
-# Run tests in parallel
-./vendor/bin/pest --parallel
-
-# Code style
-./vendor/bin/pint
-```
+`php artisan app:setup-demo` creates two demo users (`peter@demo.com` and `maria@demo.com`, password `password`) in a shared "Demo Household" with six months of expenses. It **empties the users, spaces and expenses tables first**, so never run it against real data.
 
 ## Tests
 
-**74 tests, 178 assertions**
+```sh
+./vendor/bin/pest            # or: ./vendor/bin/pest --parallel
+./vendor/bin/pint            # code style
+```
 
-| Suite | Coverage |
-|-------|----------|
-| BalanceCalculator | Equal splits, unequal splits, personal expenses, decimals |
-| Expense Model | Relationships, casts, recurring logic |
-| Space Model | Invite codes, user limits, ownership |
-| ExpenseForm | Create, edit, validation, settled months |
-| Expenses Page | Auth, CRUD, navigation, settlements, balance |
-| Auth | Login, logout, registration, password reset, email verification |
+The suite covers the balance calculation (equal and unequal splits, personal expenses, rounding), the models, the expense form, the expenses page with settlements, and the auth flows.
 
-## How It Works
+## Where things are
 
-1. **Sign up** and create your space
-2. **Share invite code** with your partner
-3. **Add expenses** as you spend
-4. **Check balance** to see who owes what
-5. **Settle the month** when you're done
-
-### Balance Calculation
-
-- **Shared expenses** are split 50/50
-- **Personal expenses** (paid for partner) are 100% owed by partner
-- Positive balance = you owe · Negative balance = you get back
+| | |
+|---|---|
+| `resources/views/welcome.blade.php` | The landing page |
+| `resources/views/components/landing/app-preview.blade.php` | The expenses screen mock in the hero |
+| `app/Livewire/Expenses.php` | The monthly expenses screen, balance and settling |
+| `app/Livewire/ExpenseForm.php` | Adding and editing an expense |
+| `app/Services/BalanceCalculator.php` | Who owes whom |
+| `tailwind.config.js` | Theme colors (`lilac` for the brand, `mint` for settled, `gold` for highlights) and fonts |
+| `scripts/make-icon.mjs` | The icon and mascot. Edit the SVG there and run `node scripts/make-icon.mjs` to render the favicons, app icons, `public/mascot.svg`, `public/mail-logo.png` and `docs/icon.png` |
 
 ## License
 

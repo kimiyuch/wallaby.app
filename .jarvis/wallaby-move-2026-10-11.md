@@ -55,6 +55,6 @@ Tests: 74 passed after every step.
 - [ ] **Domain:** DNS record and SSL for wallaby.kimiyu.ch, and `APP_URL=https://wallaby.kimiyu.ch` in the production `.env` (email logo loads from `APP_URL`).
 - [ ] **Deploy:** point any deploy setup (Forge, webhooks, CI) at the kimiyuch repo instead of `marceli-to/kimiyu.ch`.
 - [ ] **Old repo:** archive or delete `marceli-to/kimiyu.ch` once the deploy is moved, then `git remote remove old-origin`.
-- [ ] **README** in the sibling style (centered `docs/icon.png`, name, pun tagline, link to wallaby.kimiyu.ch).
+- [x] **README** in the sibling style (centered `docs/icon.png`, name, pun tagline, link to wallaby.kimiyu.ch).
 - [ ] **Optional: Tailwind 4 / Laravel 13 upgrade** to match the siblings (`@theme` colours, `laravel-vite-plugin/fonts` with `@fonts`).
-- [ ] **`.claude/settings.local.json`:** still has permission rules with old absolute paths (`Webroot/kimiyu.ch`). Clean up or reset.
+- [x] **`.claude/settings.local.json`:** reset to the committed version (the stale `Webroot/kimiyu.ch` rules are gone).
