@@ -16,7 +16,7 @@
             <x-input-label for="amount" :value="__('Amount')" />
             <x-text-input 
                 type="number" 
-                step="0.05" 
+                step="0.01" 
                 wire:model.blur="form.amount" 
                 id="amount"
                 placeholder="0.00"

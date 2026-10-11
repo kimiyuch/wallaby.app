@@ -312,3 +312,12 @@ it('starts a new expense with an empty form after editing another one', function
 
     expect(Expense::pluck('description')->sort()->values()->all())->toBe(['Pizza', 'Rent']);
 });
+
+it('labels an expense paid for the other person from the viewer\'s side', function () {
+    Expense::factory()->personal()->create(['user_id' => $this->user->id, 'description' => 'My gift', 'date' => now()]);
+    Expense::factory()->personal()->create(['user_id' => $this->partner->id, 'description' => 'Their gift', 'date' => now()]);
+
+    Livewire::actingAs($this->user)
+        ->test(Expenses::class)
+        ->assertSeeInOrder(['My gift', 'Paid for partner', 'Their gift', 'Paid for you']);
+});

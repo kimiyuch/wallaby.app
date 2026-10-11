@@ -188,8 +188,8 @@
                             <span class="text-sm text-lilac-950 tabular-nums">{{ number_format($expense->amount, 2) }}</span>
                             <!-- Hover overlay -->
                             @if(!$this->isSettled)
-                            <div class="absolute inset-y-0 right-0 flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <div class="w-12 h-full bg-linear-to-r from-transparent to-white"></div>
+                            <div class="absolute inset-y-0 right-0 flex items-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 pointer-coarse:static pointer-coarse:ml-1 pointer-coarse:opacity-100 transition-opacity">
+                                <div class="w-12 h-full bg-linear-to-r from-transparent to-white pointer-coarse:hidden"></div>
                                 <div class="flex items-center bg-white pr-1">
                                     <button wire:click="editExpense({{ $expense->id }})" 
                                             class="p-2 text-gray-400 hover:text-gray-600 rounded-xs transition-colors"
@@ -237,7 +237,7 @@
                                         <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-sm text-xs bg-lilac-100 text-lilac-700">Recurring</span>
                                     @endif
                                     @if($expense->is_personal)
-                                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-sm text-xs bg-gold-100 text-gold-800">Paid for partner</span>
+                                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-sm text-xs bg-gold-100 text-gold-800">Paid for you</span>
                                     @endif
                                 </div>
                                 <span class="text-sm text-lilac-950 tabular-nums">{{ number_format($expense->amount, 2) }}</span>

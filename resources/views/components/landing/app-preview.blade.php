@@ -10,7 +10,7 @@
         ['description' => 'Internet', 'amount' => '49.90', 'badge' => 'Recurring'],
         ['description' => 'Takeaway pizza', 'amount' => '38.50'],
         ['description' => 'Plants', 'amount' => '24.00'],
-        ['description' => 'Concert ticket', 'amount' => '59.00', 'badge' => 'Paid for partner'],
+        ['description' => 'Concert ticket', 'amount' => '59.00', 'badge' => 'Paid for you'],
     ];
 
     $stats = [
@@ -21,7 +21,7 @@
 
     $badges = [
         'Recurring' => 'bg-lilac-100 text-lilac-700',
-        'Paid for partner' => 'bg-gold-100 text-gold-800',
+        'Paid for you' => 'bg-gold-100 text-gold-800',
     ];
 @endphp
 
