@@ -26,7 +26,7 @@ Handoff note. Read this first when picking the project up in a new session.
 
 - `origin` → `https://github.com/kimiyuch/wallaby.web.git` (public; renamed from `wallaby.app` on 2026-10-11, GitHub redirects the old URL).
 - `old-origin` → `https://github.com/marceli-to/kimiyu.ch.git` (kept for reference).
-- **Everything from 2026-10-11 is uncommitted** (rebrand, icon, theme, recolour, landing page). Last commit: `fda6f15 Adjust hero h1 size`.
+- All 2026-10-11 work is committed and pushed as `a384459 Rebrand kimiyu to Wallaby and redesign the landing page`. `.claude/settings.local.json` is deliberately left uncommitted (personal, stale paths).
 
 ## Done on 2026-10-11
 
@@ -50,7 +50,7 @@ Tests: 74 passed after every step.
 
 ## Open / TODO
 
-- [ ] **Commit** the 2026-10-11 work (maybe split: rebrand / icon+theme / recolour / landing page).
+- [x] **Commit** the 2026-10-11 work (`a384459`, pushed to `origin/main`).
 - [x] **GitHub repo name:** renamed to `kimiyuch/wallaby.web`; `origin` and the README clone URL updated.
 - [ ] **Domain:** DNS record and SSL for wallaby.kimiyu.ch, and `APP_URL=https://wallaby.kimiyu.ch` in the production `.env` (email logo loads from `APP_URL`).
 - [ ] **Deploy:** point any deploy setup (Forge, webhooks, CI) at the kimiyuch repo instead of `marceli-to/kimiyu.ch`.
